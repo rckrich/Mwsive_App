@@ -79,7 +79,7 @@ public class NewScreenManager : Manager
         SetChangeOfSpawnedViews(_SpawnedViewType);
     }
 
-    public ViewModel GetManView(ViewID viewID)
+    public ViewModel GetMainView(ViewID viewID)
     {
         foreach (ViewModel viewInstance in mainViews)
         {
@@ -117,6 +117,36 @@ public class NewScreenManager : Manager
         {
             return true;
         }
+    }
+
+    public void SetCurrentViewSiblingIndex(int _value)
+    {
+        currentView.transform.SetSiblingIndex(_value);
+    }
+
+    public void SetCurrentViewAsFirstSibling(int _value)
+    {
+        currentView.transform.SetAsFirstSibling();
+    }
+
+    public void SetCurrentViewAsLastSibling(int _value)
+    {
+        currentView.transform.SetAsLastSibling();
+    }
+
+    public void SetMainViewSiblingIndex(ViewID _id, int _value)
+    {
+        GetMainView(_id).transform.SetSiblingIndex(_value);
+    }
+
+    public void SetMainViewAsFirstSibling(ViewID _id)
+    {
+        GetMainView(_id).transform.SetAsFirstSibling();
+    }
+
+    public void SetMainViewAsLastSiblig(ViewID _id)
+    {
+        GetMainView(_id).transform.SetAsLastSibling();
     }
 
     private void SetChangeOfMainViews(ViewID _viewID, bool _isSubView = false)
