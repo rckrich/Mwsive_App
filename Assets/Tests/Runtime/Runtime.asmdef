@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "Unity.TextMeshPro",
         "RCKGamesAppTemplateScripts",
-        "Scripts"
+        "Scripts",
+        "UniWebView-CSharp"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
