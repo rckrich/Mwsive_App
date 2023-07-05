@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpotifyConnectionManager : MonoBehaviour
+public class SpotifyConnectionManager : Manager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private string oauthToken = "";
 
-    // Update is called once per frame
-    void Update()
+    public void StartConnection()
     {
-        
+        if (oauthToken.Equals(""))
+        {
+
+        }
     }
 }
