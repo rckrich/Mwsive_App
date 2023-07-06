@@ -233,14 +233,14 @@ public class UIAniManager : MonoBehaviour
 
     void SetPosition(){
         FinalPosition = MainCanvas.transform.position;
-        RestPositionDown = new Vector2(MainCanvas.transform.position.x, -MainCanvas.transform.position.y);
+        RestPositionDown = new Vector2(MainCanvas.transform.position.x, -2*MainCanvas.transform.position.y);
         RestPositionUp = new Vector2(MainCanvas.transform.position.x, 2*MainCanvas.transform.position.y);
         RestPositionSide = new Vector2(MainCanvas.transform.position.x*4, MainCanvas.transform.position.y);
     }
 
     void SetPosition(GameObject GA){
         FinalPosition = GA.transform.position;
-        RestPositionDown = new Vector2(GA.transform.position.x, -GA.transform.position.y);
+        RestPositionDown = new Vector2(GA.transform.position.x, -2*GA.transform.position.y);
         RestPositionUp = new Vector2(GA.transform.position.x, GA.transform.position.y*2);
         RestPositionSide = new Vector2(GA.transform.position.x*4, GA.transform.position.y);
     }
@@ -368,6 +368,91 @@ public class UIAniManager : MonoBehaviour
         GA.transform.DOScale(new Vector3(0,0,0), ScaleTransitionDuration).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationScale);
 
     }
+
+    //Surf Animations
+
+    float SurfTransitionDuration = 0.5f;
+
+    public void SurfSide(GameObject GA,float var, float MaxRotation, float fade, bool IsItFinished){
+        Debug.Log("SurfSide");
+        SetPosition();
+        if(IsItFinished){
+            GA.transform.DOMove(new Vector2 (RestPositionSide.x*var, RestPositionSide.y), SurfTransitionDuration, false).OnComplete(() => {GA.SetActive(false);});
+        }else{
+            GA.transform.DOMove(new Vector2 (RestPositionSide.x*var, RestPositionSide.y), SurfTransitionDuration, false);
+        }
+        
+
+        GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
+
+        GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
+    }
+    public void SurfReset(GameObject GA){
+        
+        SetPosition();
+        GA.transform.DOMove(FinalPosition, SurfTransitionDuration, false);
+        GA.transform.DORotate(new Vector3 (0f,0f ,0f), SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(1, SurfTransitionDuration);
+    }
+
+    public void SurfVerticalUp(GameObject GA,float var, float MaxRotation, float fade, bool IsItFinished){
+        Debug.Log("SurfVerticalUp");
+        SetPosition();
+
+        if(IsItFinished){
+            GA.transform.DOMove(new Vector2(RestPositionUp.x, RestPositionUp.y*var), SurfTransitionDuration, false).OnComplete(() => {GA.SetActive(false);});
+        }else{
+            GA.transform.DOMove(new Vector2(RestPositionUp.x, RestPositionUp.y*var), SurfTransitionDuration, false);
+        }
+        
+        
+        GA.transform.DOMove(new Vector2(RestPositionUp.x, RestPositionUp.y*var), SurfTransitionDuration, false);
+        GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
+    }
+
+
+    public void SurfVerticalDown(GameObject GA,float var, float MaxRotation, float fade, bool IsItFinished){
+        Debug.Log("SurfVerticalDown");
+        SetPosition();
+        if(IsItFinished){
+            GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false).OnComplete(() => {GA.SetActive(false);});
+        }else{
+            GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false);
+        }
+
+        GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false);
+        GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
+    }
+
+
+
+
+
+
+    public void SurfResetOtherSongs(GameObject GA, GameObject Position, bool Visible){
+        
+        
+        GA.transform.DOMove(Position.transform.position, SurfTransitionDuration, false);
+        GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha, SurfTransitionDuration).OnComplete(() => {GA.SetActive(Visible);});
+
+    }
+
+
+
+    public void SurfTransitionOtherSongs(GameObject GA, GameObject Position, float var){
+        float fade = Mathf.Clamp(var*2, 0, 1);
+        GA.SetActive(true);
+        GA.transform.DOMove(Position.transform.position, SurfTransitionDuration, false);
+        GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha*fade, SurfTransitionDuration);
+        GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration);
+    }
+         
+    
+
+
 
     
 
