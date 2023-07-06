@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SpotifyConnectionManager : Manager
 {
@@ -18,52 +19,88 @@ public class SpotifyConnectionManager : Manager
         }
     }
 
-    [SerializeField]
-    private string oauthToken = "";
-
     [Header("UniWebView OAuth Reference")]
     public OAuthHandler oAuthHandler;
 
     private void Start()
     {
-        Debug.Log(Application.persistentDataPath);
         StartConnection();
     }
 
     public void StartConnection()
     {
-        if (!ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
+        if (ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
         {
-            if (oauthToken.Equals(""))
+            string rawValue = ProgressManager.instance.progress.userDataPersistance.raw_value;
+            oAuthHandler.SetSpotifyTokenRawValue(rawValue);
+
+            if (ProgressManager.instance.progress.userDataPersistance.expires_at.CompareTo(DateTime.Now) < 0)
             {
-                oAuthHandler.SpotifyStartAuthFlow();
+                Debug.Log("Saved token has expired, starting refresh flow");
+                oAuthHandler.SpotifyStartRefreshFlow();
+            }
+            else
+            {
+                Debug.Log("Saved token has not expired, can continue normally");
+
+                //TEST
+                GetUserProfile();
             }
         }
         else
         {
-            oauthToken = ProgressManager.instance.progress.userDataPersistance.access_token;
-            GetUserProfile();
+            oAuthHandler.SpotifyStartAuthFlow();
         }
     }
 
-    public void SetOAuthToken(string _token)
+    public void SaveToken(string _rawValue, long _expiresIn)
     {
-        oauthToken = _token;
-
-        /*ProgressManager.instance.progress.userDataPersistance.access_token = oauthToken;
+        ProgressManager.instance.progress.userDataPersistance.raw_value = _rawValue;
+        ProgressManager.instance.progress.userDataPersistance.expires_at = ConvertExpiresInToDateTime(_expiresIn);
         ProgressManager.instance.progress.userDataPersistance.userTokenSetted = true;
-        ProgressManager.instance.save();*/
+        ProgressManager.instance.save();
 
+        //TEST
         GetUserProfile();
+    }
+
+    public void ResetToken()
+    {
+        ProgressManager.instance.progress.userDataPersistance.raw_value = "";
+        ProgressManager.instance.progress.userDataPersistance.expires_at = new DateTime(1990, 01, 01);
+        ProgressManager.instance.progress.userDataPersistance.userTokenSetted = false;
+        ProgressManager.instance.save();
     }
 
     public void GetUserProfile()
     {
-        StartCoroutine(SpotifyWebCalls.CR_GetUserProfile(oauthToken, Callback_GetUserProfile));
+        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserProfile(oAuthHandler.GetSpotifyToken().AccessToken, Callback_GetUserProfile));
     }
 
-    private void Callback_GetUserProfile(object _value)
+    private void Callback_GetUserProfile(object[] _value)
     {
-        Debug.Log(((ProfileRoot)_value).display_name);
+        if (CheckReauthenticateUser((long)_value[0])) {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log(((ProfileRoot)_value[1]).display_name);
+    }
+
+    private DateTime ConvertExpiresInToDateTime(long _secondsToAdd)
+    {
+        DateTime expiresAbsolute = DateTime.Now.AddSeconds(_secondsToAdd);
+        return expiresAbsolute;
+    }
+
+    private bool CheckReauthenticateUser(long _responseCode)
+    {
+        return _responseCode.Equals(SpotifyWebCalls.AUTHORIZATION_FAILED_RESPONSE_CODE);
+    }
+
+    private void StartReauthentication()
+    {
+        ResetToken();
+        StartConnection();
     }
 }

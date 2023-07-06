@@ -5,14 +5,9 @@ using UnityEngine;
 public class OAuthHandler : MonoBehaviour
 {
     [Header("UniWebView Reference")]
-    public GameObject uniWebViewAuthenticationCommonFlow;
+    public UniWebViewAuthenticationFlowSpotify spotifyFlow = null;
 
-    private UniWebViewAuthenticationCommonFlow spotifyFlow = null;
-
-    private void Start()
-    {
-        spotifyFlow = uniWebViewAuthenticationCommonFlow.GetComponent<UniWebViewAuthenticationCommonFlow>();
-    }
+    private UniWebViewAuthenticationSpotifyToken spotifyToken = null;
 
     public void SpotifyStartAuthFlow()
     {
@@ -20,31 +15,38 @@ public class OAuthHandler : MonoBehaviour
             spotifyFlow.StartAuthenticationFlow();
     }
 
-    public void SpotifyStartRefreshFlow(string _refreshToken)
+    public void SpotifyStartRefreshFlow()
     {
-        if (spotifyFlow != null)
-            spotifyFlow.StartRefreshTokenFlow(_refreshToken);
+        if (spotifyFlow != null && spotifyToken != null)
+        {
+            if(spotifyToken.RefreshToken != null)
+            {
+                spotifyFlow.StartRefreshTokenFlow(spotifyToken.RefreshToken);
+                return;
+            }
+        }
+
+        Debug.Log("Token is null or it has no refresh token, and thus it has started authentication flow");
+        SpotifyStartAuthFlow();
     }
 
-    public void SetTokenRawData(string _rawData)
+    public void SetSpotifyTokenRawValue(string _rawValue)
     {
-        var token = new UniWebViewAuthenticationGitHubToken(_rawData);
+        spotifyToken = UniWebViewAuthenticationTokenFactory<UniWebViewAuthenticationSpotifyToken>.Parse(_rawValue);
     }
 
-    public void OnSpotifyTokenReceived(UniWebViewAuthenticationStandardToken _token)
+    public UniWebViewAuthenticationSpotifyToken GetSpotifyToken()
     {
-        Debug.Log("Token: " + _token);
+        return spotifyToken;
+    }
+
+    public void OnSpotifyTokenReceived(UniWebViewAuthenticationSpotifyToken _token)
+    {
         Debug.Log("Token received: " + _token.AccessToken);
-        Debug.Log("Token raw value: " + _token.RawValue);
 
-        if (_token.RefreshToken != null)
-        {
-            SpotifyStartRefreshFlow(_token.RefreshToken);
-        }
-        else
-        {
-            SpotifyConnectionManager.instance.SetOAuthToken(_token.AccessToken);
-        }
+        spotifyToken = _token;
+
+        SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
     }
 
     public void OnSpotifyAuthError(long errorCode, string errorMessage)
@@ -52,11 +54,13 @@ public class OAuthHandler : MonoBehaviour
         Debug.Log("Error happened: " + errorCode + " " + errorMessage);
     }
 
-    public void OnSpotifyTokenRefreshed(UniWebViewAuthenticationStandardToken _token)
+    public void OnSpotifyTokenRefreshed(UniWebViewAuthenticationSpotifyToken _token)
     {
         Debug.Log("Token received: " + _token.AccessToken);
 
-        SpotifyConnectionManager.instance.SetOAuthToken(_token.AccessToken);
+        spotifyToken = _token;
+
+        SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
     }
 
     public void OnSpotifyRefreshError(long errorCode, string errorMessage)
