@@ -47,6 +47,8 @@ public class OAuthHandler : MonoBehaviour
         spotifyToken = _token;
 
         SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
+
+        SpotifyConnectionManager.instance.DoPendingRequest();
     }
 
     public void OnSpotifyAuthError(long errorCode, string errorMessage)
@@ -61,6 +63,8 @@ public class OAuthHandler : MonoBehaviour
         spotifyToken = _token;
 
         SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
+
+        SpotifyConnectionManager.instance.DoPendingRequest();
     }
 
     public void OnSpotifyRefreshError(long errorCode, string errorMessage)
