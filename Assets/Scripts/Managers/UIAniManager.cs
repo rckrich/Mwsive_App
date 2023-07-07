@@ -12,10 +12,12 @@ public class UIAniManager : MonoBehaviour
     public float ScaleTransitionDuration =1f;
     public float FadeTransitionDuration = 1f;
     public float ColorTransitionDuration = 0.5f;
+    public float SurfTransitionDuration = 0.5f;
     public enum AnimationTypeCurves {Flash, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InFlash, InOutBack, InOutBounc, InOutCirc, InOutCubic, InOutExpo, InOutFlash, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuint, InSine, Linear, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutFlash, OutQuad, OutQuart, OutQuint, OutSine, UnSet}
     public AnimationTypeCurves AnimationMove;
     public AnimationTypeCurves AnimationScale;
     public AnimationTypeCurves AnimationFade;
+    
 
 
     private static UIAniManager _instance;
@@ -39,6 +41,7 @@ public class UIAniManager : MonoBehaviour
 
     void Start()
     {
+        DOTween.SetTweensCapacity(1250, 50);
         SetPosition();
         switch(AnimationMove){
             case AnimationTypeCurves.Flash:
@@ -260,6 +263,15 @@ public class UIAniManager : MonoBehaviour
         
     }
 
+    public void FadeIn(GameObject GA){
+        GA.GetComponent<CanvasGroup>().alpha = 0;
+        GA.SetActive(true);
+        GA.GetComponent<CanvasGroup>().DOFade(1, FadeTransitionDuration).SetEase(_AnimationFade);
+        
+    }
+    public void FadeOut(GameObject GA){
+        GA.GetComponent<CanvasGroup>().DOFade(0, FadeTransitionDuration).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationFade);
+    }
 
     public void ChangeColorRainbow(GameObject GA){
         if(ChangeColorIsOn){
@@ -272,13 +284,6 @@ public class UIAniManager : MonoBehaviour
 
  
         //GA.GetComponent<Material>().DOColor(Random.ColorHSV(), ColorTransitionDuration).OnComplete(() => {ChangeColorRainbow(GA);});
-    }
-
-    public void TestEnter(GameObject GA){
-        SideTransitionEnterCustomLocation(GA, 1000F);
-    }
-    public void TestExit(GameObject GA){
-        SideTransitionExitCustomLocation(GA, 1000F);
     }
 
     public void KillChangeColor(){
@@ -330,14 +335,21 @@ public class UIAniManager : MonoBehaviour
         GA.transform.DOMove(FinalPosition, MoveTransitionDuration, false).SetEase(_AnimationMove);
     }
 
-    public void VerticalFadeTransitionExitCenter(GameObject GA, bool Down){
+    public void VerticalFadeTransitionExitCenterDown(GameObject GA){
+        SetPosition();
+        GA.GetComponent<CanvasGroup>().DOFade(0f, FadeTransitionDuration).SetEase(_AnimationFade);
+        
+        GA.transform.DOMove(RestPositionDown, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationFade);
+        
+        
+        
+    }
+    public void VerticalFadeTransitionExitCenterUp(GameObject GA){
         SetPosition();
         GA.GetComponent<CanvasGroup>().DOFade(0f, FadeTransitionDuration* 0.2f);
-        if(Down){
-            GA.transform.DOMove(RestPositionDown, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationFade);
-        }else{
-            GA.transform.DOMove(RestPositionUp, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationFade);
-        }
+        
+        GA.transform.DOMove(RestPositionUp, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationFade);
+        
         
         
     }
@@ -354,10 +366,20 @@ public class UIAniManager : MonoBehaviour
         GA.transform.DOMove(RestPositionDown, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationMove);
         
     }
+    public void ScaleAnimationEnter(GameObject GA){
+        GA.SetActive(true);
+        GA.transform.DOScale(new Vector3(1,1,1), ScaleTransitionDuration).SetEase(_AnimationScale);
+    }
+    public void ScaleAnimationExit(GameObject GA){
+
+        GA.transform.DOScale(new Vector3(0,0,0), ScaleTransitionDuration).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationScale);
+    }
+
 
     public void PopUpScaleEnter(GameObject GA){
         SetPosition();
         GA.transform.position = FinalPosition;
+        GA.transform.localScale = new Vector3(0,0,0);
         GA.SetActive(true);
         
         GA.transform.DOScale(new Vector3(1,1,1), ScaleTransitionDuration).SetEase(_AnimationScale);
@@ -369,12 +391,11 @@ public class UIAniManager : MonoBehaviour
 
     }
 
-    //Surf Animations
+    //Surf Animations-------------------------------------------------------------------------------------------------------------------------------------------------
 
-    float SurfTransitionDuration = 0.5f;
+    
 
     public void SurfSide(GameObject GA,float var, float MaxRotation, float fade, bool IsItFinished){
-        Debug.Log("SurfSide");
         SetPosition();
         if(IsItFinished){
             GA.transform.DOMove(new Vector2 (RestPositionSide.x*var, RestPositionSide.y), SurfTransitionDuration, false).OnComplete(() => {GA.SetActive(false);});
@@ -382,7 +403,6 @@ public class UIAniManager : MonoBehaviour
             GA.transform.DOMove(new Vector2 (RestPositionSide.x*var, RestPositionSide.y), SurfTransitionDuration, false);
         }
         
-
         GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
 
         GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
@@ -406,22 +426,26 @@ public class UIAniManager : MonoBehaviour
         }
         
         
-        GA.transform.DOMove(new Vector2(RestPositionUp.x, RestPositionUp.y*var), SurfTransitionDuration, false);
+        
         GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
         GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
     }
 
 
+
+
     public void SurfVerticalDown(GameObject GA,float var, float MaxRotation, float fade, bool IsItFinished){
-        Debug.Log("SurfVerticalDown");
+        
         SetPosition();
+        
         if(IsItFinished){
+            
             GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false).OnComplete(() => {GA.SetActive(false);});
         }else{
+            
             GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false);
         }
 
-        GA.transform.DOMove(new Vector2(RestPositionDown.x, RestPositionDown.y*var), SurfTransitionDuration, false);
         GA.transform.DORotate(new Vector3 (0f,0f ,MaxRotation*var), SurfTransitionDuration);
         GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
     }
@@ -450,6 +474,22 @@ public class UIAniManager : MonoBehaviour
         GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration);
     }
          
+    public void SurfAddSong(GameObject GA, float fade){
+        GA.SetActive(true);
+        fade = Mathf.Clamp(fade*2, 0, 1);
+        GA.transform.DOScale(new Vector3(1,1,1)*fade, SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
+    }
+    public void SurfAddSongReset(GameObject GA){
+        GA.transform.DOScale(new Vector3(0,0,0), SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration).OnComplete(() => {GA.SetActive(false);});
+    }
+
+    public void CompleteSurfAddSong(GameObject GA, float fade){
+        GA.transform.DOScale(new Vector3(1,1,1)*fade, SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration).OnComplete(() => {GA.SetActive(false);});
+    }
+
     
 
 
