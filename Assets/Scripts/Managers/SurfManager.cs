@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using GG.Infrastructure.Utils.Swipe;
 
 public class SurfManager : Manager
@@ -9,19 +10,21 @@ public class SurfManager : Manager
     public SwipeListener swipeListener;
     public ScrollRect Controller;
     public GameObject Prefab;
+    public GameObject AddSong;
     public List <GameObject> MwsiveSongs = new List<GameObject>();
     public GameObject[ ] RestPositions;
 
     public float MaxRotation = 18f;
     public float SurfSuccessSensitivity = 2.2f;
+    public Vector2 LeftRightOffset;
 
 
 
     private Vector2 ControllerPostion = new Vector2();
     public int CurrentPosition = 0;
-    private int PrefabPosition = 0;
+    public int PrefabPosition = 0;
+    public bool HasSwipeEnded = true;
     
-
   
     private void Start() {
         ControllerPostion = new Vector2(Controller.transform.position.x, Controller.transform.position.y); 
@@ -43,19 +46,25 @@ public class SurfManager : Manager
     private void OnSwipe(string swipe){
         switch (swipe){
             case "Right":
-                SideScrollSuccess();
+                
                 Controller.vertical =false;
                 Controller.horizontal =false;
+                HasSwipeEnded = false;
+                SideScrollSuccess();
             break;
             case "Up":
-                UpScrollSuccess();
+                
                 Controller.vertical =false;
                 Controller.horizontal =false;
+                HasSwipeEnded = false;
+                UpScrollSuccess();
             break;
             case "Down":
-                DownScrollSuccess();
+                
                 Controller.vertical =false;
                 Controller.horizontal =false;
+                HasSwipeEnded = false;
+                DownScrollSuccess();
             break;
         }
         Debug.Log(swipe);
@@ -66,6 +75,7 @@ public class SurfManager : Manager
 
     
     public void ValChange(){
+
         if(Controller.transform.position.x > ControllerPostion.x*1.1){
             Controller.vertical =false;
            SideScrollAnimation();
@@ -88,6 +98,7 @@ public class SurfManager : Manager
             float Fade =ControllerPostion.x/Controller.transform.position.x;
 
             UIAniManager.instance.SurfSide(MwsiveSongs[CurrentPosition],var, -MaxRotation, Fade,false);
+            UIAniManager.instance.SurfAddSong(AddSong, var);
 
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], var);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], var);
@@ -103,9 +114,11 @@ public class SurfManager : Manager
 
             UIAniManager.instance.SurfVerticalUp(MwsiveSongs[CurrentPosition],var*.5f, MaxRotation, Fade,false);
 
-            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], var*.25f);
-            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], var*.25f);
-            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], var*.25f);
+            
+            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], var*.25f);
+            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], var*.25f);
+            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[3], var*.25f);
+            
 
            
     }
@@ -120,6 +133,7 @@ public class SurfManager : Manager
             
 
             UIAniManager.instance.SurfVerticalDown(MwsiveSongs[CurrentPosition],var*-.5f, MaxRotation, Fade,false);
+
             
 
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], VAR2*.25f);
@@ -130,51 +144,73 @@ public class SurfManager : Manager
     }
 
     public void OnEndDrag(){
-        
-        if(MwsiveSongs[CurrentPosition].transform.position.x >= ControllerPostion.x*SurfSuccessSensitivity){
-            SideScrollSuccess();
+        while (HasSwipeEnded){
+            if(MwsiveSongs[CurrentPosition].transform.position.x >= ControllerPostion.x*SurfSuccessSensitivity){
+                SideScrollSuccess();
+                break;
 
-        }else if(MwsiveSongs[CurrentPosition].transform.position.y >= ControllerPostion.y*SurfSuccessSensitivity){
-            UpScrollSuccess();
+            }else if(MwsiveSongs[CurrentPosition].transform.position.y >= ControllerPostion.y*SurfSuccessSensitivity){
+                UpScrollSuccess();
+                break;
 
-        }else if(MwsiveSongs[CurrentPosition].transform.position.y <= ControllerPostion.y/SurfSuccessSensitivity){
-            DownScrollSuccess();
+            }else if(MwsiveSongs[CurrentPosition].transform.position.y <= ControllerPostion.y/SurfSuccessSensitivity){
+                DownScrollSuccess();
+                break;
 
-        }else{
-            ResetValue();
+            }else{
+                ResetValue();
+                break;
+            }
         }
+        Controller.enabled =true;    
+        
+        
     }
 
     private void SideScrollSuccess(){
+        Controller.enabled =false;
         Controller.horizontal =true;
         Controller.vertical =true;
         Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
         UIAniManager.instance.SurfSide(MwsiveSongs[CurrentPosition],1, -MaxRotation,0,true);
+        UIAniManager.instance.CompleteSurfAddSong(AddSong, 1.5f);
 
         UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], 1);
         UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], 1);
         UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], 1);
         CurrentPosition++;
-        SpawnPrefab();
-
+        if(CurrentPosition == PrefabPosition-3){
+            SpawnPrefab();
+        }
+        
+        HasSwipeEnded = true;
         Debug.Log("SideScrollSuccess");
     }
     private void UpScrollSuccess(){
+        Controller.enabled =false;
         Controller.horizontal =true;
         Controller.vertical =true;
         Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
-        UIAniManager.instance.SurfVerticalUp(MwsiveSongs[CurrentPosition],1, MaxRotation, 0,true);
+        if(CurrentPosition > 0){
+            Debug.Log(DOTween.KillAll(MwsiveSongs[CurrentPosition-1]));
+            UIAniManager.instance.SurfVerticalUp(MwsiveSongs[CurrentPosition],1, MaxRotation, 0,false);
+            
+            UIAniManager.instance.SurfTransitionBackSong(MwsiveSongs[CurrentPosition-1], RestPositions[0]);
+            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition], RestPositions[1], 1);
+            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[2], 1);
+            UIAniManager.instance.SurfTransitionBackHideSong(MwsiveSongs[CurrentPosition+2], RestPositions[3], 1);
+            CurrentPosition--;
+            
+        }else{
+            ResetValue();
+        }
 
-
-        UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], 1);
-        UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], 1);
-        UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], 1);
-        CurrentPosition++;
-        SpawnPrefab();
-
+        
+        HasSwipeEnded = true;
         Debug.Log("UpScrollSuccess");
     }
     private void DownScrollSuccess(){
+            Controller.enabled =false;
             Controller.horizontal =true;
             Controller.vertical =true;
             Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
@@ -184,18 +220,25 @@ public class SurfManager : Manager
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], 1);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], 1);
             CurrentPosition++;
-            SpawnPrefab();
+            if(CurrentPosition == PrefabPosition -3){
+                SpawnPrefab();
+            }
 
+            HasSwipeEnded = true;
             Debug.Log("DownScrollSuccess");
     }
            
 
 
     public void ResetValue(){
+        Debug.Log("Reset");
         Controller.horizontal =true;
         Controller.vertical =true;
+        HasSwipeEnded = true;
         Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
         UIAniManager.instance.SurfReset(MwsiveSongs[CurrentPosition]);
+        UIAniManager.instance.SurfAddSongReset(AddSong);
+        
         UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], true);
         UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], true);
         UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[3], false);
@@ -214,41 +257,36 @@ public class SurfManager : Manager
             Instance = Instantiate(Prefab,RestPositions[PrefabPosition].transform.position, Quaternion.identity);
             Instance.SetActive(true);
             Instance.GetComponent<CanvasGroup>().alpha = RestPositions[PrefabPosition].GetComponent<CanvasGroup>().alpha;
-            
-            if(PrefabPosition < 1){
-                Instance.transform.localScale = new Vector3 (.9f,.9f,.9f);
-            }else if (PrefabPosition < 2){
-                Instance.transform.localScale = new Vector3 (.8f,.8f,.8f);
-            }else if (PrefabPosition < 3){
-                Instance.transform.localScale = new Vector3 (.7f,.7f,.7f);
-            }else if (PrefabPosition < 4){
-                Instance.transform.localScale = new Vector3 (.6f,.6f,.6f);
-            }
-            
 
         }else{
             Instance = Instantiate(Prefab,RestPositions[3].transform.position, Quaternion.identity);
             Instance.SetActive(false);
             Instance.GetComponent<CanvasGroup>().alpha = 0;
-            Instance.transform.localScale = new Vector3 (.6f,.6f,.6f);
-            
             
         }
         Instance.name = "PF_Mwsive_Song " + PrefabPosition;
-        Instance.GetComponent<RectTransform>().sizeDelta = new Vector2 (100, 100);
+        
         Instance.transform.SetParent(GameObject.Find("PF_Mwsive_Container").transform);
         Instance.transform.SetAsFirstSibling();
         MwsiveSongs.Add(Instance);
-        PrefabPosition++;
-
-    }
-
-    
-
-    // Update is called once per frame
-    void Update()
-    {
+        Instance.GetComponent<RectTransform>().offsetMin = new Vector2 (LeftRightOffset.x,0);
+        Instance.GetComponent<RectTransform>().offsetMax = new Vector2 (LeftRightOffset.y,0);
+        if(PrefabPosition < 1){
+                Instance.transform.localScale = new Vector3 (1f,1f,1f);
+                Instance.transform.position = RestPositions[PrefabPosition].transform.position;
+            }else if (PrefabPosition < 2){
+                Instance.transform.localScale = new Vector3 (.9f,.9f,.9f);
+                Instance.transform.position = RestPositions[PrefabPosition].transform.position;
+            }else if (PrefabPosition < 3){
+                Instance.transform.localScale = new Vector3 (.8f,.8f,.8f);
+                Instance.transform.position = RestPositions[PrefabPosition].transform.position;
+            }else if (PrefabPosition >3){
+                Instance.transform.localScale = new Vector3 (.6f,.6f,.6f);
+                Instance.transform.position = RestPositions[3].transform.position;
+            }
         
+        PrefabPosition++;
     }
+
 
 }

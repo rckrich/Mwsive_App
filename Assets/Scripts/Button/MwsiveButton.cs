@@ -12,34 +12,33 @@ public class MwsiveButton : MonoBehaviour
     public GameObject CompartirColorButton;
     private bool IsItCompartirColorButtonActive = false;
 
-    public void OnClickOlaButton(){
-        Debug.Log("AA");
+    public void OnClickOlaButton(float AnimationDuration){
         if(!IsItOlaColorButtonActive){
-            UIAniManager.instance.ScaleAnimationEnter(OlaColorButton);
+            UIAniManager.instance.FadeIn(OlaColorButton, AnimationDuration);
             IsItOlaColorButtonActive = true;
         }else{
-            UIAniManager.instance.ScaleAnimationExit(OlaColorButton);
+            UIAniManager.instance.FadeOut(OlaColorButton, AnimationDuration);
             IsItOlaColorButtonActive = false;
         }  
     }
 
-    public void OnClickAñadirButton(){
+    public void OnClickAñadirButton(float AnimationDuration){
         if(!IsItAñadirColorButtonActive){
-            UIAniManager.instance.ScaleAnimationEnter(AñadirColorButton);
+            UIAniManager.instance.FadeIn(AñadirColorButton, AnimationDuration);
             IsItAñadirColorButtonActive = true;
         }else{
-            UIAniManager.instance.ScaleAnimationExit(AñadirColorButton);
+            UIAniManager.instance.FadeOut(AñadirColorButton, AnimationDuration);
             IsItAñadirColorButtonActive = false;
         }  
     }
 
 
-    public void OnClickCompartirButton(){
+    public void OnClickCompartirButton(float AnimationDuration){
         if(!IsItCompartirColorButtonActive){
-            UIAniManager.instance.ScaleAnimationEnter(CompartirColorButton);
+            UIAniManager.instance.FadeIn(CompartirColorButton, AnimationDuration);
             IsItCompartirColorButtonActive = true;
         }else{
-            UIAniManager.instance.ScaleAnimationExit(CompartirColorButton);
+            UIAniManager.instance.FadeOut(CompartirColorButton, AnimationDuration);
             IsItCompartirColorButtonActive = false;
         }  
     }
