@@ -8,7 +8,6 @@ public class MenuOptions : MonoBehaviour
     public GameObject descubrir;
     public GameObject explorar;
     public GameObject ranking;
-    public int count;
     void Start()
     {
         explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
@@ -18,10 +17,7 @@ public class MenuOptions : MonoBehaviour
 
     // Update is called once per frame
     public void OnClick(int numero)
-    {
-        if(numero != count)
-        {
-            numero = count;
+    {                   
             if(numero == 0)
             {
                 explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.white;
@@ -39,9 +35,6 @@ public class MenuOptions : MonoBehaviour
                 explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 descubrir.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 ranking.GetComponent<Image>().GetComponent<Graphic>().color = Color.white;
-            }
-         
-            
-        }
+            }               
     }
 }
