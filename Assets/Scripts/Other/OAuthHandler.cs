@@ -9,25 +9,33 @@ public class OAuthHandler : MonoBehaviour
 
     private UniWebViewAuthenticationSpotifyToken spotifyToken = null;
 
-    public void SpotifyStartAuthFlow()
+    private SpotifyWebCallback callback;
+
+    public void SpotifyStartAuthFlow(SpotifyWebCallback _callback = null)
     {
+        if (_callback != null)
+            callback = _callback;
+
         if(spotifyFlow != null)
             spotifyFlow.StartAuthenticationFlow();
     }
 
-    public void SpotifyStartRefreshFlow()
+    public void SpotifyStartRefreshFlow(SpotifyWebCallback _callback = null)
     {
         if (spotifyFlow != null && spotifyToken != null)
         {
             if(spotifyToken.RefreshToken != null)
             {
+                if (_callback != null)
+                    callback = _callback;
+
                 spotifyFlow.StartRefreshTokenFlow(spotifyToken.RefreshToken);
                 return;
             }
         }
 
         Debug.Log("Token is null or it has no refresh token, and thus it has started authentication flow");
-        SpotifyStartAuthFlow();
+        SpotifyStartAuthFlow(_callback);
     }
 
     public void SetSpotifyTokenRawValue(string _rawValue)
@@ -48,7 +56,11 @@ public class OAuthHandler : MonoBehaviour
 
         SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
 
-        SpotifyConnectionManager.instance.DoPendingRequest();
+        if (callback != null)
+        {
+            callback(new object[] { _token.AccessToken });
+            callback = null;
+        }
     }
 
     public void OnSpotifyAuthError(long errorCode, string errorMessage)
@@ -64,7 +76,11 @@ public class OAuthHandler : MonoBehaviour
 
         SpotifyConnectionManager.instance.SaveToken(_token.RawValue, _token.ExpiresIn);
 
-        SpotifyConnectionManager.instance.DoPendingRequest();
+        if (callback != null)
+        {
+            callback(new object[] { _token.AccessToken });
+            callback = null;
+        }
     }
 
     public void OnSpotifyRefreshError(long errorCode, string errorMessage)

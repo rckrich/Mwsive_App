@@ -22,15 +22,7 @@ public class SpotifyConnectionManager : Manager
     [Header("UniWebView OAuth Reference")]
     public OAuthHandler oAuthHandler;
 
-    private object[] pendingRequestParameters;
-    private bool isPendingRequestAvailable = false;
-
-    private void Start()
-    {
-        StartConnection();
-    }
-
-    public void StartConnection()
+    public void StartConnection(SpotifyWebCallback _callback = null)
     {
         if (ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
         {
@@ -40,19 +32,20 @@ public class SpotifyConnectionManager : Manager
             if (ProgressManager.instance.progress.userDataPersistance.expires_at.CompareTo(DateTime.Now) < 0)
             {
                 Debug.Log("Saved token has expired, starting refresh flow");
-                oAuthHandler.SpotifyStartRefreshFlow();
+                oAuthHandler.SpotifyStartRefreshFlow(_callback);
             }
             else
             {
                 Debug.Log("Saved token has not expired, can continue normally");
-
-                //TEST
-                GetUserProfile();
+                _callback(new object[]
+                {
+                    oAuthHandler.GetSpotifyToken().AccessToken
+                }) ;
             }
         }
         else
         {
-            oAuthHandler.SpotifyStartAuthFlow();
+            oAuthHandler.SpotifyStartAuthFlow(_callback);
         }
     }
 
@@ -62,9 +55,6 @@ public class SpotifyConnectionManager : Manager
         ProgressManager.instance.progress.userDataPersistance.expires_at = ConvertExpiresInToDateTime(_expiresIn);
         ProgressManager.instance.progress.userDataPersistance.userTokenSetted = true;
         ProgressManager.instance.save();
-
-        //TEST
-        GetUserProfile();
     }
 
     public void ResetToken()
@@ -75,24 +65,17 @@ public class SpotifyConnectionManager : Manager
         ProgressManager.instance.save();
     }
 
-    public object[] GetPendingRequestParameters()
+    public bool CheckReauthenticateUser(long _responseCode)
     {
-        return pendingRequestParameters;
-    }
-
-    public void DoPendingRequest()
-    {
-        if (!isPendingRequestAvailable) return;
-
-
-
+        return _responseCode.Equals(SpotifyWebCalls.AUTHORIZATION_FAILED_RESPONSE_CODE);
     }
 
     #region Spotify API Call Methods
 
-    public void GetUserProfile()
+    public void GetCurrentUserProfile(SpotifyWebCallback _callback = null)
     {
-        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserProfile(oAuthHandler.GetSpotifyToken().AccessToken, Callback_GetUserProfile));
+        _callback += Callback_GetUserProfile;
+        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserProfile(oAuthHandler.GetSpotifyToken().AccessToken, _callback));
     }
 
     private void Callback_GetUserProfile(object[] _value)
@@ -103,12 +86,12 @@ public class SpotifyConnectionManager : Manager
         }
 
         Debug.Log(((ProfileRoot)_value[1]).display_name);
-        isPendingRequestAvailable = false;
     }
 
-    public void GetCurrentUserTopTracks()
+    public void GetCurrentUserTopTracks(SpotifyWebCallback _callback = null)
     {
-        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserTopTracks(oAuthHandler.GetSpotifyToken().AccessToken, Callback_GetCurrentUserPlaylist));
+        _callback += Callback_GetCurrentUserTopTracks;
+        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserTopTracks(oAuthHandler.GetSpotifyToken().AccessToken, _callback));
     }
 
     private void Callback_GetCurrentUserTopTracks(object[] _value)
@@ -120,12 +103,12 @@ public class SpotifyConnectionManager : Manager
         }
 
         Debug.Log((UserTopItemsRoot)_value[1]);
-        isPendingRequestAvailable = false;
     }
 
-    public void GetCurrentUserTopArtists()
+    public void GetCurrentUserTopArtists(SpotifyWebCallback _callback = null)
     {
-        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserPlaylists(oAuthHandler.GetSpotifyToken().AccessToken, Callback_GetCurrentUserPlaylist));
+        _callback += Callback_GetCurrentUserTopArtists;
+        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserTopArtists(oAuthHandler.GetSpotifyToken().AccessToken, _callback));
     }
 
     private void Callback_GetCurrentUserTopArtists(object[] _value)
@@ -137,27 +120,40 @@ public class SpotifyConnectionManager : Manager
         }
 
         Debug.Log((UserTopItemsRoot)_value[1]);
-        isPendingRequestAvailable = false;
     }
 
-    public void GetCurrentUserPlaylst(int _limit = 20, int _offset = 0)
+    public void GetCurrentUserPlaylists(SpotifyWebCallback _callback = null, int _limit = 20, int _offset = 0)
     {
-        pendingRequestParameters = new object[] { _limit, _offset };
-        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserPlaylists(oAuthHandler.GetSpotifyToken().AccessToken, Callback_GetCurrentUserPlaylist, _limit, _offset));
+        _callback += Callback_GetCurrentUserPlaylists;
+        StartCoroutine(SpotifyWebCalls.CR_GetCurrentUserPlaylists(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _limit, _offset));
     }
 
-    private void Callback_GetCurrentUserPlaylist(object[] _value)
+    private void Callback_GetCurrentUserPlaylists(object[] _value)
     {
         if (CheckReauthenticateUser((long)_value[0]))
         {
             StartReauthentication();
-            //TODO FINISH PENDING REQUEST SYSTEM
-            GetCurrentUserPlaylst((int)pendingRequestParameters[0], (int)pendingRequestParameters[1]);
             return;
         }
 
         Debug.Log((PlaylistRoot)_value[1]);
-        isPendingRequestAvailable = false;
+    }
+
+    public void GetUserPlaylists(string _userSpotifyID, SpotifyWebCallback _callback = null, int _limit = 20, int _offset = 0)
+    {
+        _callback += Callback_GetUserPlaylists;
+        StartCoroutine(SpotifyWebCalls.CR_GetUserPlaylists(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _userSpotifyID, _limit, _offset));
+    }
+
+    private void Callback_GetUserPlaylists(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((PlaylistRoot)_value[1]);
     }
 
     #endregion
@@ -170,15 +166,9 @@ public class SpotifyConnectionManager : Manager
         return expiresAbsolute;
     }
 
-    private bool CheckReauthenticateUser(long _responseCode)
-    {
-        return _responseCode.Equals(SpotifyWebCalls.AUTHORIZATION_FAILED_RESPONSE_CODE);
-    }
-
     private void StartReauthentication()
     {
         StopAllCoroutines();
-        isPendingRequestAvailable = true;
         ResetToken();
         StartConnection();
     }
