@@ -156,6 +156,57 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((PlaylistRoot)_value[1]);
     }
 
+    public void GetTrack(string _trackSpotifyID, SpotifyWebCallback _callback = null, string _market = "ES")
+    {
+        _callback += Callback_GetTrack;
+        StartCoroutine(SpotifyWebCalls.CR_GetTrack(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _trackSpotifyID, _market));
+    }
+
+    private void Callback_GetTrack(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((TrackRoot)_value[1]);
+    }
+
+    public void GetSeveralTracks(string[] _track_ids, SpotifyWebCallback _callback = null, string _market = "ES")
+    {
+        _callback += Callback_GetSeveralTracks;
+        StartCoroutine(SpotifyWebCalls.CR_GetSeveralTracks(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _track_ids, _market));
+    }
+
+    private void Callback_GetSeveralTracks(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((SeveralTrackRoot)_value[1]);
+    }
+
+    public void CreatePlaylist(string _user_id, SpotifyWebCallback _callback = null, string _playlist_name = "Mwsive Playlist", string _playlist_description = "New Mwsive playlist", bool _public = false)
+    {
+        _callback += Callback_CreatePlaylist;
+        StartCoroutine(SpotifyWebCalls.CR_CreatePlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _user_id, _playlist_name, _playlist_description, _public));
+    }
+
+    private void Callback_CreatePlaylist(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((SeveralTrackRoot)_value[1]);
+    }
+
     #endregion
 
     #region Private Methods

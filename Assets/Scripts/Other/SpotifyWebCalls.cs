@@ -748,7 +748,7 @@ public static class SpotifyWebCalls
             url = url + kvp.Key + "=" + kvp.Value + "&";
         }
 
-        url = url.Remove(_uri.Length - 1);
+        url = url.TrimEnd('&');
 
         Debug.Log("Complete url is: " + url);
 

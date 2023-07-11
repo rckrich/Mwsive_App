@@ -9,9 +9,19 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
     public TextMeshProUGUI playlistName;
     public Image playlistPicture;
 
+    public void Initialize(string _playlistName)
+    {
+        playlistName.text = _playlistName;
+    }
+
     public void Initialize(string _playlistName, string _pictureURL)
     {
         playlistName.text = _playlistName;
+        ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
+    }
+
+    public void SetImage(string _pictureURL)
+    {
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 }

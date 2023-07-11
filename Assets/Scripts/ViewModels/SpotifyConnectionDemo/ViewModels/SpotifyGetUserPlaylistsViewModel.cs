@@ -23,17 +23,13 @@ public class SpotifyGetUserPlaylistsViewModel : MonoBehaviour
 
         PlaylistRoot playlistRoot = (PlaylistRoot)_value[1];
 
-        /*foreach (Item item in playlistRoot.items)
+        foreach (Item item in playlistRoot.items)
         {
             SpotifyConnectionDemoPlaylistsHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SpotifyConnectionDemoPlaylistsHolder>();
-            instance.Initialize(item.name, item.images[0].url);
-        }*/
+            instance.Initialize(item.name);
 
-        for(int i = 0; i < playlistRoot.items.Count; i++)
-        {
-            Debug.Log("Current item: " + i + ", Name: " + playlistRoot.items[0].name + ", Image url: " + playlistRoot.items[i].images[0].url);
-            SpotifyConnectionDemoPlaylistsHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SpotifyConnectionDemoPlaylistsHolder>();
-            instance.Initialize(playlistRoot.items[i].name, playlistRoot.items[i].images[0].url);
+            if (item.images != null && item.images.Count > 0)
+                instance.SetImage(item.images[0].url);
         }
     }
 

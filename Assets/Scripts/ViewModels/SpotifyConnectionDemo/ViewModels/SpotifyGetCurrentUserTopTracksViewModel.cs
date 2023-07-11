@@ -23,7 +23,10 @@ public class SpotifyGetCurrentUserTopTracksViewModel : MonoBehaviour
         foreach(Item item in userTopItemsRoot.items)
         {
             SpotifyConnectionDemoTrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<SpotifyConnectionDemoTrackHolder>();
-            instance.Initialize(item.name, item.artists[0].name, item.album.images[0].url);
+            instance.Initialize(item.name, item.artists[0].name, item.id);
+
+            if (item.album.images != null && item.album.images.Count > 0)
+                instance.SetImage(item.album.images[0].url);
         }
     }
 
