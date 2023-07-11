@@ -27,7 +27,6 @@ public class SurfManager : Manager
     private int CurrentPosition = 0;
     private int PrefabPosition = 0;
     private bool HasSwipeEnded = true;
-    private bool HasAlreadyLiked =false;
     
   
     private void Start() {
@@ -130,7 +129,7 @@ public class SurfManager : Manager
 
     private void DownScrollAnimation(){
         
-            
+        
             float var = Controller.transform.position.y/ControllerPostion.y;
             float Fade = Controller.transform.position.y/ControllerPostion.y;
             float VAR2  =ControllerPostion.y/Controller.transform.position.y;
@@ -300,12 +299,14 @@ public class SurfManager : Manager
         float timeSinceLastClick = Time.time - lastClickTime;
 
         if (timeSinceLastClick <= doubleClickTime){
+            DOTween.Kill(MwsiveOla);
+            UIAniManager.instance.DoubleClickOla(MwsiveOla);
             bool flag = OlaButton.GetComponent<MwsiveControllerButtons>().IsItOlaColorButtonActive();
+            
             if(!flag){
                 OlaButton.GetComponent<MwsiveControllerButtons>().OnClickOlaButton();
-                UIAniManager.instance.DoubleClickOla(MwsiveOla);
+                
             }else{
-
             }
 
         }else{
