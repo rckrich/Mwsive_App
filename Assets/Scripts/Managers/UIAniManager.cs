@@ -27,6 +27,7 @@ public class UIAniManager : MonoBehaviour
     private Ease _AnimationFade;
     private bool ChangeColorIsOn = true;
     private bool IsAddSongSurfDone = true;
+    
 
 
     public static UIAniManager instance
@@ -545,6 +546,7 @@ public class UIAniManager : MonoBehaviour
     }
 
     public void SurfTransitionBackSong(GameObject GA, GameObject Position){
+
         GA.SetActive(true);
         GA.transform.DOMove(Position.transform.position, SurfTransitionDuration, false);
         GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha, SurfTransitionDuration);
@@ -564,32 +566,50 @@ public class UIAniManager : MonoBehaviour
     }
 
     public void SurfTransitionBackHideSong(GameObject GA, GameObject Position, float var){
+        Debug.Log(GA.name);
         float fade = Mathf.Clamp(var*2, 0, 1);
         GA.transform.DOMove(Position.transform.position, SurfTransitionDuration, false);
-        GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha*fade, SurfTransitionDuration);
-        GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration).OnComplete(() => {GA.SetActive(false);});
+        GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha*fade, SurfTransitionDuration).OnComplete(() => {GA.SetActive(false);});
+        GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration);
     
     }
          
     public void SurfAddSong(GameObject GA, float fade){
+        
+        
         GA.SetActive(true);
-        fade = Mathf.Clamp(fade*1.5f, 0, .8f);
+        fade = Mathf.Clamp(fade*1.5f, 0, 1f);
         GA.transform.DOScale(new Vector3(1,1,1)*fade, SurfTransitionDuration);
         GA.GetComponent<CanvasGroup>().DOFade(fade, SurfTransitionDuration);
+       
+        
     }
     public void SurfAddSongReset(GameObject GA){
+        
         if(IsAddSongSurfDone){
-            GA.transform.DOScale(new Vector3(0,0,0), SurfTransitionDuration);
-            GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration).OnComplete(() => {GA.SetActive(false);});
+            
+            GA.transform.DOScale(new Vector3(0,0,0), 0.1F);
+            GA.GetComponent<CanvasGroup>().DOFade(0, 0.1F).OnComplete(() => {GA.SetActive(false);});
         }
 
     }
 
     public void CompleteSurfAddSong(GameObject GA, float fade){
+        
         IsAddSongSurfDone = false;
+        DOTween.Kill(GA);
+        GA.GetComponent<CanvasGroup>().DOFade(1, 0.1f);
+        
         GA.transform.DOScale(new Vector3(1,1,1)*fade, SurfTransitionDuration);
-        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration*2).OnComplete(() => {IsAddSongSurfDone = true; SurfAddSongReset(GA);});
+        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration*2).OnComplete(() => {IsAddSongSurfDone = true; });
     }
+
+    public void DoubleClickOla(GameObject GA){
+        GA.SetActive(true);
+        GA.transform.DOScale(new Vector3(1.5F,1.5F,1.5F), SurfTransitionDuration);
+        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration*2).OnComplete(() => {GA.SetActive(false); GA.transform.localScale = new Vector3 (0,0,0);GA.GetComponent<CanvasGroup>().alpha = 1;GA.SetActive(false);});
+    }
+
 
     
 

@@ -22,6 +22,10 @@ public class MwsiveButton : MonoBehaviour
         }  
     }
 
+    public bool GetIsItOlaActive(){
+        return IsItOlaColorButtonActive;
+    }
+
     public void OnClickAñadirButton(float AnimationDuration){
         if(!IsItAñadirColorButtonActive){
             UIAniManager.instance.FadeIn(AñadirColorButton, AnimationDuration);

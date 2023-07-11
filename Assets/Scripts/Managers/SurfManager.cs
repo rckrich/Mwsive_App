@@ -11,19 +11,23 @@ public class SurfManager : Manager
     public ScrollRect Controller;
     public GameObject Prefab;
     public GameObject AddSong;
+    public GameObject OlaButton;
+    public GameObject MwsiveOla;
     public List <GameObject> MwsiveSongs = new List<GameObject>();
     public GameObject[ ] RestPositions;
 
     public float MaxRotation = 18f;
     public float SurfSuccessSensitivity = 2.2f;
     public Vector2 LeftRightOffset;
+    public float doubleClickTime = .2f, lastClickTime;
 
 
 
     private Vector2 ControllerPostion = new Vector2();
-    public int CurrentPosition = 0;
-    public int PrefabPosition = 0;
-    public bool HasSwipeEnded = true;
+    private int CurrentPosition = 0;
+    private int PrefabPosition = 0;
+    private bool HasSwipeEnded = true;
+    private bool HasAlreadyLiked =false;
     
   
     private void Start() {
@@ -67,7 +71,7 @@ public class SurfManager : Manager
                 DownScrollSuccess();
             break;
         }
-        Debug.Log(swipe);
+        //Debug.Log(swipe);
     }
     private void OnDisable() {
         swipeListener.OnSwipe.RemoveListener(OnSwipe);
@@ -93,7 +97,7 @@ public class SurfManager : Manager
 
     private void SideScrollAnimation(){
          
-            
+          
             float var = Controller.transform.position.x/ControllerPostion.x*.25f;
             float Fade =ControllerPostion.x/Controller.transform.position.x;
 
@@ -117,7 +121,7 @@ public class SurfManager : Manager
             
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], var*.25f);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], var*.25f);
-            UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[3], var*.25f);
+
             
 
            
@@ -125,7 +129,7 @@ public class SurfManager : Manager
 
 
     private void DownScrollAnimation(){
-        //DownScroll
+        
             
             float var = Controller.transform.position.y/ControllerPostion.y;
             float Fade = Controller.transform.position.y/ControllerPostion.y;
@@ -192,7 +196,7 @@ public class SurfManager : Manager
         Controller.vertical =true;
         Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
         if(CurrentPosition > 0){
-            Debug.Log(DOTween.KillAll(MwsiveSongs[CurrentPosition-1]));
+            DOTween.CompleteAll(true);
             UIAniManager.instance.SurfVerticalUp(MwsiveSongs[CurrentPosition],1, MaxRotation, 0,false);
             
             UIAniManager.instance.SurfTransitionBackSong(MwsiveSongs[CurrentPosition-1], RestPositions[0]);
@@ -245,6 +249,10 @@ public class SurfManager : Manager
 
        // UIAniManager.instance.SurfAddSongReset(); 
     }
+    public GameObject GetBeforeCurrentPrefab(){
+        GameObject _Instance = MwsiveSongs[CurrentPosition-1];
+        return _Instance;
+    }
 
     public GameObject GetCurrentPrefab(){
         GameObject _Instance = MwsiveSongs[CurrentPosition];
@@ -286,6 +294,26 @@ public class SurfManager : Manager
             }
         
         PrefabPosition++;
+    }
+
+    public void CheckDoubleClick(){
+        float timeSinceLastClick = Time.time - lastClickTime;
+
+        if (timeSinceLastClick <= doubleClickTime){
+            bool flag = OlaButton.GetComponent<MwsiveControllerButtons>().IsItOlaColorButtonActive();
+            if(!flag){
+                OlaButton.GetComponent<MwsiveControllerButtons>().OnClickOlaButton();
+                UIAniManager.instance.DoubleClickOla(MwsiveOla);
+            }else{
+
+            }
+
+        }else{
+
+        }
+            
+
+        lastClickTime = Time.time;
     }
 
 

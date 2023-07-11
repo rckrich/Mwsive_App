@@ -10,7 +10,6 @@ public class MwsiveControllerButtons : MonoBehaviour
         
         GameObject Instance = Surf.GetCurrentPrefab();
         Instance.GetComponentInChildren<MwsiveButton>().OnClickOlaButton(AnimationDuration);
-        Debug.Log(Instance);
     }
     public void OnClickAñadirButton(){
         GameObject Instance = Surf.GetCurrentPrefab();
@@ -19,5 +18,10 @@ public class MwsiveControllerButtons : MonoBehaviour
     public void OnClickCompartirButton(){
         GameObject Instance = Surf.GetCurrentPrefab();
         Instance.GetComponentInChildren<MwsiveButton>().OnClickCompartirButton(AnimationDuration);
+    }
+
+    public bool IsItOlaColorButtonActive(){
+        GameObject Instance = Surf.GetCurrentPrefab();
+        return Instance.GetComponentInChildren<MwsiveButton>().GetIsItOlaActive();
     }
 }
