@@ -562,7 +562,11 @@ public class UIAniManager : MonoBehaviour
         GA.transform.DOMove(Position.transform.position, SurfTransitionDuration, false);
         GA.GetComponent<CanvasGroup>().DOFade(Position.GetComponent<CanvasGroup>().alpha*fade, SurfTransitionDuration);
         GA.transform.DOScale(Position.transform.localScale, SurfTransitionDuration);
-        GA.transform.DORotate(new Vector3(0,0,0), SurfTransitionDuration);
+
+        if(GA.transform.rotation != Quaternion.identity){
+            GA.transform.DORotate(new Vector3(0,0,0), SurfTransitionDuration);
+        }
+        
     }
 
     public void SurfTransitionBackHideSong(GameObject GA, GameObject Position, float var){
@@ -587,9 +591,12 @@ public class UIAniManager : MonoBehaviour
     public void SurfAddSongReset(GameObject GA){
         
         if(IsAddSongSurfDone){
+            if(GA.transform.localScale != new Vector3 (0,0,0)){
+                GA.transform.DOScale(new Vector3(0,0,0), 0.1F);
+                
+            }
             
-            GA.transform.DOScale(new Vector3(0,0,0), 0.1F);
-            GA.GetComponent<CanvasGroup>().DOFade(0, 0.1F).OnComplete(() => {GA.SetActive(false);});
+            
         }
 
     }
@@ -601,7 +608,7 @@ public class UIAniManager : MonoBehaviour
         GA.GetComponent<CanvasGroup>().DOFade(1, 0.1f);
         
         GA.transform.DOScale(new Vector3(1,1,1)*fade, SurfTransitionDuration);
-        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration*2).OnComplete(() => {IsAddSongSurfDone = true; });
+        GA.GetComponent<CanvasGroup>().DOFade(0, SurfTransitionDuration*2).OnComplete(() => {IsAddSongSurfDone = true; GA.transform.localScale =new Vector3(0,0,0); });
     }
 
     public void DoubleClickOla(GameObject GA){

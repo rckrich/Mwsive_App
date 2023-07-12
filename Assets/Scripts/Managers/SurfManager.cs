@@ -27,6 +27,7 @@ public class SurfManager : Manager
     private int CurrentPosition = 0;
     private int PrefabPosition = 0;
     private bool HasSwipeEnded = true;
+    public bool Success = false;
     
   
     private void Start() {
@@ -96,7 +97,10 @@ public class SurfManager : Manager
 
     private void SideScrollAnimation(){
          
-          
+        DOTween.Kill(MwsiveSongs[CurrentPosition], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+1], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+2], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+3], true);  
             float var = Controller.transform.position.x/ControllerPostion.x*.25f;
             float Fade =ControllerPostion.x/Controller.transform.position.x;
 
@@ -106,12 +110,15 @@ public class SurfManager : Manager
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], var);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], var);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], var);
-            
+        Success = false;
     }
 
 
     private void UpScrollAnimation(){
-        
+        DOTween.Kill(MwsiveSongs[CurrentPosition], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+1], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+2], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+3], true); 
             float var = Controller.transform.position.y/ControllerPostion.y;
             float Fade =ControllerPostion.y/Controller.transform.position.y;
 
@@ -120,7 +127,7 @@ public class SurfManager : Manager
             
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], var*.25f);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], var*.25f);
-
+        Success = false;
             
 
            
@@ -128,7 +135,10 @@ public class SurfManager : Manager
 
 
     private void DownScrollAnimation(){
-        
+        DOTween.Kill(MwsiveSongs[CurrentPosition], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+1], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+2], true);
+        DOTween.Kill(MwsiveSongs[CurrentPosition+3], true); 
         
             float var = Controller.transform.position.y/ControllerPostion.y;
             float Fade = Controller.transform.position.y/ControllerPostion.y;
@@ -142,6 +152,7 @@ public class SurfManager : Manager
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], VAR2*.25f);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[1], VAR2*.25f);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[2], VAR2*.25f);
+        Success = false;
             
             
     }
@@ -171,6 +182,7 @@ public class SurfManager : Manager
     }
 
     private void SideScrollSuccess(){
+        
         Controller.enabled =false;
         Controller.horizontal =true;
         Controller.vertical =true;
@@ -185,7 +197,7 @@ public class SurfManager : Manager
         if(CurrentPosition == PrefabPosition-3){
             SpawnPrefab();
         }
-        
+        Success = true;
         HasSwipeEnded = true;
         Debug.Log("SideScrollSuccess");
     }
@@ -195,6 +207,7 @@ public class SurfManager : Manager
         Controller.vertical =true;
         Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
         if(CurrentPosition > 0){
+            Success = true;
             DOTween.CompleteAll(true);
             UIAniManager.instance.SurfVerticalUp(MwsiveSongs[CurrentPosition],1, MaxRotation, 0,false);
             
@@ -213,10 +226,12 @@ public class SurfManager : Manager
         Debug.Log("UpScrollSuccess");
     }
     private void DownScrollSuccess(){
+
             Controller.enabled =false;
             Controller.horizontal =true;
             Controller.vertical =true;
             Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
+            Success = true;
             UIAniManager.instance.SurfVerticalDown(MwsiveSongs[CurrentPosition],1, -MaxRotation, 0,true);
 
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[0], 1);
@@ -234,19 +249,22 @@ public class SurfManager : Manager
 
 
     public void ResetValue(){
-        Debug.Log("Reset");
-        Controller.horizontal =true;
-        Controller.vertical =true;
-        HasSwipeEnded = true;
-        Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
-        UIAniManager.instance.SurfReset(MwsiveSongs[CurrentPosition]);
-        UIAniManager.instance.SurfAddSongReset(AddSong);
-        
-        UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], true);
-        UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], true);
-        UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[3], false);
+        if(!Success){
+            Debug.Log("Reset");
+            Controller.horizontal =true;
+            Controller.vertical =true;
+            HasSwipeEnded = true;
+            Controller.transform.position = new Vector2(ControllerPostion.x,ControllerPostion.y);
+            UIAniManager.instance.SurfReset(MwsiveSongs[CurrentPosition]);
+            UIAniManager.instance.SurfAddSongReset(AddSong);
+            
+            UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[1], true);
+            UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+2], RestPositions[2], true);
+            UIAniManager.instance.SurfResetOtherSongs(MwsiveSongs[CurrentPosition+3], RestPositions[3], false);
+        }else{
+            Success = false;
+        }
 
-       // UIAniManager.instance.SurfAddSongReset(); 
     }
     public GameObject GetBeforeCurrentPrefab(){
         GameObject _Instance = MwsiveSongs[CurrentPosition-1];
