@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class SpotifyCreatePlaylistViewModel : MonoBehaviour
 {
-    public TMP_InputField userIDIputField;
+    public TMP_InputField userIDInputField;
     public TMP_InputField playlistNameIputField;
     public TMP_InputField playlistDescriptionIputField;
     public TextMeshProUGUI playListName;
     public TextMeshProUGUI creatorName;
+    public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI spotifyID;
     public TextMeshProUGUI isPublicText;
     public Image playListPicture;
-
 
     private bool isPublic = true;
 
     public void OnClick_CreatePlaylist()
     {
-        if (!userIDIputField.text.Equals("") && !playlistNameIputField.text.Equals("") && !playlistDescriptionIputField.text.Equals(""))
-            SpotifyConnectionManager.instance.CreatePlaylist(userIDIputField.text, Callback_OnCLick_CreatePlaylist, playlistNameIputField.text, playlistDescriptionIputField.text, isPublic);
+        if (!userIDInputField.text.Equals("") && !playlistNameIputField.text.Equals("") && !playlistDescriptionIputField.text.Equals(""))
+            SpotifyConnectionManager.instance.CreatePlaylist(userIDInputField.text, Callback_OnCLick_CreatePlaylist, playlistNameIputField.text, playlistDescriptionIputField.text, isPublic);
     }
 
     public void OnValueChanged(bool _value)
@@ -42,6 +42,7 @@ public class SpotifyCreatePlaylistViewModel : MonoBehaviour
         CreatedPlaylistRoot createdPlaylistRoot = (CreatedPlaylistRoot)_value[1];
         playListName.text = createdPlaylistRoot.name;
         creatorName.text = createdPlaylistRoot.owner.display_name;
+        descriptionText.text = createdPlaylistRoot.description;
         spotifyID.text = createdPlaylistRoot.id;
         isPublicText.text = createdPlaylistRoot.@public.ToString();
 

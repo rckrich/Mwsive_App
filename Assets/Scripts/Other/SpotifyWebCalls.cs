@@ -9,7 +9,7 @@ public delegate void SpotifyWebCallback(object[] _value);
 
 public static class SpotifyWebCalls
 {
-
+    public static long SUCCESS_RESPONSE_CODE { get { return 200; } }
     public static long AUTHORIZATION_FAILED_RESPONSE_CODE { get { return 401; } }
 
     public static IEnumerator CR_GetCurrentUserProfile(string _token, SpotifyWebCallback _callback)
@@ -273,6 +273,56 @@ public static class SpotifyWebCalls
         }
     }
 
+    public static IEnumerator CR_GetPlaylist(string _token, SpotifyWebCallback _callback, string _playlist_id, string _market = "ES")
+    {
+        string jsonResult = "";
+
+        string url = "https://api.spotify.com/v1/playlists/" + _playlist_id;
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("market", _market);
+
+        url = AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    ReauthenticateUser(_callback);
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch playlist result: " + jsonResult);
+                    SearchedPlaylist searchedPlaylist = JsonConvert.DeserializeObject<SearchedPlaylist>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, searchedPlaylist });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed on fetch playlist: " + jsonResult);
+            yield break;
+
+        }
+    }
+
     public static IEnumerator CR_GetTrack(string _token, SpotifyWebCallback _callback, string _track_id, string _market = "ES")
     {
         string jsonResult = "";
@@ -435,10 +485,8 @@ public static class SpotifyWebCalls
     }
 
     public static IEnumerator CR_ChangePlaylistDetails(string _token, SpotifyWebCallback _callback, string _playlist_id, string _playlist_name = "Mwsive Playlist", string _playlist_description = "New Mwsive playlist", bool _public = false)
-    {
-        string jsonResult = "";
-
-        string url = "https://api.spotify.com/v1/playlists/" + _playlist_id + "/playlists";
+    { 
+        string url = "https://api.spotify.com/v1/playlists/" + _playlist_id;
 
         CreatePlaylistBodyRequestRoot bodyRequest = new CreatePlaylistBodyRequestRoot
         {
@@ -478,13 +526,13 @@ public static class SpotifyWebCalls
 
                 if (webRequest.isDone)
                 {
-                    jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Playlist updated");
+                    _callback(new object[] { SUCCESS_RESPONSE_CODE });
                     yield break;
                 }
             }
 
-            Debug.Log("Faied on update playlist");
+            Debug.Log("Failed on update playlist");
             yield break;
 
         }
@@ -510,7 +558,9 @@ public static class SpotifyWebCalls
                 position = _position,
             };
 
-            foreach(string uri in _uris)
+            bodyRequest.uris = new List<string>();
+
+            foreach (string uri in _uris)
             {
                 bodyRequest.uris.Add(uri);
             }
@@ -572,6 +622,8 @@ public static class SpotifyWebCalls
             {
                 snapshot_id = _snapshot_id,
             };
+
+            bodyRequest.tracks = new List<Track>();
 
             foreach (string spotifyUri in _uris)
             {
@@ -791,6 +843,8 @@ public static class SpotifyWebCalls
         }
 
         _modified_uris = _modified_uris.Remove(_modified_uris.Length - 3);
+
+        Debug.Log("Complete url with spotify uris param is: " + _uri + _modified_uris);
 
         return _uri + _modified_uris;
     }

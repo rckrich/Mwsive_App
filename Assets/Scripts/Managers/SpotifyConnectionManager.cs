@@ -156,6 +156,23 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((PlaylistRoot)_value[1]);
     }
 
+    public void GetPlaylist(string _playlistID, SpotifyWebCallback _callback = null, string _market = "ES")
+    {
+        _callback += Callback_GetPlaylist;
+        StartCoroutine(SpotifyWebCalls.CR_GetPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlistID, _market));
+    }
+
+    private void Callback_GetPlaylist(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((SearchedPlaylist)_value[1]);
+    }
+
     public void GetTrack(string _trackSpotifyID, SpotifyWebCallback _callback = null, string _market = "ES")
     {
         _callback += Callback_GetTrack;
@@ -204,7 +221,39 @@ public class SpotifyConnectionManager : Manager
             return;
         }
 
-        Debug.Log((SeveralTrackRoot)_value[1]);
+        Debug.Log((CreatedPlaylistRoot)_value[1]);
+    }
+
+    public void ChangePlaylistDetails(string _playlist_id, SpotifyWebCallback _callback = null, string _playlist_name = "Mwsive Playlist", string _playlist_description = "New Mwsive playlist", bool _public = false)
+    {
+        _callback += Callback_ChangePlaylistDetails;
+        StartCoroutine(SpotifyWebCalls.CR_ChangePlaylistDetails(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _playlist_name, _playlist_description, _public));
+    }
+
+    private void Callback_ChangePlaylistDetails(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+    }
+
+    public void AddItemsToPlaylist(string _playlist_id, List<string> _uris, SpotifyWebCallback _callback = null, int _position = 0)
+    {
+        _callback += Callback_AddItemsToPlaylist;
+        StartCoroutine(SpotifyWebCalls.CR_AddItemsToPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _uris, _position));
+    }
+
+    private void Callback_AddItemsToPlaylist(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((AddItemsToPlaylistRoot)_value[1]);
     }
 
     #endregion
