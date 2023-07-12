@@ -6,9 +6,9 @@ public class AnimacionEntradaADN : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject imagen;
-    public GameObject animationManager;
+   
     private void OnEnable()
     {
-        animationManager.GetComponent<UIAniManager>().ScaleAnimationEnter(imagen);
+        UIAniManager.instance.ScaleAnimationEnter(imagen);
     }
 }

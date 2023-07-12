@@ -431,6 +431,7 @@ public class UIAniManager : MonoBehaviour
     }
 
     public void ScaleAnimationEnter(GameObject GA, float TransitionDuration){
+        GA.transform.localScale = new Vector3(0, 0, 0);
         GA.SetActive(true);
         GA.transform.DOScale(new Vector3(1,1,1), TransitionDuration).SetEase(_AnimationScale);
     }
