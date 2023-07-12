@@ -351,6 +351,19 @@ public class UIAniManager : MonoBehaviour
         GA.SetActive(true);
         GA.transform.DOMove(FinalPosition, TransitionDuration, false).SetEase(_AnimationMove);
     }
+    public void VerticalTransitionToCustomPosition(GameObject GA, GameObject Position){
+        GA.transform.DOMove(Position.transform.position, MoveTransitionDuration, false).SetEase(_AnimationMove);
+    }
+    public void VerticalTransitionToCustomPosition(GameObject GA, GameObject Position, GameObject CompleteGA, bool IsVisible){
+        if(IsVisible ==true){
+            GA.transform.DOMove(Position.transform.position, MoveTransitionDuration, false).OnComplete(() => {CompleteGA.SetActive(IsVisible);}).SetEase(_AnimationFade);
+        }else{
+            CompleteGA.SetActive(IsVisible);
+            GA.transform.DOMove(Position.transform.position, MoveTransitionDuration, false).SetEase(_AnimationFade);
+        }
+        
+    }
+
 
     public void VerticalFadeTransitionEnterCenter(GameObject GA){
         GA.GetComponent<CanvasGroup>().alpha = 0;
@@ -426,6 +439,7 @@ public class UIAniManager : MonoBehaviour
     }
 
     public void ScaleAnimationEnter(GameObject GA){
+        GA.transform.localScale = new Vector3(0,0,0);
         GA.SetActive(true);
         GA.transform.DOScale(new Vector3(1,1,1), ScaleTransitionDuration).SetEase(_AnimationScale);
     }
