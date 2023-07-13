@@ -13,21 +13,22 @@ public class SurfManager : Manager
     public GameObject AddSong;
     public GameObject OlaButton;
     public GameObject MwsiveOla;
-    public List <GameObject> MwsiveSongs = new List<GameObject>();
+    private List <GameObject> MwsiveSongs = new List<GameObject>();
     public GameObject[ ] RestPositions;
 
     public float MaxRotation = 18f;
     public float SurfSuccessSensitivity = 2.2f;
     public Vector2 LeftRightOffset;
-    public float doubleClickTime = .2f, lastClickTime;
-
-
+    public float doubleClickTime = .2f;
+    
 
     private Vector2 ControllerPostion = new Vector2();
     private int CurrentPosition = 0;
     private int PrefabPosition = 0;
     private bool HasSwipeEnded = true;
-    public bool Success = false;
+    private bool Success = false;
+    private float lastClickTime;
+
     
   
     private void Start() {
@@ -163,7 +164,7 @@ public class SurfManager : Manager
                 SideScrollSuccess();
                 break;
 
-            }else if(MwsiveSongs[CurrentPosition].transform.position.y >= ControllerPostion.y*SurfSuccessSensitivity){
+            }else if(MwsiveSongs[CurrentPosition].transform.position.y >= ControllerPostion.y*SurfSuccessSensitivity*1.5){
                 UpScrollSuccess();
                 break;
 
@@ -215,6 +216,8 @@ public class SurfManager : Manager
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition], RestPositions[1], 1);
             UIAniManager.instance.SurfTransitionOtherSongs(MwsiveSongs[CurrentPosition+1], RestPositions[2], 1);
             UIAniManager.instance.SurfTransitionBackHideSong(MwsiveSongs[CurrentPosition+2], RestPositions[3], 1);
+
+            UIAniManager.instance.SurfAddSongReset(AddSong);
             CurrentPosition--;
             
         }else{
@@ -241,6 +244,7 @@ public class SurfManager : Manager
             if(CurrentPosition == PrefabPosition -3){
                 SpawnPrefab();
             }
+            UIAniManager.instance.SurfAddSongReset(AddSong);
 
             HasSwipeEnded = true;
             Debug.Log("DownScrollSuccess");

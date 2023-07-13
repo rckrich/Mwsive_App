@@ -26,7 +26,7 @@ public class UIAniManager : MonoBehaviour
     private Ease _AnimationScale;
     private Ease _AnimationFade;
     private bool ChangeColorIsOn = true;
-    private bool IsAddSongSurfDone = true;
+    public bool IsAddSongSurfDone = true;
     
 
 
@@ -603,10 +603,10 @@ public class UIAniManager : MonoBehaviour
         
     }
     public void SurfAddSongReset(GameObject GA){
-        
         if(IsAddSongSurfDone){
             if(GA.transform.localScale != new Vector3 (0,0,0)){
-                GA.transform.DOScale(new Vector3(0,0,0), 0.1F);
+                DOTween.Kill(GA);
+                GA.transform.DOScale(new Vector3(0,0,0), 0.3F).OnComplete(() => {GA.SetActive(false);});
                 
             }
             
