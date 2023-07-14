@@ -610,7 +610,7 @@ public static class SpotifyWebCalls
         }
     }
 
-    public static IEnumerator CR_RemoveItemsFromPlaylist(string _token, SpotifyWebCallback _callback, string _playlist_id, List<string> _uris, string _snapshot_id = "")
+    public static IEnumerator CR_RemoveItemsFromPlaylist(string _token, SpotifyWebCallback _callback, string _playlist_id, List<string> _uris)
     {
         string jsonResult = "";
 
@@ -673,7 +673,7 @@ public static class SpotifyWebCalls
         }
     }
 
-    public static IEnumerator CR_GetRecomendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, int _limit = 20, string _market = "ES")
+    public static IEnumerator CR_GetRecommendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, int _limit = 20, string _market = "ES")
     {
         string jsonResult = "";
 

@@ -9,7 +9,7 @@ public class SpotifyAddItemsToPlaylistViewModel : MonoBehaviour
     public TMP_InputField playlistIDInputField;
     public List<string> trackSpotifyUris = new List<string>();
 
-    [Header("Instance Referecnes")]
+    [Header("Instance References")]
     public GameObject trackHolderPrefab;
     public Transform instanceParent;
     public int objectsToNotDestroyIndex;

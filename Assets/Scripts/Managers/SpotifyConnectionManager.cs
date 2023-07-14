@@ -283,10 +283,10 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((AddItemsToPlaylistRoot)_value[1]);
     }
 
-    public void RemoveItemsFromPlaylist(string _playlist_id, List<string> _uris, SpotifyWebCallback _callback = null, string _snapshot_id = "")
+    public void RemoveItemsFromPlaylist(string _playlist_id, List<string> _uris, SpotifyWebCallback _callback = null)
     {
         _callback += Callback_RemoveItemsFromPlaylist;
-        StartCoroutine(SpotifyWebCalls.CR_RemoveItemsFromPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _uris, _snapshot_id));
+        StartCoroutine(SpotifyWebCalls.CR_RemoveItemsFromPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _uris));
     }
 
     private void Callback_RemoveItemsFromPlaylist(object[] _value)
@@ -298,6 +298,23 @@ public class SpotifyConnectionManager : Manager
         }
 
         Debug.Log((RemoveItemsToPlaylistRoot)_value[1]);
+    }
+
+    public void GetRecommendations(string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, SpotifyWebCallback _callback = null, int _limit = 20, string _market = "ES")
+    {
+        _callback += Callback_GetRecommendations;
+        StartCoroutine(SpotifyWebCalls.CR_GetRecommendations(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _seed_artists, _seed_genres, _seed_tracks, _limit, _market));
+    }
+
+    private void Callback_GetRecommendations(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((RecommendationsRoot)_value[1]);
     }
 
     #endregion
