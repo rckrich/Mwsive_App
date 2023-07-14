@@ -8,16 +8,28 @@ public class DescubrirPaginas : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    
+    public GameObject Searchbar;
     public List<GameObject> mask = new List<GameObject>();
     public List<GameObject> scenes = new List<GameObject>();
     public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
+    public List<GameObject> Prefabs = new List<GameObject>();       
+    public GameObject PrefabsPosition;
     public int numEnpantalla;
     private bool HasColorChanged= false;
+    private string SearchText;
+    private GameObject Instance;
 
     public void ChangeWindow()
     {
 
+    }
+    public void HideEscena(){
+        mask[numEnpantalla].SetActive(false);
+        TextMesh[numEnpantalla].color = new Color32(143,143,143,255);
+        scenes[numEnpantalla].SetActive(false);
+        numEnpantalla = 0;
+        mask[0].SetActive(true);
+        TextMesh[0].color = new Color32(255,255,255,255);
     }
 
     public void EleccionDeEscena(int numero)
@@ -72,5 +84,56 @@ public class DescubrirPaginas : MonoBehaviour
             }
         }        
     }
+
+    public void Search(){
+        SearchText = Searchbar.GetComponent<TMP_InputField>().text;
+        SpawnPrefab();
+    }
+
+    private void SpawnPrefab(){
+        switch (numEnpantalla){
+            case 0:
+                break;
+            case 1:
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Curadores_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+            case 2:
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Songs_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+            case 3: 
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Artists_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+            case 4: 
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Albums_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+            case 5: 
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Playlists_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+            case 6: 
+                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
+                Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
+                Instance.transform.localScale = new Vector3(1,1,1);
+                Instance.GetComponent<DynamicSearchPrefabsManager>().InitializeSingle(SearchText);   
+                break;
+        }
+
+    }
+
+    
 
 }
