@@ -19,6 +19,12 @@ public class SpotifyConnectionManager : Manager
         }
     }
 
+#if UNITY_EDITOR_WIN
+    [Header("Test Token")]
+    [TextAreaAttribute]
+    public string testRawValue = "";
+#endif
+
     [Header("UniWebView OAuth Reference")]
     public OAuthHandler oAuthHandler;
 
@@ -26,7 +32,12 @@ public class SpotifyConnectionManager : Manager
     {
         if (ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
         {
+
+#if UNITY_EDITOR_WIN
+            string rawValue = !testRawValue.Equals("") ? testRawValue : ProgressManager.instance.progress.userDataPersistance.raw_value;
+#else
             string rawValue = ProgressManager.instance.progress.userDataPersistance.raw_value;
+#endif
             oAuthHandler.SetSpotifyTokenRawValue(rawValue);
 
             if (ProgressManager.instance.progress.userDataPersistance.expires_at.CompareTo(DateTime.Now) < 0)
@@ -39,13 +50,29 @@ public class SpotifyConnectionManager : Manager
                 Debug.Log("Saved token has not expired, can continue normally");
                 _callback(new object[]
                 {
-                    oAuthHandler.GetSpotifyToken().AccessToken
+                    oAuthHandler.GetSpotifyToken().RawValue
                 }) ;
             }
         }
         else
         {
+#if UNITY_EDITOR_WIN
+            if (!testRawValue.Equals(""))
+            {
+                oAuthHandler.SetSpotifyTokenRawValue(testRawValue);
+                SaveToken(oAuthHandler.GetSpotifyToken().RawValue, oAuthHandler.GetSpotifyToken().ExpiresIn);
+                if (_callback != null)
+                {
+                    _callback(new object[] { oAuthHandler.GetSpotifyToken().RawValue });
+                }
+            }
+            else
+            {
+                oAuthHandler.SpotifyStartAuthFlow(_callback);
+            }
+#else
             oAuthHandler.SpotifyStartAuthFlow(_callback);
+#endif
         }
     }
 
@@ -254,6 +281,23 @@ public class SpotifyConnectionManager : Manager
         }
 
         Debug.Log((AddItemsToPlaylistRoot)_value[1]);
+    }
+
+    public void RemoveItemsFromPlaylist(string _playlist_id, List<string> _uris, SpotifyWebCallback _callback = null, string _snapshot_id = "")
+    {
+        _callback += Callback_RemoveItemsFromPlaylist;
+        StartCoroutine(SpotifyWebCalls.CR_RemoveItemsFromPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _uris, _snapshot_id));
+    }
+
+    private void Callback_RemoveItemsFromPlaylist(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((RemoveItemsToPlaylistRoot)_value[1]);
     }
 
     #endregion

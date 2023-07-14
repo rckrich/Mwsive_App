@@ -618,17 +618,14 @@ public static class SpotifyWebCalls
 
         using (UnityWebRequest webRequest = UnityWebRequest.Delete(url))
         {
-            RemoveItemsPlaylistBodyRequestRoot bodyRequest = new RemoveItemsPlaylistBodyRequestRoot
-            {
-                snapshot_id = _snapshot_id,
-            };
+            RemoveItemsPlaylistBodyRequestRoot bodyRequest = new RemoveItemsPlaylistBodyRequestRoot();
 
-            bodyRequest.tracks = new List<Track>();
+            bodyRequest.tracks = new List<RemoveTrack>();
 
             foreach (string spotifyUri in _uris)
             {
-                Track track = new Track { uri = spotifyUri };
-                bodyRequest.tracks.Add(track);
+                RemoveTrack removeTrack = new RemoveTrack { uri = spotifyUri };
+                bodyRequest.tracks.Add(removeTrack);
             }
 
             string jsonRaw = JsonConvert.SerializeObject(bodyRequest);
@@ -779,7 +776,8 @@ public static class SpotifyWebCalls
                 {
                     jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Fetch search result: " + jsonResult);
-                    SearchRoot searchRoot = JsonConvert.DeserializeObject<SearchRoot>(jsonResult);
+                    JsonSerializerSettings settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                    SearchRoot searchRoot = JsonConvert.DeserializeObject<SearchRoot>(jsonResult, settings);
                     _callback(new object[] { webRequest.responseCode, searchRoot });
                     yield break;
                 }
