@@ -26,11 +26,9 @@ public class DescubrirPaginas : MonoBehaviour
 
     }
     public void HideEscena(){
-        mask[numEnpantalla].SetActive(false);
         TextMesh[numEnpantalla].color = new Color32(143,143,143,255);
         scenes[numEnpantalla].SetActive(false);
         numEnpantalla = 0;
-        mask[0].SetActive(true);
         TextMesh[0].color = new Color32(255,255,255,255);
     }
 
