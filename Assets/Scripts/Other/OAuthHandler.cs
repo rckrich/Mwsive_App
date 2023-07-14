@@ -58,7 +58,7 @@ public class OAuthHandler : MonoBehaviour
 
         if (callback != null)
         {
-            callback(new object[] { _token.RawValue });
+            callback(new object[] { _token.AccessToken });
             callback = null;
         }
     }
@@ -78,7 +78,7 @@ public class OAuthHandler : MonoBehaviour
 
         if (callback != null)
         {
-            callback(new object[] { _token.RawValue });
+            callback(new object[] { _token.AccessToken });
             callback = null;
         }
     }
