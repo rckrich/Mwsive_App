@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-#region Test Entities
+#region Spotify Entities
 
 public class ExplicitContent
 {
@@ -341,8 +341,13 @@ public class AddItemsPlaylistBodyRequestRoot
 [System.Serializable]
 public class RemoveItemsPlaylistBodyRequestRoot
 {
-    public List<Track> tracks { get; set; }
-    public string snapshot_id { get; set; }
+    public List<RemoveTrack> tracks { get; set; }
+}
+
+[System.Serializable]
+public class RemoveTrack
+{
+    public string uri { get; set; }
 }
 
 #endregion
@@ -470,6 +475,12 @@ public class SearchRoot
     public Shows shows { get; set; }
     public Episodes episodes { get; set; }
     public Audiobooks audiobooks { get; set; }
+}
+
+[System.Serializable]
+public class GenresRoot
+{
+    public List<string> genres { get; set; }
 }
 
 #endregion

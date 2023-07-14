@@ -32,6 +32,7 @@ public class SpotifyConnectionManager : Manager
     {
         if (ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
         {
+
 #if UNITY_EDITOR_WIN
             string rawValue = !testRawValue.Equals("") ? testRawValue : ProgressManager.instance.progress.userDataPersistance.raw_value;
 #else
@@ -49,7 +50,7 @@ public class SpotifyConnectionManager : Manager
                 Debug.Log("Saved token has not expired, can continue normally");
                 _callback(new object[]
                 {
-                    oAuthHandler.GetSpotifyToken().AccessToken
+                    oAuthHandler.GetSpotifyToken().RawValue
                 }) ;
             }
         }
@@ -96,7 +97,7 @@ public class SpotifyConnectionManager : Manager
         return _responseCode.Equals(SpotifyWebCalls.AUTHORIZATION_FAILED_RESPONSE_CODE);
     }
 
-#region Spotify API Call Methods
+    #region Spotify API Call Methods
 
     public void GetCurrentUserProfile(SpotifyWebCallback _callback = null)
     {
@@ -282,9 +283,77 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((AddItemsToPlaylistRoot)_value[1]);
     }
 
-#endregion
+    public void RemoveItemsFromPlaylist(string _playlist_id, List<string> _uris, SpotifyWebCallback _callback = null)
+    {
+        _callback += Callback_RemoveItemsFromPlaylist;
+        StartCoroutine(SpotifyWebCalls.CR_RemoveItemsFromPlaylist(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlist_id, _uris));
+    }
 
-#region Private Methods
+    private void Callback_RemoveItemsFromPlaylist(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((RemoveItemsToPlaylistRoot)_value[1]);
+    }
+
+    public void GetRecommendations(string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, SpotifyWebCallback _callback = null, int _limit = 20, string _market = "ES")
+    {
+        _callback += Callback_GetRecommendations;
+        StartCoroutine(SpotifyWebCalls.CR_GetRecommendations(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _seed_artists, _seed_genres, _seed_tracks, _limit, _market));
+    }
+
+    private void Callback_GetRecommendations(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((RecommendationsRoot)_value[1]);
+    }
+
+    public void SearchForItem(string _query, string[] _types, SpotifyWebCallback _callback = null, string _market = "ES", int _limit = 20, int _offset = 0, string _include_external = "audio")
+    {
+        _callback += Callback_SearchForItem;
+        StartCoroutine(SpotifyWebCalls.CR_SearchForItem(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _query, _types, _market, _limit, _offset, _include_external));
+    }
+
+    private void Callback_SearchForItem(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((SearchRoot)_value[1]);
+    }
+
+    public void CR_GetGenres(string _query, string[] _types, SpotifyWebCallback _callback = null)
+    {
+        _callback += Callback_CR_GetGenres;
+        StartCoroutine(SpotifyWebCalls.CR_GetGenres(oAuthHandler.GetSpotifyToken().AccessToken, _callback));
+    }
+
+    private void Callback_CR_GetGenres(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((GenresRoot)_value[1]);
+    }
+
+    #endregion
+
+    #region Private Methods
 
     private DateTime ConvertExpiresInToDateTime(long _secondsToAdd)
     {
@@ -299,5 +368,5 @@ public class SpotifyConnectionManager : Manager
         StartConnection();
     }
 
-#endregion
+    #endregion
 }
