@@ -10,6 +10,8 @@ public enum ViewID
     HeaderDemoViewModel,
     SettingsDemoViewModel,
     //App ViewIDs
+    ProfileViewModel,
+    InsigniasViewModel,
 }
 
 public enum HTTPMethods
