@@ -317,6 +317,40 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((RecommendationsRoot)_value[1]);
     }
 
+    public void SearchForItem(string _query, string[] _types, SpotifyWebCallback _callback = null, string _market = "ES", int _limit = 20, int _offset = 0, string _include_external = "audio")
+    {
+        _callback += Callback_SearchForItem;
+        StartCoroutine(SpotifyWebCalls.CR_SearchForItem(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _query, _types, _market, _limit, _offset, _include_external));
+    }
+
+    private void Callback_SearchForItem(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((SearchRoot)_value[1]);
+    }
+
+    public void CR_GetGenres(string _query, string[] _types, SpotifyWebCallback _callback = null)
+    {
+        _callback += Callback_CR_GetGenres;
+        StartCoroutine(SpotifyWebCalls.CR_GetGenres(oAuthHandler.GetSpotifyToken().AccessToken, _callback));
+    }
+
+    private void Callback_CR_GetGenres(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((GenresRoot)_value[1]);
+    }
+
     #endregion
 
     #region Private Methods

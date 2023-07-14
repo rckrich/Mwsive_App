@@ -477,4 +477,10 @@ public class SearchRoot
     public Audiobooks audiobooks { get; set; }
 }
 
+[System.Serializable]
+public class GenresRoot
+{
+    public List<string> genres { get; set; }
+}
+
 #endregion
