@@ -8708,6 +8708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08805463e337f48c6bf1ae2f7fb53707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testRawValue: 
   oAuthHandler: {fileID: 1672424953}
 --- !u!1 &464012305
 GameObject:
@@ -13310,8 +13311,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1443392955}
   m_HandleRect: {fileID: 1443392954}
   m_Direction: 2
-  m_Value: 0.99999976
-  m_Size: 0.52338594
+  m_Value: 1
+  m_Size: 0.5233859
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
