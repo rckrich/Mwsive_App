@@ -9,7 +9,6 @@ public class DescubrirPaginas : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     public GameObject Searchbar;
-    public List<GameObject> mask = new List<GameObject>();
     public List<GameObject> scenes = new List<GameObject>();
     public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
     public List<GameObject> Prefabs = new List<GameObject>();       
@@ -18,6 +17,9 @@ public class DescubrirPaginas : MonoBehaviour
     private bool HasColorChanged= false;
     private string SearchText;
     private GameObject Instance;
+    public List<GameObject> images = new List<GameObject>();
+    public Sprite sprite;
+    public Sprite sprite2;
 
     public void ChangeWindow()
     {
@@ -39,8 +41,8 @@ public class DescubrirPaginas : MonoBehaviour
             numEnpantalla = numero;
             for(int i = 0; i < 7; i++)
             {
-                mask[i].SetActive(false);
-                TextMesh[i].color = new Color32(143,143,143,255);
+                images[i].GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f);
+                images[i].GetComponent<Image>().sprite = sprite;
                 scenes[i].SetActive(false);
             }
             switch (numero)
@@ -48,38 +50,44 @@ public class DescubrirPaginas : MonoBehaviour
                 case 0:
                     TextMesh[0].color = new Color32(255,255,255,255);
                     scenes[0].SetActive(true);
-                    mask[0].SetActive(true);
+                    images[0].GetComponent<Image>().color = Color.white;
+                    images[0].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 1:
                     TextMesh[1].color = new Color32(255,255,255,255);
                     scenes[1].SetActive(true);
-                    mask[1].SetActive(true);
+                    images[1].GetComponent<Image>().color = Color.white;
+                    images[1].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 2:
                     TextMesh[2].color = new Color32(255,255,255,255);
                     scenes[2].SetActive(true);
-                    mask[2].SetActive(true);
-                    
+                    images[2].GetComponent<Image>().color = Color.white;
+                    images[2].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 3:
                     TextMesh[3].color = new Color32(255,255,255,255);
                     scenes[3].SetActive(true);
-                    mask[3].SetActive(true);
+                    images[3].GetComponent<Image>().color = Color.white;
+                    images[3].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 4:
                     TextMesh[4].color = new Color32(255,255,255,255);
                     scenes[4].SetActive(true);
-                    mask[4].SetActive(true);
+                    images[4].GetComponent<Image>().color = Color.white;
+                    images[4].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 5:
                     TextMesh[5].color = new Color32(255,255,255,255);
                     scenes[5].SetActive(true);
-                    mask[5].SetActive(true);
+                    images[5].GetComponent<Image>().color = Color.white;
+                    images[5].GetComponent<Image>().sprite = sprite2;
                     break;
                 case 6:
                     TextMesh[6].color = new Color32(255,255,255,255);
                     scenes[6].SetActive(true);
-                    mask[6].SetActive(true);
+                    images[6].GetComponent<Image>().color = Color.white;
+                    images[6].GetComponent<Image>().sprite = sprite2;
                     break;
             }
         }        

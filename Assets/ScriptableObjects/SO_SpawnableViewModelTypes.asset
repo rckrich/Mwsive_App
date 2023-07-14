@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: SO_SpawnableViewModelTypes
   m_EditorClassIdentifier: 
   viewTypes:
-  - viewModelType: 
-    viewModelPrefab: {fileID: 0}
+  - viewModelType: insignias
+    viewModelPrefab: {fileID: 7479211822611119040, guid: b3d344e65c723924b88936e24f584b48, type: 3}
+  - viewModelType: popUp
+    viewModelPrefab: {fileID: 4613926483041977028, guid: 2c09dfa4d9d003f4ea2e328499bb441c, type: 3}
+  - viewModelType: adn
+    viewModelPrefab: {fileID: 1521248890201070121, guid: 7c3de1802dd7e79439d6b252a9373012, type: 3}
+  - viewModelType: miPlaylist
+    viewModelPrefab: {fileID: 2806249980485039193, guid: a2320e379d161c942a0e946fa178af62, type: 3}
+  - viewModelType: playlist
+    viewModelPrefab: {fileID: 443706787101270269, guid: 81304c47fd2486649b8e8aad023976f5, type: 3}
