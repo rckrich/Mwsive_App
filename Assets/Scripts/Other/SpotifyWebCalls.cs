@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using System;
 
 public delegate void SpotifyWebCallback(object[] _value);
 
@@ -734,12 +735,10 @@ public static class SpotifyWebCalls
 
         string url = "https://api.spotify.com/v1/search";
 
-        url = url + "?" + _query;
-
-        url.Replace(' ', '+');
+        url = url + "?q=" + Uri.EscapeDataString(_query);
 
         //Accepted strings are: "album", "artist", "playlist", "track", "show", "episode" and "audiobook"
-        url = AddMultipleParameterToUri(url + "&", "types", _types);
+        url = AddMultipleParameterToUri(url + "&", "type", _types);
 
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
