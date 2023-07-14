@@ -13,7 +13,7 @@ public class SurfManager : Manager
     public GameObject AddSong;
     public GameObject OlaButton;
     public GameObject MwsiveOla;
-    private List <GameObject> MwsiveSongs = new List<GameObject>();
+    public List <GameObject> MwsiveSongs = new List<GameObject>();
     public GameObject[ ] RestPositions;
 
     public float MaxRotation = 18f;
@@ -38,8 +38,6 @@ public class SurfManager : Manager
         SpawnPrefab();
         SpawnPrefab();
         SpawnPrefab();
-
-        
     }
     private void OnEnable() {
         swipeListener.OnSwipe.AddListener(OnSwipe);
