@@ -20,5 +20,6 @@ MonoBehaviour:
   addsAndroidBrowser: 1
   androidBrowserVersion: 
   enableJetifier: 1
-  authCallbackUrls: []
+  authCallbackUrls:
+  - http://192.241.129.184/user-pkce/
   supportLINELogin: 0
