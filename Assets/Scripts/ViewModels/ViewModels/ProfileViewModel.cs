@@ -42,4 +42,7 @@ public class ProfileViewModel : ViewModel
         NewScreenManager.instance.ChangeToSpawnedView("playlist");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
+
+    
 }
+
