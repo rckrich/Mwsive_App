@@ -27,6 +27,11 @@ public class SpotifyTestMainViewModel : MonoBehaviour
         OnClick_isAuthenticationSupported();
     }
 
+    public void OnClick_Reconnect()
+    {
+        SpotifyConnectionManager.instance.StartConnection(FillTokenText);
+    }
+
     public void OnClick_isAuthenticationSupported()
     {
         if (UniWebViewAuthenticationSession.IsAuthenticationSupported)
