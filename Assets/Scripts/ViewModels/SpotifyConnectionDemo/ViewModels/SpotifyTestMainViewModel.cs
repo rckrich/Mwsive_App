@@ -23,8 +23,8 @@ public class SpotifyTestMainViewModel : MonoBehaviour
 
     private void Start()
     {
-        SpotifyConnectionManager.instance.StartConnection(FillTokenText);
         OnClick_isAuthenticationSupported();
+        SpotifyConnectionManager.instance.StartConnection(FillTokenText);
     }
 
     public void OnClick_isAuthenticationSupported()
