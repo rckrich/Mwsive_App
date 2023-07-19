@@ -5,25 +5,38 @@ using System.Collections.Generic;
 
 public class MwsiveUser
 {
-    string id { get; set; }
-    string email { get; set; }
-    string genre { get; set; }
-    int age { get; set; }
+    public string id { get; set; }
+    public string email { get; set; }
+    public string genre { get; set; }
+    public int age { get; set; }
+}
+
+public class TrackAction
+{
+    public int user_id { get; set; }
+    public int track_id { get; set; }
+    public string action { get; set; }
+    public float duration { get; set; }
 }
 
 #endregion
 
 #region Json Convert Classes
 
-public class RootMwsiveUser
+public class MwsiveUserRoot
 {
-    string MwsiveUser { get; set; }
+    public string MwsiveUser { get; set; }
 }
 
-public class RootMwsiveLogin
+public class MwsiveLoginRoot
 {
-    MwsiveUser MwsiveUser { get; set; }
-    string mwsive_token { get; set; }
+    public MwsiveUser MwsiveUser { get; set; }
+    public string mwsive_token { get; set; }
+}
+
+public class MwsiveCuratorsRoot
+{
+    public List<MwsiveUser> curators { get; set; } 
 }
 
 #endregion

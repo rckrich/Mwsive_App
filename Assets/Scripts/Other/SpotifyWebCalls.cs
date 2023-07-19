@@ -10,9 +10,6 @@ public delegate void SpotifyWebCallback(object[] _value);
 
 public static class SpotifyWebCalls
 {
-    public static long SUCCESS_RESPONSE_CODE { get { return 200; } }
-    public static long AUTHORIZATION_FAILED_RESPONSE_CODE { get { return 401; } }
-
     public static IEnumerator CR_GetCurrentUserProfile(string _token, SpotifyWebCallback _callback)
     {
         string jsonResult = "";
@@ -30,9 +27,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -69,7 +66,7 @@ public static class SpotifyWebCalls
         parameters.Add("limit", _limit.ToString());
         parameters.Add("offset", _offset.ToString());
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -82,9 +79,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -131,7 +128,7 @@ public static class SpotifyWebCalls
         parameters.Add("limit", _limit.ToString());
         parameters.Add("offset", _offset.ToString());
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -144,9 +141,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -182,7 +179,7 @@ public static class SpotifyWebCalls
         parameters.Add("limit", _limit.ToString());
         parameters.Add("offset", _offset.ToString());
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -195,9 +192,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if(webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if(webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -233,7 +230,7 @@ public static class SpotifyWebCalls
         parameters.Add("limit", _limit.ToString());
         parameters.Add("offset", _offset.ToString());
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -246,9 +243,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -283,7 +280,7 @@ public static class SpotifyWebCalls
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -296,9 +293,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -333,7 +330,7 @@ public static class SpotifyWebCalls
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -346,9 +343,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -383,9 +380,9 @@ public static class SpotifyWebCalls
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
-        url = AddMultipleParameterToUri(url + "&", "ids", _track_ids);
+        url = WebCallsUtils.AddMultipleParameterToUri(url + "&", "ids", _track_ids);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -398,9 +395,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -457,9 +454,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -513,9 +510,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -528,7 +525,7 @@ public static class SpotifyWebCalls
                 if (webRequest.isDone)
                 {
                     Debug.Log("Playlist updated");
-                    _callback(new object[] { SUCCESS_RESPONSE_CODE });
+                    _callback(new object[] { WebCallsUtils.SUCCESS_RESPONSE_CODE });
                     yield break;
                 }
             }
@@ -548,9 +545,9 @@ public static class SpotifyWebCalls
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("position", _position.ToString());
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
-        url = AddSpotifyUrisToUri(url + "&", _uris);
+        url = WebCallsUtils.AddSpotifyUrisToUri(url + "&", _uris);
 
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
@@ -583,9 +580,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -646,9 +643,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -684,11 +681,11 @@ public static class SpotifyWebCalls
         parameters.Add("limit", _limit.ToString());
         parameters.Add("market", _market);
 
-        url = AddParametersToURI(url + "?", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
 
-        url = AddMultipleParameterToUri(url + "&", "seed_artists", _seed_artists);
-        url = AddMultipleParameterToUri(url + "&", "seed_genres", _seed_genres);
-        url = AddMultipleParameterToUri(url + "&", "seed_tracks", _seed_tracks);
+        url = WebCallsUtils.AddMultipleParameterToUri(url + "&", "seed_artists", _seed_artists);
+        url = WebCallsUtils.AddMultipleParameterToUri(url + "&", "seed_genres", _seed_genres);
+        url = WebCallsUtils.AddMultipleParameterToUri(url + "&", "seed_tracks", _seed_tracks);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -701,9 +698,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -738,7 +735,7 @@ public static class SpotifyWebCalls
         url = url + "?q=" + Uri.EscapeDataString(_query);
 
         //Accepted strings are: "album", "artist", "playlist", "track", "show", "episode" and "audiobook"
-        url = AddMultipleParameterToUri(url + "&", "type", _types);
+        url = WebCallsUtils.AddMultipleParameterToUri(url + "&", "type", _types);
 
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
@@ -746,7 +743,7 @@ public static class SpotifyWebCalls
         parameters.Add("offset", _offset.ToString());
         parameters.Add("include_external", _include_external);
 
-        url = AddParametersToURI(url + "&", parameters);
+        url = WebCallsUtils.AddParametersToURI(url + "&", parameters);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -759,9 +756,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -805,9 +802,9 @@ public static class SpotifyWebCalls
             {
                 //Catch response code for multiple requests to the server in a short timespan.
 
-                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
                 {
-                    ReauthenticateUser(_callback);
+                    WebCallsUtils.ReauthenticateUser(_callback);
                 }
 
                 Debug.Log("Protocol Error or Connection Error on fetch profile");
@@ -831,69 +828,5 @@ public static class SpotifyWebCalls
             yield break;
 
         }
-    }
-
-    private static string AddParametersToURI(string _uri, Dictionary<string, string> _parameters)
-    {
-        string url = _uri;
-
-        foreach(KeyValuePair<string, string> kvp in _parameters)
-        {
-            url = url + kvp.Key + "=" + kvp.Value + "&";
-        }
-
-        url = url.TrimEnd('&');
-
-        Debug.Log("Complete url is: " + url);
-
-        return url;
-    }
-
-    private static string AddMultipleParameterToUri(string _uri, string _key, string[] _parameters)
-    {
-        string url = _uri + _key + "=";
-
-        foreach (string track_id in _parameters)
-        {
-            url = url + track_id + "%2C";
-        }
-
-        url = url.Remove(url.Length - 3);
-
-        Debug.Log("Complete url with new multiple param is: " + url);
-
-        return url;
-    }
-
-    private static string AddSpotifyUrisToUri(string _uri, List<string> _spotifyUris)
-    {
-        string _modified_uris = "uris=";
-
-        foreach (string uri in _spotifyUris)
-        {
-            string modifiedSpotifyUri = "";
-            string[] separatedUri = uri.Split(':');
-
-            foreach (string part in separatedUri)
-            {
-                modifiedSpotifyUri = modifiedSpotifyUri + part + "%3A";
-            }
-
-            modifiedSpotifyUri = modifiedSpotifyUri.Remove(modifiedSpotifyUri.Length - 3);
-
-            _modified_uris = _modified_uris + modifiedSpotifyUri + "%2C";
-        }
-
-        _modified_uris = _modified_uris.Remove(_modified_uris.Length - 3);
-
-        Debug.Log("Complete url with spotify uris param is: " + _uri + _modified_uris);
-
-        return _uri + _modified_uris;
-    }
-
-    private static void ReauthenticateUser(SpotifyWebCallback _callback)
-    {
-        Debug.Log("Bad or expired token. This can happen if the user revoked a token or the access token has expired. Will try yo re-authenticate the user.");
-        _callback(new object[] { AUTHORIZATION_FAILED_RESPONSE_CODE });
     }
 }

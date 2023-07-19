@@ -94,7 +94,7 @@ public class SpotifyConnectionManager : Manager
 
     public bool CheckReauthenticateUser(long _responseCode)
     {
-        return _responseCode.Equals(SpotifyWebCalls.AUTHORIZATION_FAILED_RESPONSE_CODE);
+        return _responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE);
     }
 
     #region Spotify API Call Methods
