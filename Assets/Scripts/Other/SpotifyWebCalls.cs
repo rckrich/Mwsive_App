@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using System;
 
 public delegate void SpotifyWebCallback(object[] _value);
 
@@ -610,7 +611,7 @@ public static class SpotifyWebCalls
         }
     }
 
-    public static IEnumerator CR_RemoveItemsFromPlaylist(string _token, SpotifyWebCallback _callback, string _playlist_id, List<string> _uris, string _snapshot_id = "")
+    public static IEnumerator CR_RemoveItemsFromPlaylist(string _token, SpotifyWebCallback _callback, string _playlist_id, List<string> _uris)
     {
         string jsonResult = "";
 
@@ -618,17 +619,14 @@ public static class SpotifyWebCalls
 
         using (UnityWebRequest webRequest = UnityWebRequest.Delete(url))
         {
-            RemoveItemsPlaylistBodyRequestRoot bodyRequest = new RemoveItemsPlaylistBodyRequestRoot
-            {
-                snapshot_id = _snapshot_id,
-            };
+            RemoveItemsPlaylistBodyRequestRoot bodyRequest = new RemoveItemsPlaylistBodyRequestRoot();
 
-            bodyRequest.tracks = new List<Track>();
+            bodyRequest.tracks = new List<RemoveTrack>();
 
             foreach (string spotifyUri in _uris)
             {
-                Track track = new Track { uri = spotifyUri };
-                bodyRequest.tracks.Add(track);
+                RemoveTrack removeTrack = new RemoveTrack { uri = spotifyUri };
+                bodyRequest.tracks.Add(removeTrack);
             }
 
             string jsonRaw = JsonConvert.SerializeObject(bodyRequest);
@@ -676,7 +674,7 @@ public static class SpotifyWebCalls
         }
     }
 
-    public static IEnumerator CR_GetRecomendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, int _limit = 20, string _market = "ES")
+    public static IEnumerator CR_GetRecommendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, int _limit = 20, string _market = "ES")
     {
         string jsonResult = "";
 
@@ -737,12 +735,10 @@ public static class SpotifyWebCalls
 
         string url = "https://api.spotify.com/v1/search";
 
-        url = url + "?" + _query;
-
-        url.Replace(' ', '+');
+        url = url + "?q=" + Uri.EscapeDataString(_query);
 
         //Accepted strings are: "album", "artist", "playlist", "track", "show", "episode" and "audiobook"
-        url = AddMultipleParameterToUri(url + "&", "types", _types);
+        url = AddMultipleParameterToUri(url + "&", "type", _types);
 
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("market", _market);
@@ -779,13 +775,59 @@ public static class SpotifyWebCalls
                 {
                     jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Fetch search result: " + jsonResult);
-                    SearchRoot searchRoot = JsonConvert.DeserializeObject<SearchRoot>(jsonResult);
+                    JsonSerializerSettings settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                    SearchRoot searchRoot = JsonConvert.DeserializeObject<SearchRoot>(jsonResult, settings);
                     _callback(new object[] { webRequest.responseCode, searchRoot });
                     yield break;
                 }
             }
 
             Debug.Log("Failed on fetch search: " + jsonResult);
+            yield break;
+
+        }
+    }
+
+    public static IEnumerator CR_GetGenres(string _token, SpotifyWebCallback _callback)
+    {
+        string jsonResult = "";
+
+        string url = "https://api.spotify.com/v1/recommendations/available-genre-seeds";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    ReauthenticateUser(_callback);
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch genres result: " + jsonResult);
+                    GenresRoot genresRoot = JsonConvert.DeserializeObject<GenresRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, genresRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed on fetch genres: " + jsonResult);
             yield break;
 
         }

@@ -15,12 +15,35 @@ public class SpotifyTestMainViewModel : MonoBehaviour
     [Header("Token Text")]
     public TextMeshProUGUI tokenText;
 
+    [Header("Token Text")]
+    public TextMeshProUGUI isAuthenticationSupportedText;
+
     [Header("Demo Views")]
     public List<SpotifyDemoViews> demoViews = new List<SpotifyDemoViews>();
 
     private void Start()
     {
+        OnClick_isAuthenticationSupported();
         SpotifyConnectionManager.instance.StartConnection(FillTokenText);
+    }
+
+    public void OnClick_Reconnect()
+    {
+        SpotifyConnectionManager.instance.StartConnection(FillTokenText);
+    }
+
+    public void OnClick_isAuthenticationSupported()
+    {
+        if (UniWebViewAuthenticationSession.IsAuthenticationSupported)
+        {
+            isAuthenticationSupportedText.color = Color.green;
+            isAuthenticationSupportedText.text = "True";
+        }
+        else
+        {
+            isAuthenticationSupportedText.color = Color.red;
+            isAuthenticationSupportedText.text = "False";
+        }
     }
 
     public void FillTokenText(object[] _value)

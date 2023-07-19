@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class SpotifyAddItemsToPlaylistViewModel : MonoBehaviour
+public class SpotifyRemoveItemsFromPlaylistViewModel : MonoBehaviour
 {
     public TMP_InputField playlistIDInputField;
     public List<string> trackSpotifyUris = new List<string>();
@@ -14,13 +14,13 @@ public class SpotifyAddItemsToPlaylistViewModel : MonoBehaviour
     public Transform instanceParent;
     public int objectsToNotDestroyIndex;
 
-    public void OnClick_AddItemsToPlaylist()
+    public void OnClick_RemoveItemsFromPlaylist()
     {
         if (!playlistIDInputField.text.Equals(""))
-            SpotifyConnectionManager.instance.AddItemsToPlaylist(playlistIDInputField.text, trackSpotifyUris, Callback_OnCLick_AddItemsToPlaylist);
+            SpotifyConnectionManager.instance.RemoveItemsFromPlaylist(playlistIDInputField.text, trackSpotifyUris, Callback_OnCLick_RemoveItemsFromPlaylist);
     }
 
-    private void Callback_OnCLick_AddItemsToPlaylist(object[] _value)
+    private void Callback_OnCLick_RemoveItemsFromPlaylist(object[] _value)
     {
         if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
 
