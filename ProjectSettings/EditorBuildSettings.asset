@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TestScenes/Javier/NewScreenManagerScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScenes/Dylan/Dylan.unity
     guid: 17690d722dd1d614f8d0f1da6312ab15
+  - enabled: 1
+    path: Assets/Scenes/TestScenes/Javier/SpotifyConnectionTest.unity
+    guid: 1a3e02f9ffd22419c8c84120ad831ae5
   m_configObjects: {}
