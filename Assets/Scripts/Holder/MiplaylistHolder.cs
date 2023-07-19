@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
+public class MiplaylistHolder : MonoBehaviour
 {
+
     public TextMeshProUGUI playlistName;
     public Image playlistPicture;
     public TextMeshProUGUI playlistOwner;
     private string spotifyID;
     public PlaylistViewModel playlistViewModel;
     public bool @public;
-    
+
 
     public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public)
     {
@@ -22,7 +23,7 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
         @public = _public;
     }
 
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _pictureURL )
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _pictureURL)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
@@ -36,11 +37,6 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 
-    public void OnClick_CopyToClipboard()
-    {
-        if(!spotifyID.Equals(""))
-            GUIUtility.systemCopyBuffer = spotifyID;
-    }
 
     public void OnClick_SpawnPlaylistButton()
     {
@@ -50,4 +46,6 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
         NewScreenManager.instance.ChangeToSpawnedView("playlist");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
+
+
 }

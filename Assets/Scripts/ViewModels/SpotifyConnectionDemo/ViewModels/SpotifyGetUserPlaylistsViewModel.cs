@@ -26,7 +26,7 @@ public class SpotifyGetUserPlaylistsViewModel : MonoBehaviour
         foreach (Item item in playlistRoot.items)
         {
             SpotifyConnectionDemoPlaylistsHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SpotifyConnectionDemoPlaylistsHolder>();
-            instance.Initialize(item.name, item.id);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
 
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);

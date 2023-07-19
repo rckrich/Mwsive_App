@@ -20,7 +20,7 @@ public class SpotifyGetRecommendationsViewModel : MonoBehaviour
             return;
         }
 
-        SpotifyConnectionManager.instance.GetRecommendations(seed_artists, seed_genres, seed_tracks, Callback_OnCLick_GetRecommendations);
+        SpotifyConnectionManager.instance.GetRecommendations(seed_artists, seed_genres, /*seed_tracks,*/ Callback_OnCLick_GetRecommendations);
     }
 
     private void Callback_OnCLick_GetRecommendations(object[] _value)

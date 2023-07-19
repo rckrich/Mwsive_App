@@ -1,0 +1,95 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class TrackViewModel : ViewModel
+{
+    public string[] seed_artists;
+    public string[] seed_genres;
+    public string[] seed_tracks;
+
+    // Start is called before the first frame update
+    public string trackID;
+    public string genre;
+    public string artistId;
+    public TextMeshProUGUI displayName;
+    //public TextMeshProUGUI spotifyID;
+    //public TextMeshProUGUI albumName;
+    public TextMeshProUGUI artistName;
+    public Image trackPicture;
+    public GameObject trackHolderPrefab;
+    public Transform instanceParent;
+    public int objectsToNotDestroyIndex;
+    //private string mp3URL;
+    void Start()
+    {
+        GetTrack();
+        GetRecommendations();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void GetTrack()
+    {
+        if (!trackID.Equals(""))
+            SpotifyConnectionManager.instance.GetTrack(trackID, Callback_GetTrack);
+    }
+    private void Callback_GetTrack(object[] _value)
+    {
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+
+        TrackRoot trackRoot = (TrackRoot)_value[1];
+        displayName.text = trackRoot.name;
+        artistName.text = trackRoot.album.name;
+
+        //mp3URL = trackRoot.preview_url;
+
+        ImageManager.instance.GetImage(trackRoot.album.images[0].url, trackPicture, (RectTransform)this.transform);
+    }
+
+    public void GetRecommendations()
+    {
+        seed_tracks[0] = trackID;
+        //seed_genres[0] = genre;
+        seed_artists[0] = artistId;
+        if ((seed_artists.Length + /*seed_genres.Length +*/ seed_tracks.Length) > 5)
+        {
+            Debug.Log("The seeds should be no more than 5 from either artists, genres or tracks");
+            return;
+        }
+
+        SpotifyConnectionManager.instance.GetRecommendations(seed_artists, /*seed_genres,*/ seed_tracks, Callback_GetRecommendations);
+    }
+
+    private void Callback_GetRecommendations(object[] _value)
+    {
+        //if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+
+        RecommendationsRoot recommendationsRoot = (RecommendationsRoot)_value[1];
+
+        InstanceTrackObjects(recommendationsRoot.tracks);
+    }
+
+    private void InstanceTrackObjects(List<Track> _tracks)
+    {
+
+        foreach (Track track in _tracks)
+        {
+            TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
+            instance.Initialize(track.name, track.artists[0].name, track.id, track.artists[0].id);
+
+            if (track.album.images != null && track.album.images.Count > 0)
+                instance.SetImage(track.album.images[0].url);
+        }
+    }
+
+    public void OnClick_BackButton()
+    {
+        NewScreenManager.instance.BackToPreviousView();
+    }
+}

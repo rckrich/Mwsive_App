@@ -7,7 +7,7 @@ public class ChangeImage : MonoBehaviour
 {
     public Sprite image;
     public Sprite oldImage;
-    private int count = 0;
+    public int count = 0;
     public Vector3 newVector= new Vector3(-134f, 0f, 0f);
     public Vector3 oldVector = new Vector3(-150f, 0f, 0f);
     public Vector3 newSize = new Vector3(50f, 50f, 0f);

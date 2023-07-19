@@ -2749,7 +2749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -45.113907, y: -22.712006}
+  m_AnchoredPosition: {x: -45.11389, y: -22.712036}
   m_SizeDelta: {x: 90.2286, y: 45.4234}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &125239839
@@ -16201,7 +16201,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1443392954}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5111842
+  m_Size: 0.5111843
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -46579,6 +46579,15 @@ PrefabInstance:
     - target: {fileID: 6861881444575408278, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6861881444575408279, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
+      propertyPath: testRawValue
+      value: '{"access_token":"BQBUUk07i6nb5s3zqpNmSSyxroDKi7RVpS1PG0ZFAo5a-7X-OODuFx9dxdb9Q6js6CiBjwOy-zKbDAvly4DAUvRrz_cslCDq4OhA_-eJRi6iWfECdmRHgx5AKDkITBVO6KaWjvQtJFrkhQlTz9N2eNXuRdRcL4BoWRADssHReIoIa7lu9c7U3dAimmyZmqqahR7eemhQk9PJ1oD3mq3vz67z-Slyp6RgBOd9vShA67ZhPIuv2HyTbti60FAtZ7XCxvpX-JamfxOB7QgLYUMtV8kiXSyfBn1tggj_R_NsogElOliDmf7fGGMmt1td7YtBVQ","token_type":"Bearer","expires_in":3600,"refresh_token":"AQD7mq6XpZzIfIjLuGoSlDwaFMXhoXQDvyKGw5aSTGSy1o1vb6mSeQpKFa9hKLHU7C8E0vzWEKI105Rb6drytfV69jSC6aK5rwmxhRgvgDsJcnDtqXPmRcBhpamypk9yCgk","scope":"playlist-read-private
+        playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private
+        user-read-email user-read-private app-remote-control streaming user-follow-modify
+        user-modify-playback-state user-library-read user-library-modify playlist-modify-public
+        user-read-playback-state user-read-currently-playing user-read-recently-played
+        user-read-playback-position user-top-read"}'
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408281, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: m_Name

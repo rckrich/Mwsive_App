@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SpotifyGetPlaylistViewModel : MonoBehaviour
 {
-    public TMP_InputField playlistIDInputField;
+    public TMP_InputField playlistID;
     public TextMeshProUGUI displayName;
     public TextMeshProUGUI creatorName;
     public TextMeshProUGUI descriptionText;
@@ -21,8 +21,8 @@ public class SpotifyGetPlaylistViewModel : MonoBehaviour
 
     public void OnClick_GetPlaylist()
     {
-        if (!playlistIDInputField.text.Equals(""))
-            SpotifyConnectionManager.instance.GetPlaylist(playlistIDInputField.text, Callback_OnCLick_GetPLaylist);
+        if (!playlistID.text.Equals(""))
+            SpotifyConnectionManager.instance.GetPlaylist(playlistID.text, Callback_OnCLick_GetPLaylist);
     }
 
     public void OnClick_CopyToClipboard()

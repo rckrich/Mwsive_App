@@ -674,7 +674,7 @@ public static class SpotifyWebCalls
         }
     }
 
-    public static IEnumerator CR_GetRecommendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, int _limit = 20, string _market = "ES")
+    public static IEnumerator CR_GetRecommendations(string _token, SpotifyWebCallback _callback, string[] _seed_artists, /*string[] _seed_genres,*/ string[] _seed_tracks, int _limit = 20, string _market = "ES")
     {
         string jsonResult = "";
 
@@ -687,7 +687,7 @@ public static class SpotifyWebCalls
         url = AddParametersToURI(url + "?", parameters);
 
         url = AddMultipleParameterToUri(url + "&", "seed_artists", _seed_artists);
-        url = AddMultipleParameterToUri(url + "&", "seed_genres", _seed_genres);
+        //url = AddMultipleParameterToUri(url + "&", "seed_genres", _seed_genres);
         url = AddMultipleParameterToUri(url + "&", "seed_tracks", _seed_tracks);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
