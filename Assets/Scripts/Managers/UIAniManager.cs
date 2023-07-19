@@ -21,7 +21,7 @@ public class UIAniManager : MonoBehaviour
 
 
     private static UIAniManager _instance;
-    private Vector2 FinalPosition, RestPositionSide, RestPositionDown, RestPositionUp; 
+    private Vector2 FinalPosition, RestPositionSide, RestPositionDown, RestPositionUp, RestPositionLeft; 
     private Ease _AnimationMove;
     private Ease _AnimationScale;
     private Ease _AnimationFade;
@@ -242,6 +242,7 @@ public class UIAniManager : MonoBehaviour
         RestPositionDown = new Vector2(MainCanvas.transform.position.x, -2*MainCanvas.transform.position.y);
         RestPositionUp = new Vector2(MainCanvas.transform.position.x, 2*MainCanvas.transform.position.y);
         RestPositionSide = new Vector2(MainCanvas.transform.position.x*4, MainCanvas.transform.position.y);
+        RestPositionLeft = new Vector2(MainCanvas.transform.position.x*-2, MainCanvas.transform.position.y);
     }
 
     void SetPosition(GameObject GA){
@@ -249,6 +250,7 @@ public class UIAniManager : MonoBehaviour
         RestPositionDown = new Vector2(GA.transform.position.x, -2*GA.transform.position.y);
         RestPositionUp = new Vector2(GA.transform.position.x, GA.transform.position.y*2);
         RestPositionSide = new Vector2(GA.transform.position.x*4, GA.transform.position.y);
+        RestPositionLeft = new Vector2(GA.transform.position.x*-4, GA.transform.position.y);
     }
 
     void SetPosition(GameObject GA, float OffSet){
@@ -256,6 +258,7 @@ public class UIAniManager : MonoBehaviour
         RestPositionDown = new Vector2(GA.transform.position.x, GA.transform.position.y-OffSet);
         RestPositionUp = new Vector2(GA.transform.position.x, GA.transform.position.y+OffSet);
         RestPositionSide = new Vector2(GA.transform.position.x+OffSet, GA.transform.position.y);
+        RestPositionLeft = new Vector2(GA.transform.position.x-OffSet, GA.transform.position.y);
     }
 
     
@@ -311,6 +314,15 @@ public class UIAniManager : MonoBehaviour
         SetPosition();
         GA.transform.DOMove(RestPositionSide, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationMove);
     }
+
+    public void SideLeftTransitionExitCenter(GameObject GA){
+        SetPosition();
+        GA.transform.DOMove(RestPositionLeft, MoveTransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationMove);
+    }
+    public void SideLeftTransitionExitCenter(GameObject GA, float TransitionDuration){
+        SetPosition();
+        GA.transform.DOMove(RestPositionLeft, TransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationMove);
+    }
     public void SideTransitionExitCenter(GameObject GA, float TransitionDuration){
         SetPosition();
         GA.transform.DOMove(RestPositionSide, TransitionDuration, false).OnComplete(() => {GA.SetActive(false);}).SetEase(_AnimationMove);
@@ -344,6 +356,19 @@ public class UIAniManager : MonoBehaviour
         GA.transform.position = RestPositionSide;
         GA.SetActive(true);
         GA.transform.DOMove(FinalPosition, MoveTransitionDuration, false).SetEase(_AnimationMove);
+    }
+
+    public void SideLeftTransitionEnterCenter(GameObject GA){
+        SetPosition();
+        GA.transform.position = RestPositionLeft;
+        GA.SetActive(true);
+        GA.transform.DOMove(FinalPosition, MoveTransitionDuration, false).SetEase(_AnimationMove);
+    }
+    public void SideLeftTransitionEnterCenter(GameObject GA, float TransitionDuration){
+        SetPosition();
+        GA.transform.position = RestPositionLeft;
+        GA.SetActive(true);
+        GA.transform.DOMove(FinalPosition, TransitionDuration, false).SetEase(_AnimationMove);
     }
     public void SideTransitionEnterCenter(GameObject GA, float TransitionDuration){
         SetPosition();
