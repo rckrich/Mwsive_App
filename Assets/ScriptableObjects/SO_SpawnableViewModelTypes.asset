@@ -29,3 +29,5 @@ MonoBehaviour:
     viewModelPrefab: {fileID: 5251568834196225102, guid: 329d943dafe43eb4a828358f3e47aa07, type: 3}
   - viewModelType: crearPlaylist
     viewModelPrefab: {fileID: 5615115499485239937, guid: 4f62c2ac380b29f4e9f3775c24ebcc8e, type: 3}
+  - viewModelType: listaDeOpciones
+    viewModelPrefab: {fileID: 4229539868790763320, guid: bc910731c67a54941b1bedb024faf7a2, type: 3}

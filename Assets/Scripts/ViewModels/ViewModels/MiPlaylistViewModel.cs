@@ -8,6 +8,10 @@ public class MiPlaylistViewModel : ViewModel
     // Start is called before the first frame update
     public GameObject playlistHolderPrefab;
     public Transform instanceParent;
+    public ScrollRect scrollRect;
+    public float end;
+    public int offset = 21;
+    int onlyone = 0;
     void Start()
     {
         SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_OnClick_GetCurrentUserPlaylists);
@@ -29,10 +33,45 @@ public class MiPlaylistViewModel : ViewModel
             if (item.@public)
             {
                 playlistHolderPrefab.GetComponentInChildren<ChangeImage>().OnClickToggle();
+                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().count = 0;
             }
         }
     }
 
+    public void OnReachEnd()
+    {
+       
+        if (onlyone == 0)
+        {
+            if (scrollRect.verticalNormalizedPosition <= end)
+            {
+                SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_GetMoreUserPlaylists, 20, offset);
+                offset += 20;
+                onlyone = 1;
+            }
+        }
+    }
+    private void Callback_GetMoreUserPlaylists(object[] _value)
+    {
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+
+        PlaylistRoot playlistRoot = (PlaylistRoot)_value[1];
+
+        foreach (Item item in playlistRoot.items)
+        {
+            MiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<MiplaylistHolder>();
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
+
+            if (item.images != null && item.images.Count > 0)
+                instance.SetImage(item.images[0].url);
+            if (item.@public)
+            {
+                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().OnClickToggle();
+                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().count = 0;
+            }
+        }
+        onlyone = 0;
+    }
     public void OnClick_BackButton()
     {
         NewScreenManager.instance.BackToPreviousView();

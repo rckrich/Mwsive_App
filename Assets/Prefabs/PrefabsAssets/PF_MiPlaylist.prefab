@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 134291380200234878}
   - component: {fileID: 7657340855463854437}
   - component: {fileID: 4668600245174421140}
-  - component: {fileID: 8272061238881450416}
+  - component: {fileID: 2814328039249780484}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -36.6, y: 8.200015}
+  m_AnchoredPosition: {x: -23.6, y: 8.200015}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &134291380200234878
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 24b5c7ff9a8aea9418525743445c7e7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06eb91b1fa93a5d47bd3c624b43357a4, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8272061238881450416}
+      - m_Target: {fileID: 4969784576469249356}
         m_TargetAssemblyTypeName: ChangeImage, Scripts
-        m_MethodName: OnClickToggle
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8272061238881450416
+--- !u!114 &2814328039249780484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,8 +321,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.2, y: 14.2}
-  m_SizeDelta: {x: 167, y: 15.1}
+  m_AnchoredPosition: {x: 23.2, y: 14.925}
+  m_SizeDelta: {x: 167, y: 16.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4969784576051622480
 CanvasRenderer:
@@ -379,8 +379,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 9
+  m_fontSizeBase: 9
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -514,8 +514,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9
-  m_fontSizeBase: 9
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

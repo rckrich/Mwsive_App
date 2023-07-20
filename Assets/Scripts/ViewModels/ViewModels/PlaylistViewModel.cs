@@ -18,6 +18,12 @@ public class PlaylistViewModel : ViewModel
     public TextMeshProUGUI playlistName;
     public bool @public;
     public GameObject button;
+    public string artists;
+    public HolderManager holderManager;
+    public float end;
+    public int offset = 21;
+    int onlyone = 0;
+    public ScrollRect scrollRect;
     void Start()
     {
         GetPlaylist();
@@ -25,8 +31,13 @@ public class PlaylistViewModel : ViewModel
     public void GetPlaylist()
     {
         if (!id.Equals(""))
+        {
             SpotifyConnectionManager.instance.GetPlaylist(id, Callback_GetPLaylist);
-        if (@public)
+            
+            holderManager.playlistId = id;
+            Debug.Log(holderManager.playlistId);
+        }
+        if (!@public)
         {  
             button.GetComponent<ChangeImage>().OnClickToggle();
         }
@@ -37,13 +48,16 @@ public class PlaylistViewModel : ViewModel
         foreach (Item item in _tracks.items)
         {
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
-            instance.Initialize(item.track.name, item.track.artists[0].name, item.track.id, item.track.artists[0].id); 
+            artists = "";
+            foreach(Artist artist in item.track.artists) { artists += artist.name + ", "; }
+            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri); 
             if (item.track.album.images != null && item.track.album.images.Count > 0)
                 instance.SetImage(item.track.album.images[0].url);
-            //trackHolderPrefab.GetComponent<TrackViewModel>().trackID = item.track.id;
-            //trackHolderPrefab.GetComponent<TrackViewModel>().GetTrack();
+            
         }
     }
+    
+
     private void Callback_GetPLaylist(object[] _value)
     {
         if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
@@ -52,7 +66,19 @@ public class PlaylistViewModel : ViewModel
         InstanceTrackObjects(searchedPlaylist.tracks);
        
     }
+    /*public void OnReachEnd()
+    {
 
+        if (onlyone == 0)
+        {
+            if (scrollRect.verticalNormalizedPosition <= end)
+            {
+                SpotifyConnectionManager.instance.GetPlaylist(id, Callback_GetPLaylist);
+                offset += 20;
+                onlyone = 1;
+            }
+        }
+    }*/
     public void OnClick_BackButton()
     {
         NewScreenManager.instance.BackToPreviousView();

@@ -22,6 +22,7 @@ public class TrackViewModel : ViewModel
     public GameObject trackHolderPrefab;
     public Transform instanceParent;
     public int objectsToNotDestroyIndex;
+    public string artista;
     //private string mp3URL;
     void Start()
     {
@@ -45,7 +46,8 @@ public class TrackViewModel : ViewModel
 
         TrackRoot trackRoot = (TrackRoot)_value[1];
         displayName.text = trackRoot.name;
-        artistName.text = trackRoot.album.name;
+        foreach(Artist artist in trackRoot.artists) { artistName.text += artist.name + ", "; }
+        
 
         //mp3URL = trackRoot.preview_url;
 
@@ -81,7 +83,9 @@ public class TrackViewModel : ViewModel
         foreach (Track track in _tracks)
         {
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
-            instance.Initialize(track.name, track.artists[0].name, track.id, track.artists[0].id);
+            artista = "";
+            foreach(Artist artist in track.artists) { artista += artist.name + ", "; }
+            instance.Initialize(track.name, artista, track.id, track.artists[0].id, track.uri);
 
             if (track.album.images != null && track.album.images.Count > 0)
                 instance.SetImage(track.album.images[0].url);

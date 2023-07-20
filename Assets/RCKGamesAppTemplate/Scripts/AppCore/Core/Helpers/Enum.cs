@@ -17,6 +17,7 @@ public enum ViewID
     MiPlaylistViewModel,
     PlayListViewModel,
     TrackViewModel,
+    listaDeOpciones,
 }
 
 public enum HTTPMethods
