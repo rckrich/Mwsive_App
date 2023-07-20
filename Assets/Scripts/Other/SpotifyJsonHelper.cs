@@ -33,6 +33,11 @@ public class Copyright
     public string type { get; set; }
 }
 
+public class VideoThumbnail
+{
+    public object url { get; set; }
+}
+
 public class Author
 {
     public string name { get; set; }
@@ -317,6 +322,7 @@ public class Item
     public string edition { get; set; }
     public List<Narrator> narrators { get; set; }
     public int total_chapters { get; set; }
+    public VideoThumbnail video_thumbnail { get; set; }
 }
 
 #endregion
