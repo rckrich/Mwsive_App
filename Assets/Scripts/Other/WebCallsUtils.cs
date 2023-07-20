@@ -70,4 +70,20 @@ public static class WebCallsUtils
         Debug.Log("Bad or expired token. This can happen if the user revoked a token or the access token has expired. Will try yo re-authenticate the user.");
         _callback(new object[] { AUTHORIZATION_FAILED_RESPONSE_CODE });
     }
+
+    public static Texture2D GetTextureCopy(Texture2D _source)
+    {
+        RenderTexture rt = RenderTexture.GetTemporary(_source.width, _source.height, 0, RenderTextureFormat.Default, RenderTextureReadWrite.Linear);
+        Graphics.Blit(_source, rt);
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = rt;
+        Texture2D readableTexture = new Texture2D(_source.width, _source.height);
+        readableTexture.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+        readableTexture.Apply();
+
+        RenderTexture.active = previous;
+        RenderTexture.ReleaseTemporary(rt);
+
+        return readableTexture;
+    }
 }

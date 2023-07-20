@@ -19,6 +19,17 @@ public class TrackAction
     public float duration { get; set; }
 }
 
+public class MusicalDNA
+{
+    public string type { get; set; }
+    public List<string> track_ids { get; set; }
+}
+
+public class Badge
+{
+    public int id;
+}
+
 #endregion
 
 #region Json Convert Classes
@@ -37,6 +48,16 @@ public class MwsiveLoginRoot
 public class MwsiveCuratorsRoot
 {
     public List<MwsiveUser> curators { get; set; } 
+}
+
+public class MwsiveFollowersRoot
+{
+    public List<MwsiveUser> followers { get; set; }
+}
+
+public class MwsiveBadgesRoot
+{
+    public List<Badge> badges { get; set; }
 }
 
 #endregion

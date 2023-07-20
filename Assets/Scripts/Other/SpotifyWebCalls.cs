@@ -321,6 +321,103 @@ public static class SpotifyWebCalls
         }
     }
 
+    public static IEnumerator CR_GetPlaylistItems(string _token, SpotifyWebCallback _callback, string _playlist_id, string _market = "ES", int _limit = 20, int _offset = 0)
+    {
+        string jsonResult = "";
+
+        string url = "https://api.spotify.com/v1/playlists/" + _playlist_id + "/tracks";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("market", _market);
+        parameters.Add("limit", _limit.ToString());
+        parameters.Add("offset", _offset.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    WebCallsUtils.ReauthenticateUser(_callback);
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch playlist result: " + jsonResult);
+                    PlaylistRoot playlistRoot = JsonConvert.DeserializeObject<PlaylistRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, playlistRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed on fetch playlist: " + jsonResult);
+            yield break;
+
+        }
+    }
+
+    public static IEnumerator CR_GetPlaylistByURL(string _token, string _url, SpotifyWebCallback _callback)
+    {
+        string jsonResult = "";
+
+        string url = _url;
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    WebCallsUtils.ReauthenticateUser(_callback);
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch playlist result: " + jsonResult);
+                    PlaylistRoot playlistRoot = JsonConvert.DeserializeObject<PlaylistRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, playlistRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed on fetch playlist: " + jsonResult);
+            yield break;
+
+        }
+    }
+
     public static IEnumerator CR_GetTrack(string _token, SpotifyWebCallback _callback, string _track_id, string _market = "ES")
     {
         string jsonResult = "";

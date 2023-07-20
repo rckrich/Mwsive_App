@@ -200,6 +200,40 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((SearchedPlaylist)_value[1]);
     }
 
+    public void GetPlaylistItems(string _playlistID, SpotifyWebCallback _callback = null, string _market = "ES", int _limit = 20, int _offset = 0)
+    {
+        _callback += Callback_GetPlaylistItems;
+        StartCoroutine(SpotifyWebCalls.CR_GetPlaylistItems(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _playlistID, _market, _limit, _offset));
+    }
+
+    private void Callback_GetPlaylistItems(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((PlaylistRoot)_value[1]);
+    }
+
+    public void GetPlaylistByURL(string _url, SpotifyWebCallback _callback = null)
+    {
+        _callback += Callback_GetPlaylistByURL;
+        StartCoroutine(SpotifyWebCalls.CR_GetPlaylistByURL(oAuthHandler.GetSpotifyToken().AccessToken, _url, _callback));
+    }
+
+    private void Callback_GetPlaylistByURL(object[] _value)
+    {
+        if (CheckReauthenticateUser((long)_value[0]))
+        {
+            StartReauthentication();
+            return;
+        }
+
+        Debug.Log((PlaylistRoot)_value[1]);
+    }
+
     public void GetTrack(string _trackSpotifyID, SpotifyWebCallback _callback = null, string _market = "ES")
     {
         _callback += Callback_GetTrack;
