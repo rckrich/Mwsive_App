@@ -27,14 +27,8 @@ public class MiPlaylistViewModel : ViewModel
         {
             MiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<MiplaylistHolder>();
             instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
-
-            if (item.images != null && item.images.Count > 0)
-                instance.SetImage(item.images[0].url);
-            if (item.@public)
-            {
-                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().OnClickToggle();
-                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().count = 0;
-            }
+            if (!item.@public) { instance.PublicTrue(); }
+            if (item.images != null && item.images.Count > 0) { instance.SetImage(item.images[0].url); }              
         }
     }
 
@@ -61,14 +55,9 @@ public class MiPlaylistViewModel : ViewModel
         {
             MiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<MiplaylistHolder>();
             instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
-
+            if (!item.@public) { instance.PublicTrue(); }
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);
-            if (item.@public)
-            {
-                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().OnClickToggle();
-                playlistHolderPrefab.GetComponentInChildren<ChangeImage>().count = 0;
-            }
         }
         onlyone = 0;
     }

@@ -21,9 +21,10 @@ public class PlaylistViewModel : ViewModel
     public string artists;
     public HolderManager holderManager;
     public float end;
-    public int offset = 21;
+    public int offset = 1;
     int onlyone = 0;
     public ScrollRect scrollRect;
+   
     void Start()
     {
         GetPlaylist();
@@ -33,7 +34,7 @@ public class PlaylistViewModel : ViewModel
         if (!id.Equals(""))
         {
             SpotifyConnectionManager.instance.GetPlaylist(id, Callback_GetPLaylist);
-            
+
             holderManager.playlistId = id;
             Debug.Log(holderManager.playlistId);
         }
@@ -50,10 +51,10 @@ public class PlaylistViewModel : ViewModel
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
             artists = "";
             foreach(Artist artist in item.track.artists) { artists += artist.name + ", "; }
-            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri); 
+            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url); 
             if (item.track.album.images != null && item.track.album.images.Count > 0)
                 instance.SetImage(item.track.album.images[0].url);
-            
+            offset++;
         }
     }
     
@@ -66,19 +67,39 @@ public class PlaylistViewModel : ViewModel
         InstanceTrackObjects(searchedPlaylist.tracks);
        
     }
-    /*public void OnReachEnd()
+    public void OnReachEnd()
     {
 
         if (onlyone == 0)
         {
             if (scrollRect.verticalNormalizedPosition <= end)
             {
-                SpotifyConnectionManager.instance.GetPlaylist(id, Callback_GetPLaylist);
-                offset += 20;
+                SpotifyConnectionManager.instance.GetPlaylistItems(id, Callback_GetMorePLaylist, "ES", 50, offset);
+                offset += 50;
                 onlyone = 1;
             }
         }
-    }*/
+    }
+    private void Callback_GetMorePLaylist(object[] _value)
+    {
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+
+        PlaylistRoot playlistRoot = (PlaylistRoot)_value[1];
+
+        foreach (Item item in playlistRoot.items)
+        {
+            TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
+            artists = "";
+            foreach (Artist artist in item.track.artists) { artists += artist.name + ", "; }
+            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url);
+            if (item.track.album.images != null && item.track.album.images.Count > 0)
+                instance.SetImage(item.track.album.images[0].url);
+        }
+        onlyone = 0;
+
+    }
+    
+
     public void OnClick_BackButton()
     {
         NewScreenManager.instance.BackToPreviousView();

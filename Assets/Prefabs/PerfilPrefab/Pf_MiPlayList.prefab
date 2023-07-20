@@ -834,7 +834,8 @@ MonoBehaviour:
   playlistHolderPrefab: {fileID: 4969784576469249356, guid: 32d7e3cd023772544896537675683dfb, type: 3}
   instanceParent: {fileID: 2806249981404453540}
   scrollRect: {fileID: 2806249980358450099}
-  end: -0.1
+  end: 0
+  offset: 21
 --- !u!1 &2806249980537311655
 GameObject:
   m_ObjectHideFlags: 0

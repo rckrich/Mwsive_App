@@ -12,6 +12,8 @@ public class MiplaylistHolder : MonoBehaviour
     public TextMeshProUGUI playlistOwner;
     private string spotifyID;
     public PlaylistViewModel playlistViewModel;
+    public MiPlaylistViewModel miPlaylistViewModel;
+    public ChangeImage change;
     public bool @public;
 
 
@@ -32,6 +34,10 @@ public class MiplaylistHolder : MonoBehaviour
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 
+    public void PublicTrue()
+    {
+        change.True();
+    }
     public void SetImage(string _pictureURL)
     {
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);

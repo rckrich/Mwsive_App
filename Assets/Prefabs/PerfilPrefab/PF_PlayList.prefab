@@ -333,10 +333,10 @@ RectTransform:
   m_Father: {fileID: 443706786995916391}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 49.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 642, y: -24.75}
+  m_SizeDelta: {x: 1284, y: 49.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &443706786586253931
 GameObject:
@@ -912,12 +912,15 @@ MonoBehaviour:
   scrollViewContent: {fileID: 0}
   trackHolderPrefab: {fileID: 4969784576469249356, guid: 4e85625fa6d8d7e4fa6875d2d8ad526e, type: 3}
   instanceParent: {fileID: 5680417848754778174}
-  id: 
+  id: 49FG9h44b7sGMfMyWzLRmv
   playlistName: {fileID: 502545051827305868}
   public: 0
   button: {fileID: 443706786586586521}
   artists: 
   holderManager: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
+  end: -0.01
+  offset: 21
+  scrollRect: {fileID: 5680417847300075328}
 --- !u!1 &443706787249666192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,10 +1029,10 @@ RectTransform:
   m_Father: {fileID: 443706786995916391}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 42.627}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 642, y: -70.8135}
+  m_SizeDelta: {x: 1284, y: 42.627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &443706787427645295
 GameObject:
@@ -1427,10 +1430,10 @@ RectTransform:
   m_Father: {fileID: 443706786995916391}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 425.1975}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 642, y: -304.72577}
+  m_SizeDelta: {x: 1284, y: 425.1975}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4902275749775743615
 GameObject:
@@ -1719,7 +1722,19 @@ MonoBehaviour:
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3057724479777381238}
+        m_TargetAssemblyTypeName: PlaylistViewModel, Scripts
+        m_MethodName: OnReachEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5680417847336116765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,7 +2461,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: lo hice por el punk
+  m_text: "Rock en espa\xF1ol "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8667039c63013024297e3de18c119b6e, type: 2}
   m_sharedMaterial: {fileID: 7919419412791477614, guid: 8667039c63013024297e3de18c119b6e, type: 2}

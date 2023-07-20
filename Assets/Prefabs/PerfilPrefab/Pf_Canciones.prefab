@@ -1847,6 +1847,7 @@ MonoBehaviour:
   instanceParent: {fileID: 5251568834104330481}
   objectsToNotDestroyIndex: 0
   artista: 
+  holderManager: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
 --- !u!1 &5251568834233677185
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,14 +23,16 @@ public class TrackViewModel : ViewModel
     public Transform instanceParent;
     public int objectsToNotDestroyIndex;
     public string artista;
-    //private string mp3URL;
+    int index = 0;
+    public HolderManager holderManager;
+ 
     void Start()
     {
+        
         GetTrack();
         GetRecommendations();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -46,10 +48,14 @@ public class TrackViewModel : ViewModel
 
         TrackRoot trackRoot = (TrackRoot)_value[1];
         displayName.text = trackRoot.name;
-        foreach(Artist artist in trackRoot.artists) { artistName.text += artist.name + ", "; }
-        
+        foreach(Artist artist in trackRoot.artists) { artistName.text += artist.name + ", ";  index++; }
+        seed_artists = new string[index];
+        for(int i = 0; i < seed_artists.Length; i++)
+        {
+            seed_artists[i] = trackRoot.artists[i].id;
+        }
 
-        //mp3URL = trackRoot.preview_url;
+     
 
         ImageManager.instance.GetImage(trackRoot.album.images[0].url, trackPicture, (RectTransform)this.transform);
     }
@@ -58,7 +64,7 @@ public class TrackViewModel : ViewModel
     {
         seed_tracks[0] = trackID;
         //seed_genres[0] = genre;
-        seed_artists[0] = artistId;
+        //seed_artists[0] = artistId;
         if ((seed_artists.Length + /*seed_genres.Length +*/ seed_tracks.Length) > 5)
         {
             Debug.Log("The seeds should be no more than 5 from either artists, genres or tracks");
@@ -70,7 +76,7 @@ public class TrackViewModel : ViewModel
 
     private void Callback_GetRecommendations(object[] _value)
     {
-        //if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
 
         RecommendationsRoot recommendationsRoot = (RecommendationsRoot)_value[1];
 
@@ -85,12 +91,13 @@ public class TrackViewModel : ViewModel
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
             artista = "";
             foreach(Artist artist in track.artists) { artista += artist.name + ", "; }
-            instance.Initialize(track.name, artista, track.id, track.artists[0].id, track.uri);
+            instance.Initialize(track.name, artista, track.id, track.artists[0].id, track.uri, track.preview_url);
 
             if (track.album.images != null && track.album.images.Count > 0)
                 instance.SetImage(track.album.images[0].url);
         }
     }
+    
 
     public void OnClick_BackButton()
     {
