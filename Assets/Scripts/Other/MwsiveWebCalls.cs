@@ -809,4 +809,602 @@ public class MwsiveWebCalls : MonoBehaviour
         }
     }
 
+    public static IEnumerator CR_GetRanking(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/ranking";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch ranking result: " + jsonResult);
+                    MwsiveRankingRoot mwsiveRankingRoot = JsonConvert.DeserializeObject<MwsiveRankingRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRankingRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch ranking result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetSettings(string _token, MwsiveWebCallback _callback)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/settings";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch settings result: " + jsonResult);
+                    MwsiveSettingsRoot mwsiveSettingsRoot = JsonConvert.DeserializeObject<MwsiveSettingsRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveSettingsRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch settings result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetChallenges(string _token, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/challenges";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch challenges result: " + jsonResult);
+                    MwsiveChallengesRoot mwsiveChallengesRoot = JsonConvert.DeserializeObject<MwsiveChallengesRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveChallengesRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch challenges result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetCompleteChallenges(string _token, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/complete_challenges";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch complete challenges result: " + jsonResult);
+                    MwsiveChallengesRoot mwsiveChallengesRoot = JsonConvert.DeserializeObject<MwsiveChallengesRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveChallengesRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch complete challenges result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_PostChallengeComplete(string _token, int _challenge_id, MwsiveWebCallback _callback)
+    {
+        string jsonResult = "";
+
+        WWWForm form = new WWWForm();
+
+        form.AddField("challenge_id", _challenge_id.ToString());
+
+        string url = "https://mwsive.com/me/set_points";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Post challenge complete " + jsonResult);
+                    MwsiveCompleteChallengesRoot mwsiveCompleteChallengesRoot = JsonConvert.DeserializeObject<MwsiveCompleteChallengesRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveCompleteChallengesRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed on post challenge complete " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetAdvertising(string _token, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/advertasing";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch advertasing result: " + jsonResult);
+                    MwsiveAdvertisingRoot mwsiveAdvertisingRoot = JsonConvert.DeserializeObject<MwsiveAdvertisingRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveAdvertisingRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch advertasing result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetRecommendedCurators(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/recommended_curators";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch recommended curators result: " + jsonResult);
+                    MwsiveRecommendedCuratorsRoot mwsiveRecommendedCuratorsRoot = JsonConvert.DeserializeObject<MwsiveRecommendedCuratorsRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRecommendedCuratorsRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch recommended curators result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetRecommendedArtists(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/recommended_artists";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch recommended curators result: " + jsonResult);
+                    MwsiveRecommendedArtistsRoot mwsiveRecommendedArtist = JsonConvert.DeserializeObject<MwsiveRecommendedArtistsRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRecommendedArtist });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch recommended curators result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetRecommendedPlaylists(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/recommended_playlists";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch recommended playlists result: " + jsonResult);
+                    MwsiveRecommendedPlaylistRoot mwsiveRecommendedPlaylistRoot = JsonConvert.DeserializeObject<MwsiveRecommendedPlaylistRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRecommendedPlaylistRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch recommended playlists result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetRecommendedTracks(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/recommended_tracks";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch recommended tracks result: " + jsonResult);
+                    MwsiveRecommendedTrackRoot mwsiveRecommendedTrackRoot = JsonConvert.DeserializeObject<MwsiveRecommendedTrackRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRecommendedTrackRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch recommended tracks result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetRecommendedAlbums(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/recommended_albums";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch recommended albums result: " + jsonResult);
+                    MwsiveRecommendedAlbumRoot mwsiveRecommendedAlbumRoot = JsonConvert.DeserializeObject<MwsiveRecommendedAlbumRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveRecommendedAlbumRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch recommended albums result: " + jsonResult);
+            yield break;
+        }
+    }
+
+    public static IEnumerator CR_GetGenres(string _token, string _type, MwsiveWebCallback _callback, int _offset = 0, int _limit = 20)
+    {
+        string jsonResult = "";
+
+        string url = "https://mwsive.com/genres";
+
+        Dictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("type", _type);
+        parameters.Add("offset", _offset.ToString());
+        parameters.Add("limit", _limit.ToString());
+
+        url = WebCallsUtils.AddParametersToURI(url + "?", parameters);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            webRequest.SetRequestHeader("Accept", "application/json");
+            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ProtocolError || webRequest.result == UnityWebRequest.Result.ConnectionError)
+            {
+                //Catch response code for multiple requests to the server in a short timespan.
+
+                if (webRequest.responseCode.Equals(WebCallsUtils.AUTHORIZATION_FAILED_RESPONSE_CODE))
+                {
+                    //TODO Response when unauthorized
+                }
+
+                Debug.Log("Protocol Error or Connection Error on fetch profile");
+                yield break;
+            }
+            else
+            {
+                while (!webRequest.isDone) { yield return null; }
+
+                if (webRequest.isDone)
+                {
+                    jsonResult = webRequest.downloadHandler.text;
+                    Debug.Log("Fetch genres result: " + jsonResult);
+                    MwsiveGenresRoot mwsiveGenresRoot = JsonConvert.DeserializeObject<MwsiveGenresRoot>(jsonResult);
+                    _callback(new object[] { webRequest.responseCode, mwsiveGenresRoot });
+                    yield break;
+                }
+            }
+
+            Debug.Log("Failed fetch genres result: " + jsonResult);
+            yield break;
+        }
+    }
 }

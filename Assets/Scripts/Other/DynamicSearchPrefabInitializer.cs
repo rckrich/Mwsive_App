@@ -4,14 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DynamicSearchPrefabsManager : MonoBehaviour
+public class DynamicSearchPrefabInitializer : MonoBehaviour
 {
     public Image _Image;
+    private bool _IsTheObjectVisible;
 
     public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
 
     // Start is called before the first frame update
 
+    public bool IsTheObjectVisible(){
+        return _IsTheObjectVisible;
+    }
+
+    private void OnBecameVisible() {
+        Debug.Log("Visible");
+        _IsTheObjectVisible = true;
+    }
+    
+    private void OnBecameInvisible() {
+        Debug.Log("Invisible");
+        _IsTheObjectVisible = false;
+    }
     public void InitializeSingle(string _text){
         
         TextMesh[0].text = _text;
