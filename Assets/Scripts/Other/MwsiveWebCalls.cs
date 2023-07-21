@@ -10,7 +10,7 @@ public delegate void MwsiveWebCallback(object[] _value);
 
 public class MwsiveWebCalls : MonoBehaviour
 {
-    public static IEnumerator CR_PostCreateUser(string _email, string _token, string _genre, int _age, ProfileRoot _profile, MwsiveWebCallback _callback)
+    public static IEnumerator CR_PostCreateUser(string _token, string _email, string _genre, int _age, ProfileRoot _profile, MwsiveWebCallback _callback)
     {
         string jsonResult = "";
 
@@ -68,7 +68,7 @@ public class MwsiveWebCalls : MonoBehaviour
         }
     }
 
-    public static IEnumerator CR_PostLogin(string _email, string _token, MwsiveWebCallback _callback)
+    public static IEnumerator CR_PostLogin(string _token, string _email, MwsiveWebCallback _callback)
     {
         string jsonResult = "";
 
@@ -304,7 +304,7 @@ public class MwsiveWebCalls : MonoBehaviour
 
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
-            TrackAction newAction = new TrackAction
+            TrackActionRoot newAction = new TrackActionRoot
             {
                 user_id = _user_id,
                 track_id = _track_id,
@@ -1244,7 +1244,7 @@ public class MwsiveWebCalls : MonoBehaviour
                 {
                     jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Fetch recommended playlists result: " + jsonResult);
-                    MwsiveRecommendedPlaylistRoot mwsiveRecommendedPlaylistRoot = JsonConvert.DeserializeObject<MwsiveRecommendedPlaylistRoot>(jsonResult);
+                    MwsiveRecommendedPlaylistsRoot mwsiveRecommendedPlaylistRoot = JsonConvert.DeserializeObject<MwsiveRecommendedPlaylistsRoot>(jsonResult);
                     _callback(new object[] { webRequest.responseCode, mwsiveRecommendedPlaylistRoot });
                     yield break;
                 }
@@ -1295,7 +1295,7 @@ public class MwsiveWebCalls : MonoBehaviour
                 {
                     jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Fetch recommended tracks result: " + jsonResult);
-                    MwsiveRecommendedTrackRoot mwsiveRecommendedTrackRoot = JsonConvert.DeserializeObject<MwsiveRecommendedTrackRoot>(jsonResult);
+                    MwsiveRecommendedTracksRoot mwsiveRecommendedTrackRoot = JsonConvert.DeserializeObject<MwsiveRecommendedTracksRoot>(jsonResult);
                     _callback(new object[] { webRequest.responseCode, mwsiveRecommendedTrackRoot });
                     yield break;
                 }
@@ -1346,7 +1346,7 @@ public class MwsiveWebCalls : MonoBehaviour
                 {
                     jsonResult = webRequest.downloadHandler.text;
                     Debug.Log("Fetch recommended albums result: " + jsonResult);
-                    MwsiveRecommendedAlbumRoot mwsiveRecommendedAlbumRoot = JsonConvert.DeserializeObject<MwsiveRecommendedAlbumRoot>(jsonResult);
+                    MwsiveRecommendedAlbumsRoot mwsiveRecommendedAlbumRoot = JsonConvert.DeserializeObject<MwsiveRecommendedAlbumsRoot>(jsonResult);
                     _callback(new object[] { webRequest.responseCode, mwsiveRecommendedAlbumRoot });
                     yield break;
                 }
