@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class SpotifyPreviewAudioManager : MonoBehaviour
 {
     private static SpotifyPreviewAudioManager _instance;
+    public TrackHolder trackHolder;
 
     public static SpotifyPreviewAudioManager instance
     {
@@ -31,7 +32,10 @@ public class SpotifyPreviewAudioManager : MonoBehaviour
     public void StopTrack()
     {
         if (audioSource.isPlaying)
+        {
             audioSource.Stop();
+            
+        }
     }
 
     private IEnumerator CR_GetAudioClip(string _audioURL)
@@ -55,6 +59,7 @@ public class SpotifyPreviewAudioManager : MonoBehaviour
                 audioSource.clip = audioClip;
                 audioSource.time = 0f;
                 audioSource.Play();
+                
                 Debug.Log("Audio is playing");
             }
         }

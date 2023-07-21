@@ -334,10 +334,10 @@ public class SpotifyConnectionManager : Manager
         Debug.Log((RemoveItemsToPlaylistRoot)_value[1]);
     }
 
-    public void GetRecommendations(string[] _seed_artists, string[] _seed_genres, string[] _seed_tracks, SpotifyWebCallback _callback = null, int _limit = 20, string _market = "ES")
+    public void GetRecommendations(string[] _seed_artists, /*string[] _seed_genres,*/ string[] _seed_tracks, SpotifyWebCallback _callback = null, int _limit = 20, string _market = "ES")
     {
         _callback += Callback_GetRecommendations;
-        StartCoroutine(SpotifyWebCalls.CR_GetRecommendations(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _seed_artists, _seed_genres, _seed_tracks, _limit, _market));
+        StartCoroutine(SpotifyWebCalls.CR_GetRecommendations(oAuthHandler.GetSpotifyToken().AccessToken, _callback, _seed_artists,/* _seed_genres,*/ _seed_tracks, _limit, _market));
     }
 
     private void Callback_GetRecommendations(object[] _value)

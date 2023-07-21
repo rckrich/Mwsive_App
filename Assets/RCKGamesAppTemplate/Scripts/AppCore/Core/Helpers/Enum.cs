@@ -9,9 +9,15 @@ public enum ViewID
     MainDemoViewModel,
     HeaderDemoViewModel,
     SettingsDemoViewModel,
+    PlaylistViewModel,
     //App ViewIDs
     ProfileViewModel,
     InsigniasViewModel,
+    MainViewModel,
+    MiPlaylistViewModel,
+    PlayListViewModel,
+    TrackViewModel,
+    listaDeOpciones,
 }
 
 public enum HTTPMethods
