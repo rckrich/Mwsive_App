@@ -516,15 +516,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5406864610665941153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8cb52cc93c7c654bafd1ec6534244b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7491a75095132447ab97b9b74f0ed4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxPrefabsInScreen: 0
-  ScrollBar: {fileID: 5406864609142382915}
-  SpawnArea: {fileID: 5406864609609788802}
-  Prefabs: {fileID: 6887279062811286481, guid: bf01953af27ffb149861c1d532a7434f, type: 3}
-  LastPosition: {fileID: 5406864610155638871}
-  PrefabPosition: {fileID: 5406864608825950123}
+  ScrollBar: {fileID: 0}
+  SpawnArea: {fileID: 0}
+  Prefabs: {fileID: 0}
+  LastPosition: {fileID: 0}
+  PrefabPosition: {fileID: 0}
   Instances: []
 --- !u!1001 &6039435706955067005
 PrefabInstance:

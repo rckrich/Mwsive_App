@@ -11326,13 +11326,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 651059708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8cb52cc93c7c654bafd1ec6534244b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7491a75095132447ab97b9b74f0ed4c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxPrefabsInScreen: 0
-  ScrollBar: {fileID: 1291946014}
-  SpawnArea: {fileID: 1644004575}
-  Prefabs: {fileID: 6887279062811286481, guid: bf01953af27ffb149861c1d532a7434f, type: 3}
+  ScrollBar: {fileID: 0}
+  SpawnArea: {fileID: 0}
+  Prefabs: {fileID: 0}
   LastPosition: {fileID: 0}
   PrefabPosition: {fileID: 0}
   Instances: []
@@ -35143,14 +35143,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1959439699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c57bec6e162a5c4696f5ffc30b63566, type: 3}
+  m_Script: {fileID: 11500000, guid: 07fe411b74c4a43519a271a42cf1b049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Descubrir: {fileID: 2126497345}
+  Descubrir: {fileID: 0}
   Ranking: {fileID: 0}
-  DescubrirButton: {fileID: 1031199506}
-  RankingButton: {fileID: 323944861}
-  SurfButton: {fileID: 843050644}
+  DescubrirButton: {fileID: 0}
+  RankingButton: {fileID: 0}
+  SurfButton: {fileID: 0}
 --- !u!1 &1978049249
 GameObject:
   m_ObjectHideFlags: 0
@@ -37193,37 +37193,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2126497345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b39c3f8ab825a4a4aa495d71c3614f5c, type: 3}
+  m_Script: {fileID: 11500000, guid: cf03a18882bcc494a8bc2d26bc638f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Descubrir: {fileID: 1026595804}
-  Searchbar: {fileID: 650546527}
-  Prefabs:
-  - {fileID: 6457824725715141589, guid: b638ae79de9f8414f986c3e29d0a71e5, type: 3}
-  - {fileID: 6457824725715141589, guid: b638ae79de9f8414f986c3e29d0a71e5, type: 3}
-  - {fileID: 3612097241878420265, guid: 2488cd8e5bce23342945a2690437e0c5, type: 3}
-  - {fileID: 6457824725715141589, guid: b638ae79de9f8414f986c3e29d0a71e5, type: 3}
-  - {fileID: 6887279062811286481, guid: bf01953af27ffb149861c1d532a7434f, type: 3}
-  - {fileID: 7010731024745489290, guid: 1e5325db2bb3db84899696510538a783, type: 3}
-  - {fileID: 1071518571179327033, guid: b4b0735d3d498f14991ad0571480e1b8, type: 3}
-  LastPosition:
-  - {fileID: 1054319458}
-  - {fileID: 1435666606575312960}
-  - {fileID: 5837932833388490562}
-  - {fileID: 1146940193}
-  - {fileID: 5098325575259508134}
-  - {fileID: 1606757046220095612}
-  - {fileID: 3628828426230537048}
-  PrefabsPosition: {fileID: 191085492}
-  SpawnArea: {fileID: 803109793}
-  Scrollbar:
-  - {fileID: 1151503259}
-  - {fileID: 75388313}
-  - {fileID: 939064330}
-  - {fileID: 1151249389}
-  - {fileID: 72011038}
-  - {fileID: 685489199}
-  - {fileID: 1660356424}
+  Descubrir: {fileID: 0}
+  Searchbar: {fileID: 0}
+  Prefabs: []
+  LastPosition: []
+  PrefabsPosition: {fileID: 0}
+  SpawnArea: {fileID: 0}
+  Scrollbar: []
   numEnpantalla: 0
   MaxPrefabsinScreen: 0
 --- !u!1 &2138705229
