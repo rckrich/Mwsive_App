@@ -77,7 +77,10 @@ public class ProfileViewModel : ViewModel
                 instance.SetImage(playlistRoot.items[i].images[0].url);
         }
     }
+    public void OnClick_BackButton()
+    {
+        NewScreenManager.instance.BackToPreviousView();
+    }
 
-    
 }
 

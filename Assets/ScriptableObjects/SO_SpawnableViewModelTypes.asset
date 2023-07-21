@@ -31,3 +31,5 @@ MonoBehaviour:
     viewModelPrefab: {fileID: 5615115499485239937, guid: 4f62c2ac380b29f4e9f3775c24ebcc8e, type: 3}
   - viewModelType: listaDeOpciones
     viewModelPrefab: {fileID: 4229539868790763320, guid: bc910731c67a54941b1bedb024faf7a2, type: 3}
+  - viewModelType: surfMiPlaylist
+    viewModelPrefab: {fileID: 2806249980485039193, guid: 9cbc6ba61f0ada549a7ad17a322016d2, type: 3}

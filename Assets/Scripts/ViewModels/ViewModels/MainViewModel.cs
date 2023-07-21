@@ -19,8 +19,9 @@ public class MainViewModel : ViewModel
     public void OnClickSpotify()
     {
         SpotifyConnectionManager.instance.StartConnection(FillTokenText);
-        NewScreenManager.instance.ChangeToSpawnedView("profile");
+        NewScreenManager.instance.ChangeToMainView(ViewID.SurfViewModel, false);
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+       
     }
 
     public void FillTokenText(object[] _value)
