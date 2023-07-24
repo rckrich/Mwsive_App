@@ -27555,7 +27555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a8681c8b202e44ab2970478333f9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Searchbar: {fileID: 0}
   scenes:
   - {fileID: 2089862153}
   - {fileID: 1596492389}
@@ -27564,9 +27563,6 @@ MonoBehaviour:
   - {fileID: 106409626}
   - {fileID: 1280315383}
   - {fileID: 571014905}
-  TextMesh: []
-  Prefabs: []
-  PrefabsPosition: {fileID: 0}
   numEnpantalla: 0
   images:
   - {fileID: 908103634}

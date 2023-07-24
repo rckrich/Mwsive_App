@@ -18,7 +18,8 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
-        playlistOwner.text = _owner;
+        if(playlistOwner != null)
+            playlistOwner.text = _owner;
         @public = _public;
     }
 
@@ -26,7 +27,8 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
-        playlistOwner.text = _owner;
+        if (playlistOwner != null)
+            playlistOwner.text = _owner;
         @public = _public;
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
@@ -44,10 +46,13 @@ public class SpotifyConnectionDemoPlaylistsHolder : MonoBehaviour
 
     public void OnClick_SpawnPlaylistButton()
     {
-        playlistViewModel.playlistName.text = playlistName.text;
-        playlistViewModel.id = spotifyID;
-        playlistViewModel.@public = @public;
-        NewScreenManager.instance.ChangeToSpawnedView("playlist");
-        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+        if(playlistViewModel != null)
+        {
+            playlistViewModel.playlistName.text = playlistName.text;
+            playlistViewModel.id = spotifyID;
+            playlistViewModel.@public = @public;
+            NewScreenManager.instance.ChangeToSpawnedView("playlist");
+            Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+        }
     }
 }
