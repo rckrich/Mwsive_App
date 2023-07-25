@@ -428,12 +428,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6457824725715141589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4a085124b3179346a0bcb1ff69a7324, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f7877ea0c3fd224b94aaaa21b63bbae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Image: {fileID: 6457824724302284278}
-  TextMesh:
-  - {fileID: 6457824724375703219}
+  _Image: {fileID: 0}
+  TextMesh: []
 --- !u!114 &6457824725715141591
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DynamicSearchPrefabEventSystem : MonoBehaviour
+public class Descubrir_ViewModel : MonoBehaviour
 {
     public DescubrirPaginas Descubrir;
     public GameObject Searchbar;
@@ -46,10 +46,9 @@ public class DynamicSearchPrefabEventSystem : MonoBehaviour
         int lastnum= numEnpantalla;
         numEnpantalla = Descubrir.GetCurrentEscena();
         SearchText = Searchbar.GetComponent<TMP_InputField>().text;
-        
+        Debug.Log(SearchText.Length);
         if(SearchText.Length >= 3 || EnableSerach){
             if(numEnpantalla != lastnum){
-                KillPrefablist(lastnum);
             }
             if(ListOfLists[numEnpantalla].Count ==0){
                 CalculateMaxPrefabToCall();
