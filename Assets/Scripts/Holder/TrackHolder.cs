@@ -19,8 +19,9 @@ public class TrackHolder : ViewModel
     private string previewURL;
     private string mp3URL;
     public GameObject playSimbol;
+    public ExternalUrls url;
 
-    public void Initialize(string _trackName, string _artistName, string _trackSpotifyID, string _artistId, string _uri, string _previewURL)
+    public void Initialize(string _trackName, string _artistName, string _trackSpotifyID, string _artistId, string _uri, string _previewURL, ExternalUrls _url)
     {
         trackName.text = _trackName;
         artistName.text = _artistName;
@@ -28,16 +29,18 @@ public class TrackHolder : ViewModel
         artistId = _artistId;
         uri = _uri;      
         previewURL = _previewURL;
+        url = _url;
     }
 
-    public void Initialize(string _trackName, string _artistName, string _pictureURL, string _artistId, string _uri, string _previewURL, string _trackSpotifyID)
+    public void Initialize(string _trackName, string _artistName,  string _artistId, string _uri, string _previewURL, string _trackSpotifyID, ExternalUrls _url,string _pictureURL)
     {
         trackName.text = _trackName;
         artistName.text = _artistName;
         trackSpotifyID = _trackSpotifyID;
         artistId= _artistId;
-        uri= _uri;
-        previewURL= _previewURL;
+        uri= _uri;       
+        previewURL = _previewURL;
+        url= _url;
         ImageManager.instance.GetImage(_pictureURL, trackPicture, (RectTransform)this.transform);
     }
 
@@ -64,6 +67,7 @@ public class TrackHolder : ViewModel
     {
         holderManager.uri[0] = uri;
         songOptions.trackID = trackSpotifyID;
+        holderManager.trackExternalUrl = url;
         NewScreenManager.instance.ChangeToSpawnedView("listaDeOpciones");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }

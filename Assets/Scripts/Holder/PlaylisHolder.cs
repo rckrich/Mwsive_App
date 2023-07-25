@@ -14,6 +14,7 @@ public class PlaylisHolder : MonoBehaviour
     public bool @public;
 
 
+
     public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public)
     {
         playlistName.text = _playlistName;

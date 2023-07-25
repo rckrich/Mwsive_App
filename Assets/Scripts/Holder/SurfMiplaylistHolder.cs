@@ -20,6 +20,7 @@ public class SurfMiplaylistHolder : ViewModel
     private bool enabled;
     public bool changeBool;
     public string description;
+    public ExternalUrls url;
     public void SetOnSelectedPlaylist(bool _enabled) { enabled = _enabled; }
     public bool GetOnSelectedPlaylist() { return enabled; }
     public void OnEnable()
@@ -30,22 +31,24 @@ public class SurfMiplaylistHolder : ViewModel
     {
         RemoveEventListener<OnSelectedPlaylistClick>(SelectedPlaylistEventListener);
     }
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description, ExternalUrls _url)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
         description = _description;
+        url = _url;
     }
 
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description, string _pictureURL)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description, ExternalUrls _url, string _pictureURL)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
         description= _description;
+        url= _url;
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 
@@ -64,6 +67,7 @@ public class SurfMiplaylistHolder : ViewModel
         playlistViewModel.playlistName.text = playlistName.text;
         playlistViewModel.id = spotifyID;
         playlistViewModel.@public = @public;
+        holderManager.playlistExternalUrl = url;
         NewScreenManager.instance.ChangeToSpawnedView("playlist");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
@@ -82,7 +86,7 @@ public class SurfMiplaylistHolder : ViewModel
 
     public void ChangePublic()
     {
-        if (!@public) { changeBool = false; }
+        if (@public) { changeBool = false; }
         else { changeBool = true; }
         if (!spotifyID.Equals("") && !playlistName.text.Equals(""))
             SpotifyConnectionManager.instance.ChangePlaylistDetails(spotifyID, Callback_OnCLick_ChangePlaylistDetails, playlistName.text, description, changeBool);
@@ -99,4 +103,5 @@ public class SurfMiplaylistHolder : ViewModel
        
     }
 
+    
 }

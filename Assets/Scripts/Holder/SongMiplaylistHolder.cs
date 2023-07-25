@@ -18,6 +18,7 @@ public class SongMiplaylistHolder : ViewModel
     public HolderManager holderManager;
     private bool enabled;
     public GameObject selected;
+    public ExternalUrls url;
     public void SetOnSelectedPlaylist(bool _enabled) { enabled = _enabled; }
     public bool GetOnSelectedPlaylist() { return enabled; }
     public void OnEnable()
@@ -28,20 +29,22 @@ public class SongMiplaylistHolder : ViewModel
     {
         RemoveEventListener<OnSelectedPlaylistClick>(SelectedPlaylistEventListener);
     }
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, ExternalUrls _url)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
+        url = _url;
     }
 
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _pictureURL)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public,ExternalUrls _url, string _pictureURL)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
+        url = _url;
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 
@@ -56,6 +59,7 @@ public class SongMiplaylistHolder : ViewModel
         playlistViewModel.playlistName.text = playlistName.text;
         playlistViewModel.id = spotifyID;
         playlistViewModel.@public = @public;
+        holderManager.playlistExternalUrl = url;
         NewScreenManager.instance.ChangeToSpawnedView("playlist");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }

@@ -16202,7 +16202,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1443392954}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5111843
+  m_Size: 0.5111842
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -46587,12 +46587,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408279, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: testRawValue
-      value: '{"access_token":"BQB4JdBofjcr_YmLuTEA22Cffml3Ge81wMY99N_unJPWcQ6o7_3wZ2z6fntfBdcPw44r-qh7geirb_0oUg-3zG6N8il2CnEqOOr8ZyLHP0Fh4T9Sjpy_wRJv7A6yHMw_i9-S1UuqOZQHGKw_ssdQLfH_E4yAeyHvjEKR-JcI4MtbgEo3mXZ4ZB2NNBJ4mr2p7rH0sYFfjGPb0RTNFkP6Cj3WG370HqPi_RmOxfem5Q2w3vSK-e1azBIRK4ILY58rWFDyKnXYusAbQkSP7_hHgsc70ng8CrIxh5qPqz2H9HyhBKZj-Sw-wK6Uo0_jGiyXBw","token_type":"Bearer","expires_in":3600,"refresh_token":"AQBjBYYhbopN6u4mfAtIVLTjr5oShvFtENtAmVmMeuvSwprGQdm4kdDdOcyGIieZIXPB5iK-rIdvw83i6IY6HGU9sDfDyOnxq0w4A4wVk5sB4sHShIThYjnb4fxuxH4yLPQ","scope":"playlist-read-private
+      value: '{"access_token":"BQAY0y-boXL2LSVbwaQmkung6Wkq0XWZlHQNiVv41_SiOTQKjtV4NqzZo-bJnB36CzopbL3jbm9XRqQtN5jo1tOuiXIlOe4FPfTH602ysOrZxkJaf-WUNqVFVXXdjiRCKgBItsgXOAXZW0CbBUDGZK3g2wCSAPt_P7K3jRsEMmnE-IDP_0Vo1mdQY4ofgv3rgdtGY5se21Xotc3ne8t5aFuXWqzFjERNd1Ni0zPCw_7-NGiUIwjQT1YQf1F9w5UuvVK2SA_Z39pbL_MgJiGv9_E6j_K-4J7pSzci4wQcVHLHF4b7xJke9nwGSsJb7zutJA","token_type":"Bearer","expires_in":3600,"refresh_token":"AQABUQkoXcw_bZRgXKkWk3GZU8TyQoH1bMwwVSt9VNKStIPt2XUdhq6pNbKdRnD-XuCFIdh1Lxl7NJGo0CEv-ytGozJd0I8lVX-UC0FyB_bVliGlMKwrQZawhmE_FtjwjvQ","scope":"playlist-read-private
         playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private
         user-read-email user-read-private app-remote-control streaming user-follow-modify
         user-modify-playback-state user-library-read user-library-modify playlist-modify-public
         user-read-playback-state user-read-currently-playing user-read-recently-played
-        user-read-playback-position user-top-read"}'
+        user-read-playback-position user-top-read"}
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408281, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: m_Name

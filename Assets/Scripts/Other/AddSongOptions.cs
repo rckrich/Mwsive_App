@@ -15,6 +15,8 @@ public class AddSongOptions : ViewModel
     public int objectsToNotDestroyIndex;
     public HolderManager holderManager;
     public TrackViewModel trackViewModel;
+    public ExternalUrls url;
+    public string stringUrl;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,12 @@ public class AddSongOptions : ViewModel
          trackViewModel.trackID = trackID;
         NewScreenManager.instance.ChangeToSpawnedView("cancion");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+    }
+    public void ListenOnSpotify()
+    {
+        url = holderManager.trackExternalUrl;
+        stringUrl = url.spotify.ToString();
+        Application.OpenURL(stringUrl);
     }
     public void OnClick_BackButton()
     {

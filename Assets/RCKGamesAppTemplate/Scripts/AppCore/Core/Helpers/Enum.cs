@@ -20,6 +20,7 @@ public enum ViewID
     listaDeOpciones,
     SurfViewModel,
     MenuViewModel,
+    CreatePlaylistViewModel,
 }
 
 public enum HTTPMethods

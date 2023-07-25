@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+
 
 public class SongMiPlaylistViewModel : ViewModel 
 {
@@ -59,7 +59,19 @@ public class SongMiPlaylistViewModel : ViewModel
             }
         }
     }
-    private void Callback_GetMoreUserPlaylists(object[] _value)
+
+    public void ResetScroll()
+    {
+        if (scrollRect.verticalNormalizedPosition >= 1.1)
+        {
+            for (int i = 0; i < instanceParent.childCount; i++)
+            {
+                Destroy(instanceParent.GetChild(i).gameObject);
+            }
+            SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_OnClick_GetCurrentUserPlaylists);
+        }
+    }
+        private void Callback_GetMoreUserPlaylists(object[] _value)
     {
         if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
 
@@ -74,7 +86,7 @@ public class SongMiPlaylistViewModel : ViewModel
             }
             else { holder.NoSelected(); }
             SongMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SongMiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.external_urls);
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);
             
@@ -90,7 +102,7 @@ public class SongMiPlaylistViewModel : ViewModel
     }
     private void Callback_OnCLick_AddItemsToPlaylist(object[] _value)
     {
-        //if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
 
         //SpotifyConnectionManager.instance.GetPlaylist(playlistID, Callback_OnCLick_GetPlaylist);
     }

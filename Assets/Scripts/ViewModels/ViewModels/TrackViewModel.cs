@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class TrackViewModel : ViewModel
 {
@@ -25,7 +26,7 @@ public class TrackViewModel : ViewModel
     public string artista;
     int index = 0;
     public HolderManager holderManager;
- 
+    public string stringUrl;
     void Start()
     {
         
@@ -91,14 +92,19 @@ public class TrackViewModel : ViewModel
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
             artista = "";
             foreach(Artist artist in track.artists) { artista += artist.name + ", "; }
-            instance.Initialize(track.name, artista, track.id, track.artists[0].id, track.uri, track.preview_url);
+            instance.Initialize(track.name, artista, track.id, track.artists[0].id, track.uri, track.preview_url, track.external_urls);
 
             if (track.album.images != null && track.album.images.Count > 0)
                 instance.SetImage(track.album.images[0].url);
         }
     }
-    
 
+    public void OnClickListenInSpotify()
+    {
+        
+        stringUrl = holderManager.trackExternalUrl.spotify.ToString();
+        Application.OpenURL(stringUrl);
+    }
     public void OnClick_BackButton()
     {
         NewScreenManager.instance.BackToPreviousView();

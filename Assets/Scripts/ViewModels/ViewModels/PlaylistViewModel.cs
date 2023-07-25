@@ -24,6 +24,8 @@ public class PlaylistViewModel : ViewModel
     public int offset = 1;
     int onlyone = 0;
     public ScrollRect scrollRect;
+    public ExternalUrls url;
+    public string stringUrl;
    
     void Start()
     {
@@ -51,7 +53,7 @@ public class PlaylistViewModel : ViewModel
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
             artists = "";
             foreach(Artist artist in item.track.artists) { artists += artist.name + ", "; }
-            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url); 
+            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url, item.track.external_urls); 
             if (item.track.album.images != null && item.track.album.images.Count > 0)
                 instance.SetImage(item.track.album.images[0].url);
             offset++;
@@ -91,14 +93,19 @@ public class PlaylistViewModel : ViewModel
             TrackHolder instance = GameObject.Instantiate(trackHolderPrefab, instanceParent).GetComponent<TrackHolder>();
             artists = "";
             foreach (Artist artist in item.track.artists) { artists += artist.name + ", "; }
-            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url);
+            instance.Initialize(item.track.name, artists, item.track.id, item.track.artists[0].id, item.track.uri, item.track.preview_url, item.track.external_urls);
             if (item.track.album.images != null && item.track.album.images.Count > 0)
                 instance.SetImage(item.track.album.images[0].url);
         }
         onlyone = 0;
 
     }
-    
+    public void OnClickListenInSpotify()
+    {
+        url = holderManager.playlistExternalUrl;
+        stringUrl = url.spotify.ToString();
+        Application.OpenURL(stringUrl);
+    }
 
     public void OnClick_BackButton()
     {

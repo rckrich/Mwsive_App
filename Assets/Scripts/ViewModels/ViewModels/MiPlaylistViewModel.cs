@@ -26,7 +26,7 @@ public class MiPlaylistViewModel : ViewModel
         foreach (Item item in playlistRoot.items)
         {
             MiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<MiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.external_urls);
             if (!item.@public) { instance.PublicTrue(); }
             if (item.images != null && item.images.Count > 0) { instance.SetImage(item.images[0].url); }              
         }
@@ -54,12 +54,23 @@ public class MiPlaylistViewModel : ViewModel
         foreach (Item item in playlistRoot.items)
         {
             MiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<MiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.external_urls);
             if (!item.@public) { instance.PublicTrue(); }
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);
         }
         onlyone = 0;
+    }
+    public void ResetScroll()
+    {
+        if (scrollRect.verticalNormalizedPosition >= 1.1)
+        {
+            for (int i = 0; i < instanceParent.childCount; i++)
+            {
+                Destroy(instanceParent.GetChild(i).gameObject);
+            }
+            SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_OnClick_GetCurrentUserPlaylists);
+        }
     }
     public void OnClick_BackButton()
     {
