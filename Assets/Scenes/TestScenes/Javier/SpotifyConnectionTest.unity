@@ -16336,7 +16336,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1443392954}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5111843
+  m_Size: 0.5111842
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -46807,6 +46807,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1027212843}
     m_Modifications:
+    - target: {fileID: 6861881443087573188, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
+      propertyPath: redirectUri
+      value: mwsive://callback/
+      objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408278, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: m_RootOrder
       value: 1

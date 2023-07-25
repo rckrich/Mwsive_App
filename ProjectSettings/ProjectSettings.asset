@@ -157,6 +157,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.rckgames.mwsive
     Standalone: com.DefaultCompany.2DProject
+    iPhone: com.rckgames.mwsive
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -218,7 +219,8 @@ PlayerSettings:
   iOSLaunchScreenCustomStoryboardPath: 
   iOSLaunchScreeniPadCustomStoryboardPath: 
   iOSDeviceRequirements: []
-  iOSURLSchemes: []
+  iOSURLSchemes:
+  - mwsive
   macOSURLSchemes: []
   iOSBackgroundModes: 0
   iOSMetalForceHardShadows: 0
@@ -788,7 +790,7 @@ PlayerSettings:
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
   enableRoslynAnalyzers: 1
-  selectedPlatform: 2
+  selectedPlatform: 3
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 1

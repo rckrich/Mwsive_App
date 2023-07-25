@@ -592,7 +592,7 @@ public static class SpotifyWebCalls
 
         string jsonRaw = JsonConvert.SerializeObject(bodyRequest);
 
-        Debug.Log("Body request for creating a playlist is:" + jsonRaw);
+        Debug.Log("Body request for changing a playlist is:" + jsonRaw);
 
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
 

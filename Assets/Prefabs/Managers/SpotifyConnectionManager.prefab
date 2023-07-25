@@ -51,7 +51,7 @@ MonoBehaviour:
   grantType: authorization_code
   refreshTokenGrantType: refresh_token
   clientId: f341903aedd041dcb51e9a9a0a4464aa
-  redirectUri: http://192.241.129.184/user-pkce/
+  redirectUri: mwsive://callback/
   scope: app-remote-control playlist-modify-private playlist-modify-public playlist-read-collaborative
     playlist-read-private streaming ugc-image-upload user-follow-modify user-follow-read
     user-library-modify user-library-read user-modify-playback-state user-read-currently-playing
