@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3494807364923777907}
   - component: {fileID: 3494807364923777906}
   - component: {fileID: 3494807364923777908}
-  - component: {fileID: 2948215275633357682}
+  - component: {fileID: 4737248343527445604}
   m_Layer: 5
   m_Name: Pf_playlist
   m_TagString: Untagged
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2948215275633357682}
-        m_TargetAssemblyTypeName: SpotifyConnectionDemoPlaylistsHolder, Scripts
+      - m_Target: {fileID: 4737248343527445604}
+        m_TargetAssemblyTypeName: PlaylisHolder, Scripts
         m_MethodName: OnClick_SpawnPlaylistButton
         m_Mode: 1
         m_Arguments:
@@ -128,7 +128,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2948215275633357682
+--- !u!114 &4737248343527445604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3494807364923777904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41bcec801fbb2419bb0e0874d3458d90, type: 3}
+  m_Script: {fileID: 11500000, guid: 5683569e211b8ca4faccbecd12b1f350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playlistName: {fileID: 3494807364999838617}

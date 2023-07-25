@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SurfMiplaylistHolder : ViewModel
+public class SongMiplaylistHolder : ViewModel
 {
 
     public TextMeshProUGUI playlistName;
@@ -14,12 +14,10 @@ public class SurfMiplaylistHolder : ViewModel
     private string spotifyID;
     public PlaylistViewModel playlistViewModel;
     public SurfMiPlaylistViewModel miPlaylistViewModel;
-    public ChangeImage change;
     public bool @public;
     public HolderManager holderManager;
     private bool enabled;
-    public bool changeBool;
-    public string description;
+    public GameObject selected;
     public void SetOnSelectedPlaylist(bool _enabled) { enabled = _enabled; }
     public bool GetOnSelectedPlaylist() { return enabled; }
     public void OnEnable()
@@ -30,29 +28,23 @@ public class SurfMiplaylistHolder : ViewModel
     {
         RemoveEventListener<OnSelectedPlaylistClick>(SelectedPlaylistEventListener);
     }
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
-        description = _description;
     }
 
-    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description, string _pictureURL)
+    public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _pictureURL)
     {
         playlistName.text = _playlistName;
         spotifyID = _spotifyID;
         playlistOwner.text = _owner;
         @public = _public;
-        description= _description;
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
     }
 
-    public void PublicTrue()
-    {
-        change.True();
-    }
     public void SetImage(string _pictureURL)
     {
         ImageManager.instance.GetImage(_pictureURL, playlistPicture, (RectTransform)this.transform);
@@ -70,33 +62,23 @@ public class SurfMiplaylistHolder : ViewModel
     public void SelectedPlaylistEventListener(OnSelectedPlaylistClick _enable)
     {
         SetOnSelectedPlaylist(false);
-        gameObject.GetComponent<Image>().enabled = false;
+        selected.SetActive(false);
     }
     public void OnClickSelected()
     {
         holderManager.playlistId = spotifyID;
         
-        gameObject.GetComponent<Image>().enabled = true;
+        selected.SetActive(true);
         
     }
+    public void Charging()
+    {
+        selected.SetActive(true);
+    }
+    public void NoSelected()
+    {
+        selected.SetActive(false);
+    }
 
-    public void ChangePublic()
-    {
-        if (!@public) { changeBool = false; }
-        else { changeBool = true; }
-        if (!spotifyID.Equals("") && !playlistName.text.Equals(""))
-            SpotifyConnectionManager.instance.ChangePlaylistDetails(spotifyID, Callback_OnCLick_ChangePlaylistDetails, playlistName.text, description, changeBool);
-    }
-    private void Callback_OnCLick_ChangePlaylistDetails(object[] _value)
-    {
-        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
-
-        SpotifyConnectionManager.instance.GetPlaylist(spotifyID, Callback_OnCLick_GetPlaylist);
-    }
-    private void Callback_OnCLick_GetPlaylist(object[] _value)
-    {
-        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
-       
-    }
 
 }

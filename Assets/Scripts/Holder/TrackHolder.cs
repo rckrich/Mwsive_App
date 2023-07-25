@@ -62,7 +62,7 @@ public class TrackHolder : ViewModel
     
     public void OnClickSongOptions()
     {
-        songOptions.trackSpotifyUris[0] = uri;
+        holderManager.uri[0] = uri;
         songOptions.trackID = trackSpotifyID;
         NewScreenManager.instance.ChangeToSpawnedView("listaDeOpciones");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);

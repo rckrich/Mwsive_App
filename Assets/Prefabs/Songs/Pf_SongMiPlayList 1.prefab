@@ -144,7 +144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CREAR LISTA
+  m_text: Hecho
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9dfaac552010a224d8adfdf529c25fa4, type: 2}
   m_sharedMaterial: {fileID: 5309427046401644999, guid: 9dfaac552010a224d8adfdf529c25fa4, type: 2}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1960618545465120682}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SurfMiPlaylistViewModel, Scripts
         m_MethodName: OnClick_BackButton
         m_Mode: 1
@@ -763,8 +763,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1960618545465120682}
-        m_TargetAssemblyTypeName: SurfMiPlaylistViewModel, Scripts
+      - m_Target: {fileID: 7080279966217288309}
+        m_TargetAssemblyTypeName: SongMiPlaylistViewModel, Scripts
         m_MethodName: OnReachEnd
         m_Mode: 1
         m_Arguments:
@@ -784,9 +784,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2806249980485039190}
-  - component: {fileID: 1960618545465120682}
+  - component: {fileID: 7080279966217288309}
   m_Layer: 5
-  m_Name: Pf_SurfMiPlayList
+  m_Name: Pf_SongMiPlayList 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,7 +816,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1960618545465120682
+--- !u!114 &7080279966217288309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -825,20 +825,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2806249980485039193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c8852810726aa64bb23273fe52d3445, type: 3}
+  m_Script: {fileID: 11500000, guid: d817fec473cbd674399aa66e7d9a67b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewID: 12
+  viewID: 0
   networkLoadingCanvas: {fileID: 0}
   scrollViewContent: {fileID: 0}
-  playlistHolderPrefab: {fileID: 4969784576469249356, guid: 2ffad1e68fccfc74ca0d1ab98a4b7071, type: 3}
+  playlistHolderPrefab: {fileID: 4969784576469249356, guid: 7d30dc692d8edc145864310474b4c27e, type: 3}
   instanceParent: {fileID: 2806249981404453540}
   scrollRect: {fileID: 2806249980358450099}
   end: 0
   offset: 21
   holderManager: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
-  imagenes:
-  - {fileID: 0}
+  imagenes: []
+  holder: {fileID: 9027684508757775569, guid: 7d30dc692d8edc145864310474b4c27e, type: 3}
 --- !u!1 &2806249980537311655
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,10 +970,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-        m_MethodName: SendMessage
-        m_Mode: 5
+      - m_Target: {fileID: 7080279966217288309}
+        m_TargetAssemblyTypeName: SongMiPlaylistViewModel, Scripts
+        m_MethodName: OnClickDone
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

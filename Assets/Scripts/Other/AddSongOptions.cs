@@ -24,10 +24,9 @@ public class AddSongOptions : ViewModel
 
     public void OnClick_AddItemsToPlaylist()
     {
-        
-        playlistID = holderManager.playlistId;
-        if (!playlistID.Equals(""))
-            SpotifyConnectionManager.instance.AddItemsToPlaylist(playlistID, trackSpotifyUris, Callback_OnCLick_AddItemsToPlaylist);
+        holderManager.trackID = trackID;
+        NewScreenManager.instance.ChangeToSpawnedView("songMiPlaylist");
+        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
 
     private void Callback_OnCLick_AddItemsToPlaylist(object[] _value)

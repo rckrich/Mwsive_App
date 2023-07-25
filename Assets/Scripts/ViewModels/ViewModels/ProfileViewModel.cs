@@ -71,7 +71,7 @@ public class ProfileViewModel : ViewModel
         
         for(int i = 0; i < 6; i++)
         {
-            SpotifyConnectionDemoPlaylistsHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SpotifyConnectionDemoPlaylistsHolder>();
+            PlaylisHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<PlaylisHolder>();
             instance.Initialize(playlistRoot.items[i].name, playlistRoot.items[i].id, playlistRoot.items[i].owner.display_name, playlistRoot.items[i].@public);           
             if (playlistRoot.items[i].images != null && playlistRoot.items[i].images.Count > 0)
                 instance.SetImage(playlistRoot.items[i].images[0].url);

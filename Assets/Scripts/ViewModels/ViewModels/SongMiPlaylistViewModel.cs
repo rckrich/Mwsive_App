@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class SurfMiPlaylistViewModel : ViewModel 
+public class SongMiPlaylistViewModel : ViewModel 
 {
     // Start is called before the first frame update
     public GameObject playlistHolderPrefab;
@@ -15,7 +15,9 @@ public class SurfMiPlaylistViewModel : ViewModel
     int onlyone = 0;
     public HolderManager holderManager;
     public List<Image> imagenes;
-    
+    public SongMiplaylistHolder holder;
+   
+
     void Start()
     {
         SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_OnClick_GetCurrentUserPlaylists);
@@ -31,19 +33,15 @@ public class SurfMiPlaylistViewModel : ViewModel
         {
             if (holderManager.playlistId == item.id)
             {
-                playlistHolderPrefab.GetComponent<Image>().enabled = true;
 
+                holder.Charging();
             }
-            else
-            {
-                playlistHolderPrefab.GetComponent<Image>().enabled = false;
-            }
-            SurfMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SurfMiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.description);
-            if (!item.@public) { instance.PublicTrue(); }
+            else { holder.NoSelected(); }
+                     
+            SongMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SongMiplaylistHolder>();
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
             if (item.images != null && item.images.Count > 0) { instance.SetImage(item.images[0].url); }
             
-
            
         }
     }
@@ -71,24 +69,31 @@ public class SurfMiPlaylistViewModel : ViewModel
         {
             if (holderManager.playlistId == item.id)
             {
-                playlistHolderPrefab.GetComponent<Image>().enabled = true;
 
+                holder.Charging();
             }
-            else
-            {
-                playlistHolderPrefab.GetComponent<Image>().enabled = false;
-            }
-            SurfMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SurfMiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public,item.description);
-            if (!item.@public) { instance.PublicTrue(); }
+            else { holder.NoSelected(); }
+            SongMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SongMiplaylistHolder>();
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public);
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);
             
         }
         onlyone = 0;
     }
-     
+     public void OnClickDone()
+    {
+        if (!holderManager.playlistId.Equals(""))
+            SpotifyConnectionManager.instance.AddItemsToPlaylist(holderManager.playlistId, holderManager.uri, Callback_OnCLick_AddItemsToPlaylist);
 
+        NewScreenManager.instance.BackToPreviousView();
+    }
+    private void Callback_OnCLick_AddItemsToPlaylist(object[] _value)
+    {
+        //if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+
+        //SpotifyConnectionManager.instance.GetPlaylist(playlistID, Callback_OnCLick_GetPlaylist);
+    }
     public void OnClick_BackButton()
     {
         NewScreenManager.instance.BackToPreviousView();

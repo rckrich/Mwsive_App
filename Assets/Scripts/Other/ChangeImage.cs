@@ -34,5 +34,6 @@ public class ChangeImage : MonoBehaviour
     public void True()
     {
         gameObject.GetComponent<Image>().sprite = image;
+        count = 1;
     }
 }
