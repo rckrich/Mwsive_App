@@ -583,14 +583,29 @@ public static class SpotifyWebCalls
     { 
         string url = "https://api.spotify.com/v1/playlists/" + _playlist_id;
 
-        CreatePlaylistBodyRequestRoot bodyRequest = new CreatePlaylistBodyRequestRoot
-        {
-            name = _playlist_name,
-            description = _playlist_description,
-            @public = _public
-        };
+        string jsonRaw = "";
 
-        string jsonRaw = JsonConvert.SerializeObject(bodyRequest);
+        if (_playlist_description.Equals(""))
+        {
+            EditPlaylistCompleteBodyRequestRoot bodyRequest = new EditPlaylistCompleteBodyRequestRoot
+            {
+                name = _playlist_name,
+                description = _playlist_description,
+                @public = _public
+            };
+
+            jsonRaw = JsonConvert.SerializeObject(bodyRequest);
+        }
+        else
+        {
+            EditPlaylistNoDescriptionBodyRequestRoot bodyRequest = new EditPlaylistNoDescriptionBodyRequestRoot
+            {
+                name = _playlist_name,
+                @public = _public
+            };
+
+            jsonRaw = JsonConvert.SerializeObject(bodyRequest);
+        }
 
         Debug.Log("Body request for changing a playlist is:" + jsonRaw);
 
