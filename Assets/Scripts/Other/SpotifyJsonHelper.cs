@@ -338,6 +338,21 @@ public class CreatePlaylistBodyRequestRoot
 }
 
 [System.Serializable]
+public class EditPlaylistCompleteBodyRequestRoot
+{
+    public string name { get; set; }
+    public string description { get; set; }
+    public bool @public { get; set; }
+}
+
+[System.Serializable]
+public class EditPlaylistNoDescriptionBodyRequestRoot
+{
+    public string name { get; set; }
+    public bool @public { get; set; }
+}
+
+[System.Serializable]
 public class AddItemsPlaylistBodyRequestRoot
 {
     public List<string> uris { get; set; }

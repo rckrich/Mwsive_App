@@ -32,6 +32,8 @@ public class SpotifyGetCurrentUserProfileViewModel : MonoBehaviour
         spotifyID.text = profileRoot.id;
         countryName.text = profileRoot.country;
         emailName.text = profileRoot.email;
-        ImageManager.instance.GetImage(profileRoot.images[0].url, profilePicture, (RectTransform)this.transform);
+
+        if(profileRoot.images != null && profileRoot.images.Count > 0)
+            ImageManager.instance.GetImage(profileRoot.images[0].url, profilePicture, (RectTransform)this.transform);
     }
 }
