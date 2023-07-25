@@ -22,5 +22,4 @@ MonoBehaviour:
   enableJetifier: 1
   authCallbackUrls:
   - mwsive://callback/
-  - http://192.241.129.184/user-pkce/
   supportLINELogin: 0
