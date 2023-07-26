@@ -30,7 +30,7 @@ public class SpotifyConnectionManager : Manager
 
     public void StartConnection(SpotifyWebCallback _callback = null)
     {
-        if (ProgressManager.instance.progress.userDataPersistance.userTokenSetted)
+        if (ProgressManager.instance.progress.userDataPersistance.spotify_userTokenSetted)
         {
 
 #if UNITY_EDITOR_WIN
@@ -40,7 +40,7 @@ public class SpotifyConnectionManager : Manager
 #endif
             oAuthHandler.SetSpotifyTokenRawValue(rawValue);
 
-            if (ProgressManager.instance.progress.userDataPersistance.expires_at.CompareTo(DateTime.Now) < 0)
+            if (ProgressManager.instance.progress.userDataPersistance.spotify_expires_at.CompareTo(DateTime.Now) < 0)
             {
                 Debug.Log("Saved token has expired, starting refresh flow");
                 oAuthHandler.SpotifyStartRefreshFlow(_callback);
@@ -79,16 +79,16 @@ public class SpotifyConnectionManager : Manager
     public void SaveToken(string _rawValue, long _expiresIn)
     {
         ProgressManager.instance.progress.userDataPersistance.raw_value = _rawValue;
-        ProgressManager.instance.progress.userDataPersistance.expires_at = ConvertExpiresInToDateTime(_expiresIn);
-        ProgressManager.instance.progress.userDataPersistance.userTokenSetted = true;
+        ProgressManager.instance.progress.userDataPersistance.spotify_expires_at = ConvertExpiresInToDateTime(_expiresIn);
+        ProgressManager.instance.progress.userDataPersistance.spotify_userTokenSetted = true;
         ProgressManager.instance.save();
     }
 
     public void ResetToken()
     {
         ProgressManager.instance.progress.userDataPersistance.raw_value = "";
-        ProgressManager.instance.progress.userDataPersistance.expires_at = new DateTime(1990, 01, 01);
-        ProgressManager.instance.progress.userDataPersistance.userTokenSetted = false;
+        ProgressManager.instance.progress.userDataPersistance.spotify_expires_at = new DateTime(1990, 01, 01);
+        ProgressManager.instance.progress.userDataPersistance.spotify_userTokenSetted = false;
         ProgressManager.instance.save();
     }
 

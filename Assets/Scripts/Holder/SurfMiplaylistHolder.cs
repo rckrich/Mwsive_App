@@ -80,6 +80,9 @@ public class SurfMiplaylistHolder : ViewModel
     {
         holderManager.playlistId = spotifyID;
         holderManager.playlistName = playlistName.text;
+        ProgressManager.instance.progress.userDataPersistance.current_playlist = spotifyID;
+        ProgressManager.instance.save();
+
         gameObject.GetComponent<Image>().enabled = true;
         
     }

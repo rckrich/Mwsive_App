@@ -13,7 +13,8 @@ public class HolderManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+         playlistId = ProgressManager.instance.progress.userDataPersistance.current_playlist;
+         GetPlaylist();
     }
     public void GetPlaylist()
     {

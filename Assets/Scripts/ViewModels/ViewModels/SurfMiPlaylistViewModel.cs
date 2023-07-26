@@ -102,7 +102,7 @@ public class SurfMiPlaylistViewModel : ViewModel
 
     public void OnClick_BackButton()
     {
-        buttonSurfPlaylist.OnRecharge();
+        
         NewScreenManager.instance.BackToPreviousView();
 
     }

@@ -23435,7 +23435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408279, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: testRawValue
-      value: '{"access_token":"BQCw38tfPFLBzhYKExXMn1SckGybORZ_IIIjoAb4Y-K8WL0OGdNhz6zJneZjVzNo2jkeJKl5ePCM8jlQvleW30rtXmb74AUqqXZQRnpJAw2HOutdFHs2iqWAhiFTQLKNCGAJEuB91RcT6i3lB2ok1JtyQ1Xg9WS7dNYDZOGIgt0ghRy3gbevbJ7g0TsuFUNCBxzy0CD3kKxxODCwyczGn6Wdpa8Y6PvWagjDSx2B9nWx1a5SC7wwAbgCJfyEchdS_gBWcS2bCNf8voeNG0Iw4uyxz4ed4fFYxv4zh6_PTHaSmHIeVer6UruZ3-qF1u4_LA","token_type":"Bearer","expires_in":3600,"refresh_token":"AQCYnpUFGMRx7bhEB05ck2Er0BW1GgVR9n_EQlG0cndIJ4E6MaRUWwGL2H5AUxqOmTT-3P5H0Ps23-hUKycWEVQNxiJhmvr-9EiBJOSVbEaGjM78K4m6wgPVtZCZyi6akPY","scope":"playlist-read-private
+      value: '{"access_token":"BQDlzbkG-pQCtm-g71bJfw5KJUqI3X14g6klfUFGIRH9a5LwPvF6kA19_wkIKJUmu92jzBGYpAorLFw8tbX9TCkYH0Or8iI4UUMgwrXLp4DPyE7LwyqqDJdHfHzprlBObQ6PSt7tRA_LExi-_Elx00Bp0Fwsot7eec1OvBw-C1ROCOUl48C3H57y1omHGf8rWvlNbb-vNN9jkhHZqShjf7Lz_tbvhPK4p1tha4L6KjUXQ7EtrzTRP1cRIs19P8Y4Y3FyK1uTZ2r9lDVNoej5IpSc9DLrZbykrHwj2XJO3qzCMfrns1ZMvhSbvNj9ulNRLA","token_type":"Bearer","expires_in":3600,"refresh_token":"AQDnVG0sGZT2MeMo4wbYfE0sxkfrZUefIoNqJfQ3dOSk5hA5RQhLbFZiReUZZzaS-3sY35FAPZEdjpGS57p7riL6xPt5pcDI6UC_5MBLKptes8vWJW5Zzc4MRjRv54BwrT0","scope":"playlist-read-private
         playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private
         user-read-email user-read-private app-remote-control streaming user-follow-modify
         user-modify-playback-state user-library-read user-library-modify playlist-modify-public
@@ -41521,9 +41521,11 @@ MonoBehaviour:
   progress:
     userDataPersistance:
       userTokenSetted: 0
+      spotify_userTokenSetted: 0
       access_token: 
       token_type: 
       raw_value: 
+      current_playlist: 37i9dQZF1DX68kWwWBDPYS
 --- !u!4 &1099027746
 Transform:
   m_ObjectHideFlags: 0
@@ -75681,7 +75683,7 @@ MonoBehaviour:
   viewID: 11
   networkLoadingCanvas: {fileID: 0}
   scrollViewContent: {fileID: 0}
-  testRawValue: '{"access_token":"BQCw38tfPFLBzhYKExXMn1SckGybORZ_IIIjoAb4Y-K8WL0OGdNhz6zJneZjVzNo2jkeJKl5ePCM8jlQvleW30rtXmb74AUqqXZQRnpJAw2HOutdFHs2iqWAhiFTQLKNCGAJEuB91RcT6i3lB2ok1JtyQ1Xg9WS7dNYDZOGIgt0ghRy3gbevbJ7g0TsuFUNCBxzy0CD3kKxxODCwyczGn6Wdpa8Y6PvWagjDSx2B9nWx1a5SC7wwAbgCJfyEchdS_gBWcS2bCNf8voeNG0Iw4uyxz4ed4fFYxv4zh6_PTHaSmHIeVer6UruZ3-qF1u4_LA","token_type":"Bearer","expires_in":3600,"refresh_token":"AQCYnpUFGMRx7bhEB05ck2Er0BW1GgVR9n_EQlG0cndIJ4E6MaRUWwGL2H5AUxqOmTT-3P5H0Ps23-hUKycWEVQNxiJhmvr-9EiBJOSVbEaGjM78K4m6wgPVtZCZyi6akPY","scope":"playlist-read-private
+  testRawValue: '{"access_token":"BQDlzbkG-pQCtm-g71bJfw5KJUqI3X14g6klfUFGIRH9a5LwPvF6kA19_wkIKJUmu92jzBGYpAorLFw8tbX9TCkYH0Or8iI4UUMgwrXLp4DPyE7LwyqqDJdHfHzprlBObQ6PSt7tRA_LExi-_Elx00Bp0Fwsot7eec1OvBw-C1ROCOUl48C3H57y1omHGf8rWvlNbb-vNN9jkhHZqShjf7Lz_tbvhPK4p1tha4L6KjUXQ7EtrzTRP1cRIs19P8Y4Y3FyK1uTZ2r9lDVNoej5IpSc9DLrZbykrHwj2XJO3qzCMfrns1ZMvhSbvNj9ulNRLA","token_type":"Bearer","expires_in":3600,"refresh_token":"AQDnVG0sGZT2MeMo4wbYfE0sxkfrZUefIoNqJfQ3dOSk5hA5RQhLbFZiReUZZzaS-3sY35FAPZEdjpGS57p7riL6xPt5pcDI6UC_5MBLKptes8vWJW5Zzc4MRjRv54BwrT0","scope":"playlist-read-private
     playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private
     user-read-email user-read-private app-remote-control streaming user-follow-modify
     user-modify-playback-state user-library-read user-library-modify playlist-modify-public
@@ -79117,6 +79119,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1027212843}
     m_Modifications:
+    - target: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
+      propertyPath: playlistId
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
+      propertyPath: playlistName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2692963331336141334, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
       propertyPath: m_RootOrder
       value: 5

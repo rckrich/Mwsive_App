@@ -12,7 +12,7 @@ public class ButtonSurfPlaylist : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OnRecharge();
+        name.text = holderManager.playlistName;
     }
 
     // Update is called once per frame
@@ -27,9 +27,5 @@ public class ButtonSurfPlaylist : MonoBehaviour
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
 
-    public void OnRecharge()
-    {
-        holderManager.GetPlaylist();
-        name.text = holderManager.playlistName;
-    }
+   
 }
