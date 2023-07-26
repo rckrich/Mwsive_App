@@ -15,10 +15,6 @@ public class ADNDynamicScroll : MonoBehaviour
     private static ADNDynamicScroll _instance;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        DynamicPrefabSpawner(MaxPrefabsInScreen);
-    }
 
     // Update is called once per frame
     void Update()

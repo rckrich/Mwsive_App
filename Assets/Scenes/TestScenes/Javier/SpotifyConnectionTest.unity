@@ -3587,7 +3587,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 630728663}
   m_HandleRect: {fileID: 630728662}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -16202,7 +16202,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1443392954}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5111842
+  m_Size: 0.51118416
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -46587,7 +46587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408279, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: testRawValue
-      value: '{"access_token":"BQCb6NoA7RnM6AMgAasPKF90wFSvlEw_avky0RuiL_ubAlTQBADFhCDKLBp_Sx4773SJVALmfFnttF6snc21yJ8PYi1NkjbvPpQzggNZpT_I2mT9EDLYx-_d12ToJ7e8tYYtXPSfY77Shft9FtOO9JQC9nbKEUUXTGz0JONfQ7lBe3UH474cCaRiZJt7m2MmLnc4GCh4ehCP48pKtUqNiXaDMpY0YsfosivY80QI-hNLQkqoKd40cNvykjx--imF-HQ9XbW4MOZyjaga7slhJLOGwmRGDu1_otUQG-QiqvPDPDcICa49Vl_o9V9mKIOHfQ","token_type":"Bearer","expires_in":3600,"refresh_token":"AQD1ufnQGue2vUVj5KN5JlaxJ_NWu0_iz4bVur1jBfeR-g-2XgN0MlSNW1vQn3ukr4TKTv0g3n6e2wZfdbpk7X5yTDFejYt-C24UdzBCFUAybhLfTPrXhVa3PKOVUqE6whU","scope":"playlist-read-private
+      value: '{"access_token":"BQAqcxFSzlCy2wVViE3oj3WizTPPPoeZFwtPi3Km7SQiimYULLY_CSr__ROvoU-5QvhCY0ek8_bm43nBMo2Lovra1dl0G0AyVaRVtz1WfzbEqIJLNflleTa7gXRvrWV-2-ODRn6dBUY6m0APfIpoiEGNFLHYkN3qPRwuPHxqcSbWtIUaFa2I0mRths9-r7rhjgvIOrbFi6xlwHW2UI7OQFaMyqMWLuWgpCSpmWDldSB2dVZ5GxGSXGt3T0UvnpwP_ro7NPpTmBOkekQjK9IOD-QmqUNOelLnQbH__tO0Oeag1wQjtRFxeyCysj_Tng","token_type":"Bearer","expires_in":3600,"refresh_token":"AQCl21zeBKLt5JYc91t4_RFL3n6QCq3j7GjjBHnazAM2vKNy6GR7LRgmJD627VQKY5XDNDLr_nzohvGtrVLctW13xyp4JMN0fcLfXBo-fw5lGN44fQHT6OxkSzA45LAl1ZQ","scope":"playlist-read-private
         playlist-read-collaborative ugc-image-upload user-follow-read playlist-modify-private
         user-read-email user-read-private app-remote-control streaming user-follow-modify
         user-modify-playback-state user-library-read user-library-modify playlist-modify-public
