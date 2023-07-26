@@ -10,21 +10,30 @@ public delegate void MwsiveWebCallback(object[] _value);
 
 public class MwsiveWebCalls : MonoBehaviour
 {
-    public static IEnumerator CR_PostCreateUser(string _token, string _email, string _genre, int _age, ProfileRoot _profile, MwsiveWebCallback _callback)
+    public static IEnumerator CR_PostCreateUser(string _token, string _email, string _gender, int _age, ProfileRoot _profile, string[] _playlist_ids, MwsiveWebCallback _callback)
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/signin";
+        string url = "https://mwsive.com/register";
 
-        WWWForm form = new WWWForm();
-
-        form.AddField("email", _email);
-        form.AddField("genre", _genre);
-        form.AddField("age", _age);
-
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
-            string jsonRaw = JsonConvert.SerializeObject(_profile);
+            CreateMwsiveUserRoot createMwsiveUserRoot = new CreateMwsiveUserRoot
+            {
+                user = _profile,
+                email = _email,
+                gender = _gender,
+                age = _age
+            };
+
+            createMwsiveUserRoot.playlist_ids = new string[_playlist_ids.Length];
+
+            for(int i = 0; i < _playlist_ids.Length; i++)
+            {
+                createMwsiveUserRoot.playlist_ids[i] = _playlist_ids[i];
+            }
+
+            string jsonRaw = JsonConvert.SerializeObject(createMwsiveUserRoot);
 
             Debug.Log("Body request for creating a playlist is:" + jsonRaw);
 
@@ -33,7 +42,6 @@ public class MwsiveWebCalls : MonoBehaviour
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
             webRequest.SetRequestHeader("Accept", "application/json");
-            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
 
             yield return webRequest.SendWebRequest();
 

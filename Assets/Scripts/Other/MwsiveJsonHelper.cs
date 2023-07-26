@@ -279,4 +279,14 @@ public class TrackActionRoot
     public float duration { get; set; }
 }
 
+public class CreateMwsiveUserRoot
+{
+    public ProfileRoot user { get; set; }
+    public string email { get; set; }
+    public string access_token { get; set; }
+    public string gender { get; set; }
+    public int age { get; set; }
+    public string[] playlist_ids { get; set; }
+}
+
 #endregion
