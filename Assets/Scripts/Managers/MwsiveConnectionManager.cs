@@ -26,7 +26,7 @@ public class MwsiveConnectionManager : MonoBehaviour
     public void PostCreateUser(string _email, string _gender, int _age, ProfileRoot _profile, string[] _playlist_ids, MwsiveWebCallback _callback = null)
     {
         _callback += Callback_PostCreateUser;
-        StartCoroutine(MwsiveWebCalls.CR_PostCreateUser(oAuthHandler.GetSpotifyToken().AccessToken, _email, _gender, _age, _profile, _playlist_ids, _callback));
+        StartCoroutine(MwsiveWebCalls.CR_PostCreateUser(_email, _gender, _age, _profile, _playlist_ids, _callback));
     }
 
     private void Callback_PostCreateUser(object[] _value)

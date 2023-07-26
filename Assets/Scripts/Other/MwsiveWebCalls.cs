@@ -10,7 +10,7 @@ public delegate void MwsiveWebCallback(object[] _value);
 
 public class MwsiveWebCalls : MonoBehaviour
 {
-    public static IEnumerator CR_PostCreateUser(string _token, string _email, string _gender, int _age, ProfileRoot _profile, string[] _playlist_ids, MwsiveWebCallback _callback)
+    public static IEnumerator CR_PostCreateUser(string _email, string _gender, int _age, ProfileRoot _profile, string[] _playlist_ids, MwsiveWebCallback _callback)
     {
         string jsonResult = "";
 
