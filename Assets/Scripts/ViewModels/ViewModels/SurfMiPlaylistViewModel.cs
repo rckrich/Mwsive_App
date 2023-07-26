@@ -14,6 +14,7 @@ public class SurfMiPlaylistViewModel : ViewModel
     int onlyone = 0;
     public HolderManager holderManager;
     public List<Image> imagenes;
+    public ButtonSurfPlaylist buttonSurfPlaylist;
     
     void Start()
     {
@@ -101,7 +102,9 @@ public class SurfMiPlaylistViewModel : ViewModel
 
     public void OnClick_BackButton()
     {
+        buttonSurfPlaylist.OnRecharge();
         NewScreenManager.instance.BackToPreviousView();
+
     }
 
     public void OnClick_SpawnCrearPlaylistButton()

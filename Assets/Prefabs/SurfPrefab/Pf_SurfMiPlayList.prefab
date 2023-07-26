@@ -851,6 +851,7 @@ MonoBehaviour:
   holderManager: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
   imagenes:
   - {fileID: 0}
+  buttonSurfPlaylist: {fileID: 3427835128281672231, guid: d3d8010569ce88c42889d1ec0cddc425, type: 3}
 --- !u!1 &2806249980537311655
 GameObject:
   m_ObjectHideFlags: 0

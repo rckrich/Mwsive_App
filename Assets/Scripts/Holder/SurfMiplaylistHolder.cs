@@ -79,7 +79,7 @@ public class SurfMiplaylistHolder : ViewModel
     public void OnClickSelected()
     {
         holderManager.playlistId = spotifyID;
-        
+        holderManager.playlistName = playlistName.text;
         gameObject.GetComponent<Image>().enabled = true;
         
     }

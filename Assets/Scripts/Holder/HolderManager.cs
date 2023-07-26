@@ -9,15 +9,22 @@ public class HolderManager : MonoBehaviour
     public List<string> uri;
     public ExternalUrls playlistExternalUrl;
     public ExternalUrls trackExternalUrl;
+    public string playlistName;
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public void GetPlaylist()
     {
-        
+        SpotifyConnectionManager.instance.GetPlaylist(playlistId, Callback_OnCLick_GetPlaylist);
+    }
+    private void Callback_OnCLick_GetPlaylist(object[] _value)
+    {
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+        SearchedPlaylist searchedPlaylist = (SearchedPlaylist)_value[1];
+        playlistName = searchedPlaylist.name;
+        Debug.Log(playlistName);
+
     }
 }

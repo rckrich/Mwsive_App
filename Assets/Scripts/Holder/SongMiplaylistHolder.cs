@@ -71,6 +71,7 @@ public class SongMiplaylistHolder : ViewModel
     public void OnClickSelected()
     {
         holderManager.playlistId = spotifyID;
+        holderManager.playlistName = playlistName.text;
         
         selected.SetActive(true);
         
