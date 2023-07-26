@@ -21,16 +21,22 @@ public class SurfMiplaylistHolder : ViewModel
     public bool changeBool;
     public string description;
     public ExternalUrls url;
+    
     public void SetOnSelectedPlaylist(bool _enabled) { enabled = _enabled; }
     public bool GetOnSelectedPlaylist() { return enabled; }
+    
     public void OnEnable()
     {
         AddEventListener<OnSelectedPlaylistClick>(SelectedPlaylistEventListener);
+        
     }
-    public void OnDisable()
+
+    private void OnDisable()
     {
+        
         RemoveEventListener<OnSelectedPlaylistClick>(SelectedPlaylistEventListener);
     }
+   
     public void Initialize(string _playlistName, string _spotifyID, string _owner, bool _public, string _description, ExternalUrls _url)
     {
         playlistName.text = _playlistName;
@@ -86,7 +92,7 @@ public class SurfMiplaylistHolder : ViewModel
         gameObject.GetComponent<Image>().enabled = true;
         
     }
-
+    
     public void ChangePublic()
     {
         if (@public) { changeBool = false; }

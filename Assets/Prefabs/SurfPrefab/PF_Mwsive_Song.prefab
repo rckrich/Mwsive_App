@@ -1391,6 +1391,7 @@ GameObject:
   - component: {fileID: 6148568945590365121}
   - component: {fileID: 6148568945590365122}
   - component: {fileID: 3427835128281672231}
+  - component: {fileID: -7216780934816768357}
   m_Layer: 5
   m_Name: PF_Mwsive_Song
   m_TagString: MwsiveSong
@@ -1443,8 +1444,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018472c0f12b08a41b874b5fe53e22f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewID: 0
+  networkLoadingCanvas: {fileID: 0}
+  scrollViewContent: {fileID: 0}
   holderManager: {fileID: 2692963331336141333, guid: 55d500d6e41ab1a48bbb098ee7f2fa5a, type: 3}
   name: {fileID: 6148568946047426640}
+  playlistName: 
+--- !u!114 &-7216780934816768357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6148568945450055006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78124e1095553754ab7fdf5e710cbe43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playlistName: 
 --- !u!1 &6148568945711781988
 GameObject:
   m_ObjectHideFlags: 0

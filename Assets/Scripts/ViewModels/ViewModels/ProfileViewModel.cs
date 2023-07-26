@@ -48,7 +48,7 @@ public class ProfileViewModel : ViewModel
 
     private void Callback_GetUserProfile(object[] _value)
     {
-      //  if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
+        if (SpotifyConnectionManager.instance.CheckReauthenticateUser((long)_value[0])) return;
 
         ProfileRoot profileRoot = (ProfileRoot)_value[1];
         displayName.text = profileRoot.display_name;

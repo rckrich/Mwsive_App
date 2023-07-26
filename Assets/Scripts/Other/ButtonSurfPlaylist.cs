@@ -5,10 +5,22 @@ using System.Net.NetworkInformation;
 using UnityEngine;
 using TMPro;
 
-public class ButtonSurfPlaylist : MonoBehaviour
+public class ButtonSurfPlaylist : ViewModel
 {
     public HolderManager holderManager;
     public TMP_Text name;
+    public string playlistName;
+    public void SetSelectedPlaylistNameAppEvent(string _playlistName) { playlistName = _playlistName; }
+    public string GetSelectedPlaylistNameAppEvent() { return playlistName; }
+    private void OnEnable()
+    {
+        name.text = holderManager.playlistName;
+        AddEventListener<SelectedPlaylistNameAppEvent>(SelectedPlaylistNameEventListener);
+    }
+    private void OnDisable()
+    {
+        RemoveEventListener<SelectedPlaylistNameAppEvent>(SelectedPlaylistNameEventListener);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +32,12 @@ public class ButtonSurfPlaylist : MonoBehaviour
     {
         
     }
-
+    public void SelectedPlaylistNameEventListener(SelectedPlaylistNameAppEvent _event)
+    {
+        playlistName = holderManager.playlistName;
+        SetSelectedPlaylistNameAppEvent(playlistName);
+        name.text = playlistName;
+    }
     public void OnClickPlaylistButton()
     {
         NewScreenManager.instance.ChangeToSpawnedView("surfMiPlaylist");
