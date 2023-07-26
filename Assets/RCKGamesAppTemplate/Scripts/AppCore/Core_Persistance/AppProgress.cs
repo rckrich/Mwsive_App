@@ -20,7 +20,6 @@ public class UserDataPersistance
         this.token_type = _token_type;
         this.expires_at = _dateTime;
         this.raw_value = _raw_value;
-
     }
 }
 

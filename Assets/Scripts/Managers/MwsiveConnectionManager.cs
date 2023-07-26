@@ -23,10 +23,10 @@ public class MwsiveConnectionManager : MonoBehaviour
 
     #region Mwsive API Call Methods
 
-    public void PostCreateUser(string _email, string _genre, int _age, ProfileRoot _profile, MwsiveWebCallback _callback = null)
+    public void PostCreateUser(string _email, string _gender, int _age, ProfileRoot _profile, string[] _playlist_ids, MwsiveWebCallback _callback = null)
     {
         _callback += Callback_PostCreateUser;
-        StartCoroutine(MwsiveWebCalls.CR_PostCreateUser(oAuthHandler.GetSpotifyToken().AccessToken, _email, _genre, _age, _profile, _callback));
+        StartCoroutine(MwsiveWebCalls.CR_PostCreateUser(oAuthHandler.GetSpotifyToken().AccessToken, _email, _gender, _age, _profile, _playlist_ids, _callback));
     }
 
     private void Callback_PostCreateUser(object[] _value)
