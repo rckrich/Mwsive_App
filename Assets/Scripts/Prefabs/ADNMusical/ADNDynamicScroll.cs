@@ -14,6 +14,9 @@ public class ADNDynamicScroll : MonoBehaviour
     public List<GameObject> Instances = new List<GameObject>(); 
     private static ADNDynamicScroll _instance;
 
+    public string PlaceHolderText;
+    public List<string> Data = new List<string>(); 
+
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -21,8 +24,29 @@ public class ADNDynamicScroll : MonoBehaviour
     {
         
     }
+    private void Start() {
+        SpotifyConnectionManager.instance.StartConnection(FillTokenText);
+        if(Data != null){
+            for (int i = 0; i < Data.Count-1; i++)
+            {
+                DynamicPrefabSpawner(0);
+                if(Data[i] != null || Data[i] != ""){
+                    Instances[i].GetComponent<PF_ADNMusicalEventSystem>().SetPlaceHolder(Data[i]);
+                }else{
+                    Instances[i].GetComponent<PF_ADNMusicalEventSystem>().SetPlaceHolder(PlaceHolderText);
+                }
+                
+            }
+        }
+    }
+
+    public void FillTokenText(object[] _value)
+    {
+        Debug.Log(_value); 
+    }
 
     public void HideAllOtherInstances(string gameObjectname){
+        Debug.Log("Hide");
         foreach (GameObject item in Instances)
         {
             if(item.name != gameObjectname){
@@ -46,15 +70,17 @@ public class ADNDynamicScroll : MonoBehaviour
     }
 
 
-    public void ShowAllInstances(){
+    public void ShowAllInstances(string _text){
         
         foreach (GameObject item in Instances)
         {
-             
-            if(item.activeSelf == true){
-                item.GetComponent<PF_ADNMusicalEventSystem>().End();
-            }else{
+            
+            if(item.activeSelf != true){
+                Debug.Log("Show");
                 item.SetActive(true);
+            }else{
+                item.GetComponent<PF_ADNMusicalEventSystem>().End(_text);   
+                
             }
             
         }
@@ -81,6 +107,18 @@ public class ADNDynamicScroll : MonoBehaviour
         }
     }
 
+    public void GetData(){
+        Data.Clear();
+        foreach (var item in Instances )
+        {
+            string _data = item.GetComponent<PF_ADNMusicalEventSystem>().GetPlaceHolder();
+            if(_data != PlaceHolderText){
+                Data.Add(_data);
+            }else{
+                Data.Add(null);
+            }
+        }
+    }
 
 
     public void DynamicPrefabSpawner(float howmanyprefabs){
@@ -104,10 +142,6 @@ public class ADNDynamicScroll : MonoBehaviour
 
         LastPosition.transform.SetAsLastSibling();
 
-    }
-
-    public void Rebuild(){
-        LayoutRebuilder.ForceRebuildLayoutImmediate(ScrollView.GetComponent<RectTransform>());
     }
 
     public void KillPrefablist(){

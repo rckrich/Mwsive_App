@@ -12,13 +12,13 @@ public class ADNMusicalPrefabInitializaer : MonoBehaviour
     private bool _IsTheObjectVisible;
     
 
-    public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
+    public TextMeshProUGUI TextMesh;
 
     // Start is called before the first frame update
     
     public void InitializeSingleWithBackgroundWithImage(string _text, string Image){
-        Debug.Log(gameObject.name);
-        TextMesh[0].text = _text;
+          
+        TextMesh.text = _text;
         int i = int.Parse(gameObject.name.Split("-")[1]);
         i--;
         while (i > Colors.Count -1){
@@ -28,15 +28,15 @@ public class ADNMusicalPrefabInitializaer : MonoBehaviour
         }
         Color32 _color = Colors[i];
         Background.GetComponent<Image>().color =_color;
-
+        Debug.Log(Image);
         
     
         ImageManager.instance.GetImage(Image, Portada, (RectTransform)this.transform);
-    
+        gameObject.SetActive(true);
     }
     public void InitializeSingleWithBackgroundNoImage(string _text){
-        Debug.Log(gameObject.name);
-        TextMesh[0].text = _text;
+        
+        TextMesh.text = _text;
         int i = int.Parse(gameObject.name.Split("-")[1]);
         i--;
         while (i > Colors.Count -1){
@@ -46,10 +46,12 @@ public class ADNMusicalPrefabInitializaer : MonoBehaviour
         }
         Color32 _color = Colors[i];
         Background.GetComponent<Image>().color =_color;
-    
+        gameObject.SetActive(true);
     }
+
+
     public void OnClickButton(){
-        ADNDynamicScroll.instance.ShowAllInstances();
+        ADNDynamicScroll.instance.ShowAllInstances(TextMesh.text);
     }
 
     
