@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 9134652716780589803}
   - component: {fileID: 5061949035335807640}
   m_Layer: 5
-  m_Name: PF_ADN_Artist
+  m_Name: PF_ADN_Genero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +289,8 @@ MonoBehaviour:
     rgba: 4294813862
   - serializedVersion: 2
     rgba: 4293119853
-  TextMesh: {fileID: 1486145353199672459}
+  Title: {fileID: 1486145353199672459}
+  Subtitle: {fileID: 0}
 --- !u!114 &9134652716780589803
 MonoBehaviour:
   m_ObjectHideFlags: 0

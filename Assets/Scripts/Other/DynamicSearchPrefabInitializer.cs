@@ -7,35 +7,24 @@ using TMPro;
 public class DynamicSearchPrefabInitializer : MonoBehaviour
 {
     public Image Portada;
-    private bool _IsTheObjectVisible;
     
 
     public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
 
     // Start is called before the first frame update
 
-    public bool IsTheObjectVisible(){
-        return _IsTheObjectVisible;
-    }
-
-    private void OnBecameVisible() {
-        Debug.Log("Visible");
-        _IsTheObjectVisible = true;
-    }
-    
-    private void OnBecameInvisible() {
-        Debug.Log("Invisible");
-        _IsTheObjectVisible = false;
-    }
     public void InitializeSingle(string _text){
         
         TextMesh[0].text = _text;
+        Portada.color = new Color32 (0,0,0,0);
+        gameObject.SetActive(true);
 
     }
-    public void InitializeSingleWithBackground(string _text){
-        TextMesh[0].text = _text;
-        
-        
+    public void InitializeSingleWithImage(string _name,  string _image){
+        Debug.Log(_image);
+        TextMesh[0].text = _name;
+        ImageManager.instance.GetImage(_image, Portada, (RectTransform)this.transform);
+        gameObject.SetActive(true);
     }
 
     public void DoubleLine(List<string> _text){
