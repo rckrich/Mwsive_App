@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class MainViewModel : ViewModel
+public class LogInViewModel : ViewModel
 {
     // Start is called before the first frame update
     [Header("Test Token")]
@@ -19,13 +19,14 @@ public class MainViewModel : ViewModel
     public void OnClickSpotify()
     {
         SpotifyConnectionManager.instance.StartConnection(FillTokenText);
-        NewScreenManager.instance.ChangeToMainView(ViewID.SurfViewModel, false);
-        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+
        
     }
 
     public void FillTokenText(object[] _value)
     {
         testRawValue = (string)_value[0];
+        NewScreenManager.instance.ChangeToMainView(ViewID.SurfViewModel, false);
+        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
 }

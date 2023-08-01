@@ -13,6 +13,8 @@ public enum ViewID
     //App ViewIDs
     ProfileViewModel,
     InsigniasViewModel,
+    SplashViewModel,
+    LogInViewModel,
     MainViewModel,
     MiPlaylistViewModel,
     PlayListViewModel,
@@ -21,6 +23,7 @@ public enum ViewID
     SurfViewModel,
     MenuViewModel,
     CreatePlaylistViewModel,
+    
 }
 
 public enum HTTPMethods

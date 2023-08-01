@@ -194,6 +194,12 @@ public class MwsiveUserRoot
     public string MwsiveUser { get; set; }
 }
 
+public class MwsiveCreatenRoot
+{
+    public MwsiveUser MwsiveUser { get; set; }
+    public string mwsive_token { get; set; }
+}
+
 public class MwsiveLoginRoot
 {
     public MwsiveUser MwsiveUser { get; set; }
