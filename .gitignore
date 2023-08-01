@@ -72,3 +72,5 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Assets/Fonts/static/Exo-Bold SDF.asset
 Assets/Fonts/static/Exo-Italic SDF.asset
+Assets/Fonts/static/Exo-ExtraBoldItalic SDF.asset
+Assets/Fonts/static/Exo-Italic SDF.asset

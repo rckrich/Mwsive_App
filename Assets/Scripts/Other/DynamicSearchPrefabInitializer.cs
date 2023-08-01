@@ -21,17 +21,22 @@ public class DynamicSearchPrefabInitializer : MonoBehaviour
 
     }
     public void InitializeSingleWithImage(string _name,  string _image){
-        Debug.Log(_image);
         TextMesh[0].text = _name;
         ImageManager.instance.GetImage(_image, Portada, (RectTransform)this.transform);
         gameObject.SetActive(true);
     }
 
-    public void DoubleLine(List<string> _text){
-        
-        TextMesh[0].text = _text[0];
-        TextMesh[1].text = _text[1];
+    public void InitializeDoubleWithImage(string _Title, string _Subtitle, string _Image){
+        TextMesh[0].text = _Title;
+        TextMesh[1].text = _Subtitle;
+        ImageManager.instance.GetImage(_Image, Portada, (RectTransform)this.transform);
+        gameObject.SetActive(true);
+    }
 
+    public void InitializeDouble(string _Title, string _Subtitle){
+        TextMesh[0].text = _Title;
+        TextMesh[1].text = _Subtitle;
+        gameObject.SetActive(true);
     }
 
 

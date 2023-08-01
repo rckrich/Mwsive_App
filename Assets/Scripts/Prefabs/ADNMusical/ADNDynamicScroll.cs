@@ -10,71 +10,143 @@ public class ADNDynamicScroll : MonoBehaviour
     public float MaxPrefabsInScreen = 0;
     public ScrollRect ScrollBar;
     private float ScrollbarVerticalPos =-0.001f;
-    public GameObject SpawnArea, Prefab, Añadir, ScrollView;
+    public GameObject SpawnArea, Prefab, Añadir, ScrollView, GuardarTop, HeaderGrafico;
     private GameObject Instance;  
     public List<GameObject> Instances = new List<GameObject>(); 
     private static ADNDynamicScroll _instance;
-    public List<string> Data = new List<string>(); 
+    public List<string> DataPlaceHolders = new List<string>(); 
+    public List<string> DataSpotifyID = new List<string>(); 
 
     
-    public enum TypeOfADN {Artista, Album, Canciones, PlayList};
+    public enum TypeOfADN {OnRepeat, Artistaquereviviria, GustoCulposo, DeAmor, UltimoDescubrimiento, GOAT, ProximaEstrella, SoundtrackDeMiVida};
     public TypeOfADN ADN;
-    public TextMeshProUGUI Title; 
+    public TextMeshProUGUI Title, Subtitle; 
     public List<GameObject> Prefabs = new List<GameObject>(); 
     private string PlaceHolderText;
     private GameObject PrefabToSet;
-    private int Type;
+    private int Type, Max, Min, CurrentPrefabs;
 
 
     // Start is called before the first frame update
 
     // Update is called once per frame
+    private void OnEnable() {
+        switch(ADN){
+            case TypeOfADN.OnRepeat:
+                Title.text = "ON REPEAT";
+                Subtitle.text = "Escribe tus canciones favoritas";
+                PlaceHolderText = "Buscar Canción";
+                PrefabToSet = Prefabs[1];
+                Max = 1;
+                Min = 1;
+                Type = 1;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                Añadir.SetActive(false);
+                break;
+            case TypeOfADN.Artistaquereviviria:
+                Title.text = "ARTISTA QUE REVIVIRIA";
+                Subtitle.text = "Escribe tus artistas favoritos";
+                PlaceHolderText = "Buscar Artista";
+                PrefabToSet = Prefabs[0];
+                Max = 5;
+                Min = 1;
+                Type = 0;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.GustoCulposo:
+                Title.text = "GUSTO CULPOSO";
+                Subtitle.text = "Escribe tus canciones favoritas";
+                PlaceHolderText = "Buscar Canción";
+                PrefabToSet = Prefabs[1];
+                Max = 5;
+                Min = 1;
+                Type = 1;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.DeAmor:
+                Title.text = "DE AMOR";
+                Subtitle.text = "Escribe tus canciones favoritas";
+                PlaceHolderText = "Buscar Canción";
+                PrefabToSet = Prefabs[1];
+                Max = 5;
+                Min = 1;
+                Type = 1;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.UltimoDescubrimiento:
+                Title.text = "ULTIMO DESCUBRIMIENTO";
+                Subtitle.text = "Escribe tus canciones favoritas";
+                PlaceHolderText = "Buscar Canción";
+                Max = 5;
+                Min = 1;
+                PrefabToSet = Prefabs[1];
+                Type = 1;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.GOAT:
+                Title.text = "GOAT";
+                Subtitle.text = "Escribe tus artistas favoritos";
+                PlaceHolderText = "Buscar Artista";
+                PrefabToSet = Prefabs[0];
+                Max = 1;
+                Min = 1;
+                Type = 0;
+                Añadir.SetActive(false);
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.ProximaEstrella:
+                Title.text = "PROXIMA ESTRELLA";
+                Subtitle.text = "Escribe tus artistas favoritos";
+                PlaceHolderText = "Buscar Artista";
+                PrefabToSet = Prefabs[0];
+                Max = 5;
+                Min = 1;
+                Type = 0;
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                break;
+            case TypeOfADN.SoundtrackDeMiVida:
+                Title.text = "EL SOUNDTRACK DE MI VIDA";
+                Subtitle.text = "Escribe tus canciones favoritas";
+                PlaceHolderText = "Buscar Canción";
+                PrefabToSet = Prefabs[1];
+                Max = 18;
+                Min = 4;
+                Type = 1;
+                CurrentPrefabs = 4;
+                GuardarTop.GetComponent<Button>().enabled = false;
+                break;
+        }
+
+        
+        if(DataPlaceHolders != null){
+            if(DataPlaceHolders.Count >= Min){
+                for (int i = 0; i < DataPlaceHolders.Count; i++)
+                {
+                    DynamicPrefabSpawner(0);
+                    if(DataPlaceHolders[i] != null || DataPlaceHolders[i] != ""){
+                        Instances[i].GetComponent<PF_ADNMusicalEventSystem>().SetPlaceHolder(DataPlaceHolders[i]);
+                    }
+                    
+                }
+            }else{
+            DynamicPrefabSpawner(Min-1);
+            }
+            
+        }
+        CurrentPrefabs = 1;
+    }
     void Update()
     {
         
     }
     private void Start() {
         
-        switch(ADN){
-            case TypeOfADN.Artista:
-                Title.text = "Escribe tus artistas favoritos";
-                PlaceHolderText = "Buscar Artista";
-                PrefabToSet = Prefabs[0];
-                Type = 0;
-                break;
-            case TypeOfADN.Album:
-                Title.text = "Escribe tus Álbumes favoritos";
-                PlaceHolderText = "Buscar Álbum";
-                PrefabToSet = Prefabs[1];
-                Type = 1;
-                break;
-            case TypeOfADN.Canciones:
-                Title.text = "Escribe tus canciones favoritas";
-                PlaceHolderText = "Buscar Canción";
-                PrefabToSet = Prefabs[2];
-                Type = 2;
-                break;
-            case TypeOfADN.PlayList:
-                Title.text = "Escribe tus playlists favoritas";
-                PlaceHolderText = "Buscar Playlist";
-                PrefabToSet = Prefabs[3];
-                Type = 3;
-                break;
-        }
-
         
-        if(Data != null){
-            for (int i = 0; i < Data.Count-1; i++)
-            {
-                DynamicPrefabSpawner(0);
-                if(Data[i] != null || Data[i] != ""){
-                    Instances[i].GetComponent<PF_ADNMusicalEventSystem>().SetPlaceHolder(Data[i]);
-                }
-                
-            }
-        }
     }
-
+    public void HideShowHeader(bool value){
+        HeaderGrafico.SetActive(value);
+    }
+    
     public void HideAllOtherInstances(string gameObjectname){
         Debug.Log("Hide");
         foreach (GameObject item in Instances)
@@ -100,7 +172,7 @@ public class ADNDynamicScroll : MonoBehaviour
     }
 
 
-    public void ShowAllInstances(string _text){
+    public void ShowAllInstances(string _text, string SpotifyId){
         
         foreach (GameObject item in Instances)
         {
@@ -109,11 +181,16 @@ public class ADNDynamicScroll : MonoBehaviour
                 Debug.Log("Show");
                 item.SetActive(true);
             }else{
-                item.GetComponent<PF_ADNMusicalEventSystem>().End(_text);   
+                item.GetComponent<PF_ADNMusicalEventSystem>().End(_text, SpotifyId);   
                 
             }
-            
+            if(item.GetComponent<PF_ADNMusicalEventSystem>().GetPlaceHolder() != PlaceHolderText){
+                GuardarTop.GetComponent<Button>().enabled = true;
+            }else{
+                GuardarTop.GetComponent<Button>().enabled = false;
+            }
         }
+        
         Añadir.SetActive(true);
     }
 
@@ -138,36 +215,35 @@ public class ADNDynamicScroll : MonoBehaviour
     }
 
     public void GetData(){
-        Data.Clear();
+        DataPlaceHolders.Clear();
+        DataSpotifyID.Clear();
         foreach (var item in Instances )
         {
             string _data = item.GetComponent<PF_ADNMusicalEventSystem>().GetPlaceHolder();
+            string id = item.GetComponent<PF_ADNMusicalEventSystem>().GetSpotifyID();
             if(_data != PlaceHolderText){
-                Data.Add(_data);
-            }else{
-                Data.Add(null);
+                DataPlaceHolders.Add(_data);
+                DataSpotifyID.Add(id);
             }
         }
     }
 
+    public void ControlAñadirButton(){
+        CurrentPrefabs++;
+        if(CurrentPrefabs >= Min){
+            GuardarTop.GetComponent<Button>().enabled = true;
+            GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+        }
+        if(CurrentPrefabs >= Max){
+            Añadir.SetActive(false);
+        }
+    }
 
     public void DynamicPrefabSpawner(float howmanyprefabs){
-        if(MaxPrefabsInScreen ==0){
-            
-            CalculateMaxPrefabToCall();
-        }
-        if(howmanyprefabs != MaxPrefabsInScreen){
-            for (int i = 0; i <= howmanyprefabs; i++)
-            {
-
-                SpawnPrefab();
-            }
-        }else{
-            for (int i = 0; i <= MaxPrefabsInScreen; i++)
-            {
-                
-                SpawnPrefab();
-            }
+    
+        for (int i = 0; i <= howmanyprefabs; i++)
+        {
+            SpawnPrefab();
         }
 
         Añadir.transform.SetAsLastSibling();

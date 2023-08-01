@@ -261,10 +261,11 @@ public class Descubrir_ViewModel : MonoBehaviour
             if (searchRoot.albums != null){
                 for (int i = 0; i < searchRoot.albums.items.Count; i++)
                 {
+                    Debug.Log(searchRoot.albums.items[i].artists[0].name);
                     try
                     {
                         if (searchRoot.albums.items[i].images != null){
-                        ListOfLists[numEnpantalla][i].GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(searchRoot.albums.items[i].name, searchRoot.albums.items[i].images[0].url);
+                        ListOfLists[numEnpantalla][i].GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(searchRoot.albums.items[i].name, searchRoot.albums.items[i].artists[0].name,  searchRoot.albums.items[i].images[0].url);
                         }else{
                             ListOfLists[numEnpantalla][i].GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(searchRoot.albums.items[i].name);
                             }
