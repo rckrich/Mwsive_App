@@ -40274,9 +40274,11 @@ MonoBehaviour:
   progress:
     userDataPersistance:
       userTokenSetted: 0
+      spotify_userTokenSetted: 0
       access_token: 
       token_type: 
       raw_value: 
+      current_playlist: 
 --- !u!1 &1846407755
 GameObject:
   m_ObjectHideFlags: 0
@@ -46598,7 +46600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6861881444575408281, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}
       propertyPath: m_Name
-      value: SpotifyConnectionManager
+      value: PF_SpotifyConnectionManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2fa3da39455645b7af809d6cd9d52a9, type: 3}

@@ -295,4 +295,10 @@ public class CreateMwsiveUserRoot
     public string[] playlist_ids { get; set; }
 }
 
+public class LogInMwsiveRoot
+{
+    public string email { get; set; }
+    public string user_id { get; set; }
+}
+
 #endregion

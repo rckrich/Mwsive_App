@@ -39,10 +39,10 @@ public class MwsiveConnectionManager : MonoBehaviour
         Debug.Log(((MwsiveCreatenRoot)_value[1]));
     }
 
-    public void PostLogin(string _email, MwsiveWebCallback _callback = null)
+    public void PostLogin(string _email, string _user_id, MwsiveWebCallback _callback = null)
     {
         _callback += Callback_PostLogin;
-        StartCoroutine(MwsiveWebCalls.CR_PostLogin(oAuthHandler.GetSpotifyToken().AccessToken, _email, _callback));
+        StartCoroutine(MwsiveWebCalls.CR_PostLogin(_email, _user_id, _callback));
     }
 
     private void Callback_PostLogin(object[] _value)

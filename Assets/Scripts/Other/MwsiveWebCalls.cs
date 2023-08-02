@@ -14,7 +14,8 @@ public class MwsiveWebCalls : MonoBehaviour
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/register";
+        //string url = "https://mwsive.com/register";
+        string url = "http://192.241.129.184/api/register";
 
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
@@ -76,21 +77,30 @@ public class MwsiveWebCalls : MonoBehaviour
         }
     }
 
-    public static IEnumerator CR_PostLogin(string _token, string _email, MwsiveWebCallback _callback)
+    public static IEnumerator CR_PostLogin(string _email, string _user_id, MwsiveWebCallback _callback)
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/login";
+        //string url = "https://mwsive.com/login";
+        string url = "http://192.241.129.184/api/login";
 
-        WWWForm form = new WWWForm();
-
-        form.AddField("email", _email);
-        form.AddField("id", _token);
-
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(url, form))
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
+            LogInMwsiveRoot logInMwsiveRoot = new LogInMwsiveRoot
+            {
+                email = _email,
+                user_id = _user_id
+            };
+
+            string jsonRaw = JsonConvert.SerializeObject(logInMwsiveRoot);
+
+            Debug.Log("Body request for login is:" + jsonRaw);
+
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
+            webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
             webRequest.SetRequestHeader("Accept", "application/json");
-            webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
 
             yield return webRequest.SendWebRequest();
 
@@ -129,7 +139,8 @@ public class MwsiveWebCalls : MonoBehaviour
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/logout";
+        //string url = "https://mwsive.com/logout";
+        string url = "http://192.241.129.184/api/logout";
 
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
@@ -171,7 +182,8 @@ public class MwsiveWebCalls : MonoBehaviour
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/me";
+        //string url = "https://mwsive.com/me";
+        string url = "http://192.241.129.184/api/me";
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
@@ -216,7 +228,8 @@ public class MwsiveWebCalls : MonoBehaviour
     {
         string jsonResult = "";
 
-        string url = "https://mwsive.com/get_user";
+        //string url = "https://mwsive.com/user";
+        string url = "http://192.241.129.184/api/user";
 
         Dictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("user_id", _user_id);

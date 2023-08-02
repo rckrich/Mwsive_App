@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 6861881444575408278}
   - component: {fileID: 6861881444575408279}
   m_Layer: 0
-  m_Name: SpotifyConnectionManager
+  m_Name: PF_SpotifyConnectionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

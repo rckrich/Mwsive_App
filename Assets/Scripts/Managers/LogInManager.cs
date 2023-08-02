@@ -84,7 +84,7 @@ public class LogInManager : Manager
         profileid = profileRoot.id;
         email = profileRoot.email;
 
-        MwsiveConnectionManager.instance.PostLogin(email, Callback_PostLogin);
+        MwsiveConnectionManager.instance.PostLogin(email, profileid, Callback_PostLogin);
     }
 
     private void Callback_PostLogin(object[] _value)
