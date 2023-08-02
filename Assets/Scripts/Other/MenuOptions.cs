@@ -23,18 +23,29 @@ public class MenuOptions : ViewModel
                 explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.white;
                 descubrir.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 ranking.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
+                //OpenView(ViewID.DescubrirViewModel);
+           
             }
             if(numero == 1)
             {
                 explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 descubrir.GetComponent<Image>().GetComponent<Graphic>().color = Color.white;
                 ranking.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
+                OpenView(ViewID.SurfViewModel);
             }
             if(numero == 2)
             {
                 explorar.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 descubrir.GetComponent<Image>().GetComponent<Graphic>().color = Color.gray;
                 ranking.GetComponent<Image>().GetComponent<Graphic>().color = Color.white;
+                OpenView(ViewID.RankingViewModel);
             }               
+    }
+
+    private void OpenView(ViewID _value)
+    {
+        NewScreenManager.instance.ChangeToMainView(_value, false);
+        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+        
     }
 }
