@@ -19,6 +19,8 @@ public class SpotifyConnectionManager : Manager
         }
     }
 
+    public static SpotifyConnectionManager dontDestroySpotifyConnectionM;
+
 #if UNITY_EDITOR_WIN
     [Header("Test Token")]
     [TextAreaAttribute]
@@ -27,6 +29,20 @@ public class SpotifyConnectionManager : Manager
 
     [Header("UniWebView OAuth Reference")]
     public OAuthHandler oAuthHandler;
+
+    // Use this for initialization
+    void Awake()
+    {
+        if (dontDestroySpotifyConnectionM == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            dontDestroySpotifyConnectionM = this;
+        }
+        else if (dontDestroySpotifyConnectionM != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void StartConnection(SpotifyWebCallback _callback = null)
     {

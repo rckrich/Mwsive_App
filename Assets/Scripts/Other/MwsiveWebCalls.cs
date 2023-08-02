@@ -41,6 +41,7 @@ public class MwsiveWebCalls : MonoBehaviour
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
 
             webRequest.SetRequestHeader("Accept", "application/json");
 
@@ -99,6 +100,7 @@ public class MwsiveWebCalls : MonoBehaviour
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
 
             webRequest.SetRequestHeader("Accept", "application/json");
 
@@ -340,6 +342,7 @@ public class MwsiveWebCalls : MonoBehaviour
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
 
             webRequest.SetRequestHeader("Accept", "application/json");
             webRequest.SetRequestHeader("Authorization", "Bearer " + _token);
@@ -795,6 +798,7 @@ public class MwsiveWebCalls : MonoBehaviour
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonRaw);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
 
             webRequest.SetRequestHeader("Accept", "application/json");
             webRequest.SetRequestHeader("Authorization", "Bearer " + _token);

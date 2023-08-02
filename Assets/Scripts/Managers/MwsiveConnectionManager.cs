@@ -18,8 +18,25 @@ public class MwsiveConnectionManager : MonoBehaviour
         }
     }
 
+    public static MwsiveConnectionManager dontDestroyMwsiveConnectionM;
+
+
     [Header("UniWebView OAuth Reference")]
     public OAuthHandler oAuthHandler;
+
+    // Use this for initialization
+    void Awake()
+    {
+        if (dontDestroyMwsiveConnectionM == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            dontDestroyMwsiveConnectionM = this;
+        }
+        else if (dontDestroyMwsiveConnectionM != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     #region Mwsive API Call Methods
 
