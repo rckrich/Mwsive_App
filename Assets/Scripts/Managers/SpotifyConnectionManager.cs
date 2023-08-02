@@ -76,6 +76,22 @@ public class SpotifyConnectionManager : Manager
         }
     }
 
+    public void StartRefreshRequestOnly(SpotifyWebCallback _callback = null)
+    {
+#if UNITY_EDITOR_WIN
+            string rawValue = !testRawValue.Equals("") ? testRawValue : ProgressManager.instance.progress.userDataPersistance.raw_value;
+#else
+        string rawValue = ProgressManager.instance.progress.userDataPersistance.raw_value;
+#endif
+        oAuthHandler.SetSpotifyTokenRawValue(rawValue);
+
+        if (ProgressManager.instance.progress.userDataPersistance.spotify_expires_at.CompareTo(DateTime.Now) < 0)
+        {
+            Debug.Log("Saved token has expired, starting refresh flow");
+            oAuthHandler.SpotifyStartRefreshFlow(_callback);
+        }
+    }
+
     public void SaveToken(string _rawValue, long _expiresIn)
     {
         ProgressManager.instance.progress.userDataPersistance.raw_value = _rawValue;
