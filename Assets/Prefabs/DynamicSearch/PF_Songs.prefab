@@ -399,9 +399,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Portada: {fileID: 3612097242713697965}
-  TextMesh:
-  - {fileID: 3612097240892882038}
-  - {fileID: 3612097240831194438}
+  SpotifyID: 
+  Title: {fileID: 3612097240892882038}
+  Subtitle: {fileID: 3612097240831194438}
 --- !u!114 &5076459616556627251
 MonoBehaviour:
   m_ObjectHideFlags: 0

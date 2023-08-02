@@ -8,35 +8,41 @@ public class DynamicSearchPrefabInitializer : MonoBehaviour
 {
     public Image Portada;
     
+    public string SpotifyID;
+    public TextMeshProUGUI Title;
+    public TextMeshProUGUI Subtitle;
 
-    public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
 
     // Start is called before the first frame update
 
-    public void InitializeSingle(string _text){
+    public void InitializeSingle(string _text, string id){
         
-        TextMesh[0].text = _text;
-        Portada.color = new Color32 (0,0,0,0);
+        Title.text = _text;
         gameObject.SetActive(true);
+        SpotifyID = id;
 
     }
-    public void InitializeSingleWithImage(string _name,  string _image){
-        TextMesh[0].text = _name;
+    public void InitializeSingleWithImage(string _name,  string _image, string id){
+        Title.text = _name;
         ImageManager.instance.GetImage(_image, Portada, (RectTransform)this.transform);
         gameObject.SetActive(true);
+        SpotifyID = id;
     }
 
-    public void InitializeDoubleWithImage(string _Title, string _Subtitle, string _Image){
-        TextMesh[0].text = _Title;
-        TextMesh[1].text = _Subtitle;
+    public void InitializeDoubleWithImage(string _Title, string _Subtitle, string _Image, string id){
+        Title.text = _Title;
+        Subtitle.text = _Subtitle;
         ImageManager.instance.GetImage(_Image, Portada, (RectTransform)this.transform);
         gameObject.SetActive(true);
+        SpotifyID = id;
     }
 
-    public void InitializeDouble(string _Title, string _Subtitle){
-        TextMesh[0].text = _Title;
-        TextMesh[1].text = _Subtitle;
+    public void InitializeDouble(string _Title, string _Subtitle, string id){
+        
+        Title.text = _Title;
+        Subtitle.text = _Subtitle;
         gameObject.SetActive(true);
+        SpotifyID = id;
     }
 
 

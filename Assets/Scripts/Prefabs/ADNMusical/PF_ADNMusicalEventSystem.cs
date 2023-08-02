@@ -10,13 +10,14 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
 
     public string[] types = new string[] {"artist"};
 
-    public GameObject PlaceHolder, DynamicScroll;
+    public GameObject PlaceHolder, DynamicScroll, EraseButton;
     private string SearchText, SpotifyId;
     public  TMP_InputField searchbar;
     public TextMeshProUGUI Number;
     public int MaxNumerofPrefabsInstanciate;
     private bool EnableSerach = false;
     public int PositionInSearch = 0;
+
 
 
     [Header("Dynamic Scroll")]
@@ -27,7 +28,7 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
     public List<GameObject> Instances = new List<GameObject>();
     public bool CheckForSpawnHasEnded = true;
     private int Type;
-
+    private bool EraseButtonNever = false;
 
     void Update()
     {
@@ -39,9 +40,12 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
         }
     }
 
-    public void ChangeName(int num ){
+    public void ChangeName(int num, int min ){
         Number.text = "#" +num;
-        
+        if( num <= min){
+            EraseButton.SetActive(false);
+            EraseButtonNever = true;
+        }
     }
     
     public void SetPrefab(GameObject _Prefab, int _Type){
@@ -54,7 +58,7 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
         
         SearchText = searchbar.text;
         if(SearchText.Length >= 1){
-
+            EraseButton.SetActive(false);
             PlaceHolder.SetActive(false);
             
             
@@ -116,6 +120,10 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
         DynamicScroll.transform.DOScaleY(0, 0.5F);
         
         PlaceHolder.SetActive(true);
+        if(!EraseButtonNever){
+            EraseButton.SetActive(true);
+        }
+        
         
     }
 
@@ -263,6 +271,9 @@ public class PF_ADNMusicalEventSystem : MonoBehaviour
         
     }
 
+    public void OnClickErase(){
+        ADNDynamicScroll.instance.DestroyInstance(gameObject);
+    }
 
 
     public void DynamicPrefabSpawner(){

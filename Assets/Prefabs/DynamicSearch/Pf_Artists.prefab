@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 90d7134fca3d8a74a8b3d2af920ef970, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58f2ebdb1937fd049a08d94a3c34a725, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -356,8 +356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Portada: {fileID: 8441419225330621984}
-  TextMesh:
-  - {fileID: 6457824724375703219}
+  SpotifyID: 
+  Title: {fileID: 6457824724375703219}
+  Subtitle: {fileID: 0}
 --- !u!114 &6457824725715141591
 MonoBehaviour:
   m_ObjectHideFlags: 0

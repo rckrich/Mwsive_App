@@ -9,7 +9,6 @@ public class ADNDynamicScroll : MonoBehaviour
     
     public float MaxPrefabsInScreen = 0;
     public ScrollRect ScrollBar;
-    private float ScrollbarVerticalPos =-0.001f;
     public GameObject SpawnArea, Prefab, Añadir, ScrollView, GuardarTop, HeaderGrafico;
     private GameObject Instance;  
     public List<GameObject> Instances = new List<GameObject>(); 
@@ -24,7 +23,9 @@ public class ADNDynamicScroll : MonoBehaviour
     public List<GameObject> Prefabs = new List<GameObject>(); 
     private string PlaceHolderText;
     private GameObject PrefabToSet;
-    private int Type, Max, Min, CurrentPrefabs;
+    public int Type, Max, Min, CurrentPrefabs;
+    private float ScrollPosition = -0.3f;
+    private bool IsAllPlacesComplete = true;
 
 
     // Start is called before the first frame update
@@ -34,7 +35,7 @@ public class ADNDynamicScroll : MonoBehaviour
         switch(ADN){
             case TypeOfADN.OnRepeat:
                 Title.text = "ON REPEAT";
-                Subtitle.text = "Escribe tus canciones favoritas";
+                Subtitle.text = "Escribe tus cancion favorita";
                 PlaceHolderText = "Buscar Canción";
                 PrefabToSet = Prefabs[1];
                 Max = 1;
@@ -85,7 +86,7 @@ public class ADNDynamicScroll : MonoBehaviour
                 break;
             case TypeOfADN.GOAT:
                 Title.text = "GOAT";
-                Subtitle.text = "Escribe tus artistas favoritos";
+                Subtitle.text = "Escribe tus artista favorito";
                 PlaceHolderText = "Buscar Artista";
                 PrefabToSet = Prefabs[0];
                 Max = 1;
@@ -112,7 +113,7 @@ public class ADNDynamicScroll : MonoBehaviour
                 Max = 18;
                 Min = 4;
                 Type = 1;
-                CurrentPrefabs = 4;
+                
                 GuardarTop.GetComponent<Button>().enabled = false;
                 break;
         }
@@ -133,16 +134,11 @@ public class ADNDynamicScroll : MonoBehaviour
             }
             
         }
-        CurrentPrefabs = 1;
+        CurrentPrefabs = Min;
+        GuardarTop.GetComponent<Button>().enabled = false;
+        GuardarTop.GetComponent<Image>().color = new Color32 (128,128,128,255);
     }
-    void Update()
-    {
-        
-    }
-    private void Start() {
-        
-        
-    }
+
     public void HideShowHeader(bool value){
         HeaderGrafico.SetActive(value);
     }
@@ -170,7 +166,35 @@ public class ADNDynamicScroll : MonoBehaviour
             return _instance;
         }
     }
+    
+    public void DestroyInstance(GameObject target){
+        Instances.Remove(target);
+        Destroy(target);
+        CurrentPrefabs--;
+        int i = 1;
+        foreach (GameObject item in Instances)
+        {
+            item.GetComponent<PF_ADNMusicalEventSystem>().ChangeName(i, Min);
+            item.name =  Prefab.name  + "-"+ i;
+            i++;
 
+            if(item.GetComponent<PF_ADNMusicalEventSystem>().GetPlaceHolder() != PlaceHolderText){
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
+                GuardarTop.GetComponent<Button>().enabled = true;
+            }else{
+                IsAllPlacesComplete = false;
+            }
+            
+        }
+        if(!IsAllPlacesComplete){
+            GuardarTop.GetComponent<Button>().enabled = false;
+            GuardarTop.GetComponent<Image>().color = new Color32 (128,128,128,255);
+            IsAllPlacesComplete = true;
+        }
+        
+        
+        Añadir.SetActive(true);
+    }
 
     public void ShowAllInstances(string _text, string SpotifyId){
         
@@ -185,25 +209,23 @@ public class ADNDynamicScroll : MonoBehaviour
                 
             }
             if(item.GetComponent<PF_ADNMusicalEventSystem>().GetPlaceHolder() != PlaceHolderText){
+                GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
                 GuardarTop.GetComponent<Button>().enabled = true;
             }else{
-                GuardarTop.GetComponent<Button>().enabled = false;
+                IsAllPlacesComplete = false;
             }
+
+
+
         }
-        
+        if(!IsAllPlacesComplete){
+            GuardarTop.GetComponent<Button>().enabled = false;
+            GuardarTop.GetComponent<Image>().color = new Color32 (128,128,128,255);
+            IsAllPlacesComplete = true;
+        }
         Añadir.SetActive(true);
     }
 
-    public void CheckForSpawn(){
-        Debug.Log(ScrollBar.verticalNormalizedPosition + " " + ScrollbarVerticalPos);
-        if(Instances.Count != 0){
-            if(ScrollBar.verticalNormalizedPosition  <= ScrollbarVerticalPos){
-                
-                DynamicPrefabSpawner(MaxPrefabsInScreen);
-            }
-        }
-        
-    }
     private void CalculateMaxPrefabToCall(){
         if(MaxPrefabsInScreen ==0){
             if(Instances.Count != 0){
@@ -227,27 +249,30 @@ public class ADNDynamicScroll : MonoBehaviour
             }
         }
     }
-
     public void ControlAñadirButton(){
+        
         CurrentPrefabs++;
-        if(CurrentPrefabs >= Min){
-            GuardarTop.GetComponent<Button>().enabled = true;
-            GuardarTop.GetComponent<Image>().color = new Color32 (255,255,255,255);
-        }
+        
         if(CurrentPrefabs >= Max){
             Añadir.SetActive(false);
         }
+        Debug.Log(ScrollPosition);
+        ScrollBar.verticalNormalizedPosition = -0.001f;
+
+        GuardarTop.GetComponent<Button>().enabled = false;
+        GuardarTop.GetComponent<Image>().color = new Color32 (128,128,128,255);
+        
+
     }
 
     public void DynamicPrefabSpawner(float howmanyprefabs){
-    
+        
         for (int i = 0; i <= howmanyprefabs; i++)
         {
             SpawnPrefab();
         }
 
-        Añadir.transform.SetAsLastSibling();
-
+        Añadir.transform.SetAsLastSibling();        
     }
 
     public void KillPrefablist(){
@@ -269,10 +294,11 @@ public class ADNDynamicScroll : MonoBehaviour
         Instance.transform.localScale = new Vector3(1,1,1); 
         Instances.Add(Instance);
         Instance.name =  Prefab.name  + "-"+ Instances.Count;
-        Instance.GetComponent<PF_ADNMusicalEventSystem>().ChangeName(Instances.Count);
+        Instance.GetComponent<PF_ADNMusicalEventSystem>().ChangeName(Instances.Count, Min);
         Instance.GetComponent<PF_ADNMusicalEventSystem>().SetPrefab(PrefabToSet, Type);
         Instance.GetComponent<PF_ADNMusicalEventSystem>().SetPlaceHolder(PlaceHolderText);
-
+        
+        
     }
     
 }
