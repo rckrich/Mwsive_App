@@ -68,8 +68,8 @@ public class Descubrir_ViewModel : MonoBehaviour
         {
             case 0:
                 types = new string[] { "album", "artist", "playlist", "track" };
+                
                 SpotifyConnectionManager.instance.SearchForItem(SearchText, types, Callback_OnCLick_SearchForItem, "ES", Mathf.RoundToInt(MaxPrefabsinScreen/3));
-                //DynamicPrefabSpawner(Mathf.RoundToInt(MaxPrefabsinScreen/4));
                 break;
             case 1:
                 
@@ -95,6 +95,11 @@ public class Descubrir_ViewModel : MonoBehaviour
                 SpotifyConnectionManager.instance.SearchForItem(SearchText, types, Callback_OnCLick_SearchForItem, "ES", MaxPrefabsinScreen);
                 DynamicPrefabSpawner(MaxPrefabsinScreen);
                 break;
+            case 6:
+                types = new string[] { "album", "artist", "playlist", "track" };
+                string GenreText =SearchText +"%20genre:" + SearchText;
+                SpotifyConnectionManager.instance.SearchForItem(GenreText, types, Callback_OnCLick_SearchForItem, "ES", Mathf.RoundToInt(MaxPrefabsinScreen/3));
+                break;
         }
 
         
@@ -111,9 +116,9 @@ public class Descubrir_ViewModel : MonoBehaviour
         switch (numEnpantalla)
         {
             case 0:
-            
+                KillPrefablist(0);
                 if (searchRoot.tracks != null){
-                    Debug.Log("Tracks");
+                    
                     foreach (var item in searchRoot.tracks.items)
                     {
                         try
@@ -133,7 +138,7 @@ public class Descubrir_ViewModel : MonoBehaviour
                     
                 }
                 if (searchRoot.artists != null){
-                Debug.Log("artits");
+                
                     foreach (var item in searchRoot.artists.items)
                     {
                         try
@@ -152,7 +157,7 @@ public class Descubrir_ViewModel : MonoBehaviour
                     
                 }
                 if (searchRoot.albums != null){
-                 Debug.Log("albums");
+                 
                     foreach (var item in searchRoot.albums.items)
                     {
                         try
@@ -171,7 +176,7 @@ public class Descubrir_ViewModel : MonoBehaviour
                     
                 }        
                 if (searchRoot.playlists != null){
-                 Debug.Log("playlist");
+                
                     foreach (var item in searchRoot.playlists.items)
                     {
                         try
@@ -295,7 +300,95 @@ public class Descubrir_ViewModel : MonoBehaviour
                 
             }
             break;     
+
+
+            case 6:
+                KillPrefablist(6);
+                if (searchRoot.tracks != null){
+                    
+                    foreach (var item in searchRoot.tracks.items)
+                    {
+                        try
+                        {
+                            if (item.album.images != null){
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.album.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                        }
+                    }
+                    
+                    
+                }
+                if (searchRoot.artists != null){
                 
+                    foreach (var item in searchRoot.artists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                    
+                }
+                if (searchRoot.albums != null){
+                 
+                    foreach (var item in searchRoot.albums.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                    }
+                    
+                    
+                }        
+                if (searchRoot.playlists != null){
+                
+                    foreach (var item in searchRoot.playlists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                }   
+            }
+
+            
+            
+            LastPosition[numEnpantalla].transform.SetAsLastSibling();
+            
+            break;
+
+
             
         }
 
@@ -308,6 +401,97 @@ public class Descubrir_ViewModel : MonoBehaviour
         SearchRoot searchRoot = (SearchRoot)_value[1];
         switch (numEnpantalla)
         {
+            case 0:
+                
+                if (searchRoot.tracks != null){
+                    
+                    foreach (var item in searchRoot.tracks.items)
+                    {
+                        
+                        try
+                        {
+                            if (item.album.images != null){
+                                
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.album.images[0].url, item.id);
+                            }else{
+                                
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            
+                            CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                        }
+                    }
+                    
+                    
+                }
+                if (searchRoot.artists != null){
+                
+                    foreach (var item in searchRoot.artists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                    
+                }
+                if (searchRoot.albums != null){
+                 
+                    foreach (var item in searchRoot.albums.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                        }
+                    
+                    }    
+                }        
+                if (searchRoot.playlists != null){
+                
+                    foreach (var item in searchRoot.playlists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                }   
+            
+
+            
+            
+            LastPosition[numEnpantalla].transform.SetAsLastSibling();
+            
+            break;
+
+
 
             case 2:
             if (searchRoot.tracks != null){
@@ -401,6 +585,97 @@ public class Descubrir_ViewModel : MonoBehaviour
                 
             }
             break; 
+
+
+            case 6:
+                
+                if (searchRoot.tracks != null){
+                    
+                    foreach (var item in searchRoot.tracks.items)
+                    {
+                        
+                        try
+                        {
+                            if (item.album.images != null){
+                                
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.album.images[0].url, item.id);
+                            }else{
+                                
+                                CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            
+                            CustomSpawnPrefab(false, 2).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                        }
+                    }
+                    
+                    
+                }
+                if (searchRoot.artists != null){
+                
+                    foreach (var item in searchRoot.artists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 3).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                    
+                }
+                if (searchRoot.albums != null){
+                 
+                    foreach (var item in searchRoot.albums.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDoubleWithImage(item.name, item.artists[0].name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 4).GetComponent<DynamicSearchPrefabInitializer>().InitializeDouble(item.name, item.artists[0].name, item.id);
+                        }
+                    
+                    }    
+                }        
+                if (searchRoot.playlists != null){
+                
+                    foreach (var item in searchRoot.playlists.items)
+                    {
+                        try
+                        {
+                            if (item.images != null){
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingleWithImage(item.name, item.images[0].url, item.id);
+                            }else{
+                                CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                            }
+                        }
+                        catch (System.ArgumentOutOfRangeException)
+                        {
+                            CustomSpawnPrefab(false, 5).GetComponent<DynamicSearchPrefabInitializer>().InitializeSingle(item.name, item.id);
+                        }
+                    }
+                }   
+            
+
+            
+            
+            LastPosition[numEnpantalla].transform.SetAsLastSibling();
+            
+            break;
         }
         Debug.Log("EndCheck");
         CheckForSpawnHasEnded = true;
@@ -441,7 +716,7 @@ public class Descubrir_ViewModel : MonoBehaviour
         }
 
         if (numEnpantalla == 0){
-            SpawnAll( prefabs);
+            //SpawnAll( prefabs);
         }else{
             for (int i = 0; i <= prefabs-1; i++)
             {
@@ -479,67 +754,75 @@ public class Descubrir_ViewModel : MonoBehaviour
         }
         ListOfLists[scene].Clear();
     }
-    private void SpawnAll(int numoftimes){
-        for (int i = 0; i <= numoftimes-1; i++)
-        {
-            for (int j = 2; j <= Prefabs.Count-1; j++)
-            {
-                Instance = Instantiate(Prefabs[j],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_ResultadosdeBusqueda_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);  
-                ListOfLists[0].Add(Instance);
-                ListOfLists[numEnpantalla].Add(Instance);
-            }   
-            
-        }
-    }
-
-
     private GameObject CustomSpawnPrefab(bool IsVisible, int scene){
-        switch (scene){
-            case 1:
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Curadores_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);  
-                Instance.SetActive(IsVisible);
-                ListOfLists[numEnpantalla].Add(Instance);
-                return Instance;
-                
-            case 2:
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Songs_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);
-                Instance.SetActive(IsVisible);
-                ListOfLists[numEnpantalla].Add(Instance);   
-                return Instance;
-            case 3: 
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Artists_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);  
-                Instance.SetActive(IsVisible); 
-                ListOfLists[numEnpantalla].Add(Instance);
-                return Instance;
-            case 4: 
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Albums_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);
-                Instance.SetActive(IsVisible);
-                ListOfLists[numEnpantalla].Add(Instance);  
-                return Instance;
-            case 5: 
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Playlists_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);
-                Instance.SetActive(IsVisible);
-                ListOfLists[numEnpantalla].Add(Instance);   
-                return Instance;
-            case 6: 
-                Instance = Instantiate(Prefabs[numEnpantalla],PrefabsPosition.transform.position, Quaternion.identity);
-                Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
-                Instance.transform.localScale = new Vector3(1,1,1);
-                Instance.SetActive(IsVisible);
-                ListOfLists[numEnpantalla].Add(Instance);
-                return Instance;
+        switch (numEnpantalla){
+            case 0:
+                switch (scene){
+                case 2:
+                    Instance = Instantiate(Prefabs[2],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_ResultadosdeBusqueda_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);  
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);
+                    return Instance;
+                    
+                case 3:
+                    Instance = Instantiate(Prefabs[3],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_ResultadosdeBusqueda_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);   
+                    return Instance;
+                case 4: 
+                    Instance = Instantiate(Prefabs[4],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_ResultadosdeBusqueda_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);  
+                    Instance.SetActive(IsVisible); 
+                    ListOfLists[numEnpantalla].Add(Instance);
+                    return Instance;
+                case 5: 
+                    Instance = Instantiate(Prefabs[5],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_ResultadosdeBusqueda_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);  
+                    return Instance;
+            }
+            return null;
+            case 6:
+                switch (scene){
+                case 2:
+                    Instance = Instantiate(Prefabs[2],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);  
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);
+                    return Instance;
+                    
+                case 3:
+                    Instance = Instantiate(Prefabs[3],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);   
+                    return Instance;
+                case 4: 
+                    Instance = Instantiate(Prefabs[4],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);  
+                    Instance.SetActive(IsVisible); 
+                    ListOfLists[numEnpantalla].Add(Instance);
+                    return Instance;
+                case 5: 
+                    Instance = Instantiate(Prefabs[5],PrefabsPosition.transform.position, Quaternion.identity);
+                    Instance.transform.SetParent(GameObject.Find("PF_Genders_Container").transform);
+                    Instance.transform.localScale = new Vector3(1,1,1);
+                    Instance.SetActive(IsVisible);
+                    ListOfLists[numEnpantalla].Add(Instance);  
+                    return Instance;
+            }
+            return null;
+            
         }
         return null;
     }

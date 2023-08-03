@@ -31,7 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3612097241878420264}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -106,13 +106,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3612097242713697954}
-  m_RootOrder: 1
+  m_Father: {fileID: 3612097241878420264}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 196.9197, y: -10.118702}
-  m_SizeDelta: {x: 256.45, y: 17.187}
+  m_AnchoredPosition: {x: 208.6, y: -10.118702}
+  m_SizeDelta: {x: 194.81, y: 17.187}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3612097240831194433
 CanvasRenderer:
@@ -241,13 +241,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3612097242713697954}
-  m_RootOrder: 0
+  m_Father: {fileID: 3612097241878420264}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 186.93468, y: 12.430304}
-  m_SizeDelta: {x: 276.42, y: 25}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 45.61, y: 9.9652}
+  m_SizeDelta: {x: -91.22, y: 20.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3612097240892882033
 CanvasRenderer:
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 8
+  m_fontSizeMin: 6
   m_fontSizeMax: 20
   m_fontStyle: 0
   m_HorizontalAlignment: 1
@@ -377,6 +377,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3612097242713697954}
+  - {fileID: 3612097240892882039}
+  - {fileID: 3612097240831194439}
   - {fileID: 2953906392574521203}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -475,9 +477,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3612097240892882039}
-  - {fileID: 3612097240831194439}
+  m_Children: []
   m_Father: {fileID: 3612097241878420264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
