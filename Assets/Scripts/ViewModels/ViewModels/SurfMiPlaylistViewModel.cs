@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SurfMiPlaylistViewModel : ViewModel 
 {
     // Start is called before the first frame update
@@ -14,9 +15,6 @@ public class SurfMiPlaylistViewModel : ViewModel
     int onlyone = 0;
     public HolderManager holderManager;
     public List<Image> imagenes;
-    public ButtonSurfPlaylist buttonSurfPlaylist;
-    
-    
     
     void Start()
     {
@@ -41,7 +39,7 @@ public class SurfMiPlaylistViewModel : ViewModel
                 playlistHolderPrefab.GetComponent<Image>().enabled = false;
             }
             SurfMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SurfMiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.description, item.external_urls);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public, item.description);
             if (!item.@public) { instance.PublicTrue(); }
             if (item.images != null && item.images.Count > 0) { instance.SetImage(item.images[0].url); }
             
@@ -49,18 +47,7 @@ public class SurfMiPlaylistViewModel : ViewModel
            
         }
     }
-    public void ResetScroll()
-    {
-        if (scrollRect.verticalNormalizedPosition >= 1.1)
-        {
-            for (int i = 0; i < instanceParent.childCount; i++)
-            {
-                Destroy(instanceParent.GetChild(i).gameObject);
-            }
-            SpotifyConnectionManager.instance.GetCurrentUserPlaylists(Callback_OnClick_GetCurrentUserPlaylists);
-        }
-        
-    }
+
     public void OnReachEnd()
     {
        
@@ -92,7 +79,7 @@ public class SurfMiPlaylistViewModel : ViewModel
                 playlistHolderPrefab.GetComponent<Image>().enabled = false;
             }
             SurfMiplaylistHolder instance = GameObject.Instantiate(playlistHolderPrefab, instanceParent).GetComponent<SurfMiplaylistHolder>();
-            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public,item.description, item.external_urls);
+            instance.Initialize(item.name, item.id, item.owner.display_name, item.@public,item.description);
             if (!item.@public) { instance.PublicTrue(); }
             if (item.images != null && item.images.Count > 0)
                 instance.SetImage(item.images[0].url);
@@ -100,13 +87,11 @@ public class SurfMiPlaylistViewModel : ViewModel
         }
         onlyone = 0;
     }
+     
 
-    
     public void OnClick_BackButton()
     {
-        
         NewScreenManager.instance.BackToPreviousView();
-
     }
 
     public void OnClick_SpawnCrearPlaylistButton()

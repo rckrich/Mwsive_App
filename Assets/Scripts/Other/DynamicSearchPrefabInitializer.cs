@@ -7,47 +7,42 @@ using TMPro;
 public class DynamicSearchPrefabInitializer : MonoBehaviour
 {
     public Image Portada;
-    public Image Background;
-    public List<Color32> Colors = new List<Color32>(); 
-    private bool _IsTheObjectVisible;
     
+    public string SpotifyID;
+    public TextMeshProUGUI Title;
+    public TextMeshProUGUI Subtitle;
 
-    public List<TextMeshProUGUI> TextMesh = new List<TextMeshProUGUI>();
 
     // Start is called before the first frame update
 
-    public bool IsTheObjectVisible(){
-        return _IsTheObjectVisible;
-    }
-
-    private void OnBecameVisible() {
-        Debug.Log("Visible");
-        _IsTheObjectVisible = true;
-    }
-    
-    private void OnBecameInvisible() {
-        Debug.Log("Invisible");
-        _IsTheObjectVisible = false;
-    }
-    public void InitializeSingle(string _text){
+    public void InitializeSingle(string _text, string id){
         
-        TextMesh[0].text = _text;
+        Title.text = _text;
+        gameObject.SetActive(true);
+        SpotifyID = id;
 
     }
-    public void InitializeSingleWithBackground(string _text){
-        TextMesh[0].text = _text;
-        int i = int.Parse(gameObject.name.Split("-")[1]);
-        while (i > Colors.Count -1){
-            i = i-Colors.Count -1;
-        }
-        Background.GetComponent<Image>().color =Colors[i];
+    public void InitializeSingleWithImage(string _name,  string _image, string id){
+        Title.text = _name;
+        ImageManager.instance.GetImage(_image, Portada, (RectTransform)this.transform);
+        gameObject.SetActive(true);
+        SpotifyID = id;
     }
 
-    public void DoubleLine(List<string> _text){
+    public void InitializeDoubleWithImage(string _Title, string _Subtitle, string _Image, string id){
+        Title.text = _Title;
+        Subtitle.text = _Subtitle;
+        ImageManager.instance.GetImage(_Image, Portada, (RectTransform)this.transform);
+        gameObject.SetActive(true);
+        SpotifyID = id;
+    }
+
+    public void InitializeDouble(string _Title, string _Subtitle, string id){
         
-        TextMesh[0].text = _text[0];
-        TextMesh[1].text = _text[1];
-
+        Title.text = _Title;
+        Subtitle.text = _Subtitle;
+        gameObject.SetActive(true);
+        SpotifyID = id;
     }
 
 
