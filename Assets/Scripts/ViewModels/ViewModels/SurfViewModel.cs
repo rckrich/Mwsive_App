@@ -40,4 +40,12 @@ public class SurfViewModel : ViewModel
         NewScreenManager.instance.ChangeToSpawnedView("profile");
         Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
     }
+
+    public void OnClick_Discos()
+    {
+        
+        CallPopUP(PopUpViewModelTypes.MessageOnly, "¿Qué son los discos?", "Cada vez que escuches una canción que te haga vibrar, puedes lanzar un disco para votar por tus favoritas y destacar en el ranking. (1 Disco = 1 Pik) " +
+            " < b >Tus Piks: < /b >"  +
+            "En Mwsive tus piks nos ayudan a recomendar música a otros crowd-surfers y así descubrir juntos la música que hace olas.", "Aceptar");
+    }
 }

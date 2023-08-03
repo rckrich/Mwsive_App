@@ -79,8 +79,33 @@ public class ProfileViewModel : ViewModel
     }
     public void OnClick_BackButton()
     {
-        NewScreenManager.instance.BackToPreviousView();
+        OpenView(ViewID.SurfViewModel);
     }
 
+    public void OnClick_OptionsButton()
+    {
+        OpenView(ViewID.OptionsViewModel);
+    }
+
+    public void OnClick_FollowFollowers()
+    {
+        OpenView(ViewID.FollowersViewModel);
+    }
+
+    public void OnClick_EditProfile()
+    {
+        OpenView(ViewID.EditProfileViewModel);
+    }
+
+    public void OnClick_Surf()
+    {
+        OpenView(ViewID.SurfViewModel);
+    }
+    private void OpenView(ViewID _value)
+    {
+        NewScreenManager.instance.ChangeToMainView(_value, false);
+        Debug.Log(NewScreenManager.instance.GetCurrentView().gameObject.name);
+
+    }
 }
 

@@ -19,11 +19,15 @@ public enum ViewID
     MiPlaylistViewModel,
     PlayListViewModel,
     TrackViewModel,
-    listaDeOpciones,
+    MenuInferiorViewModel,
     SurfViewModel,
     MenuViewModel,
     CreatePlaylistViewModel,
-    
+    OptionsViewModel,
+    FollowersViewModel,
+    EditProfileViewModel,
+    RankingViewModel,
+
 }
 
 public enum HTTPMethods
